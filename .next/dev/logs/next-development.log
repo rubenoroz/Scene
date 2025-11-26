@@ -3206,3 +3206,7 @@ Invalid value for argument `endDate`: premature end of input. Expected ISO-8601 
 [24:00:18.554] Server  LOG     [Role Check] User: cmictuju30000bc4sqzswqrr8, Project: cmictvb480003bc4sjtzuqwlj
 [24:00:18.585] Server  LOG     [Role Check] Resolved Role: ADMIN
 [25:00:45.241] Server  LOG      ✓ Compiled in 2.7s
+[25:29:00.096] Server  LOG      ✓ Compiled in 544ms
+[25:29:00.539] Browser WARN    Warning: Failed to re-render. We will retry on the next Fast Refresh event.
+Error: PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in ``).
+If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report
