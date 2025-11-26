@@ -3210,3 +3210,4 @@ Invalid value for argument `endDate`: premature end of input. Expected ISO-8601 
 [25:29:00.539] Browser WARN    Warning: Failed to re-render. We will retry on the next Fast Refresh event.
 Error: PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in ``).
 If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report
+[25:41:58.411] Server  LOG      ✓ Compiled in 1560ms

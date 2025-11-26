@@ -59,12 +59,11 @@ export default function Home() {
               </div>
 
               <div className="space-y-3">
-                <button
-                  className="w-full px-4 py-3 rounded-lg bg-blue-200 text-neutral-900 font-medium hover:bg-blue-300 transition-all"
-                  onClick={() => signIn()}
-                >
-                  Iniciar Sesión
-                </button>
+                <Link href="/login" passHref className="block">
+                  <button className="w-full px-4 py-3 rounded-lg bg-blue-200 text-neutral-900 font-medium hover:bg-blue-300 transition-all">
+                    Iniciar Sesión
+                  </button>
+                </Link>
 
                 <Link href="/register" passHref className="block">
                   <button className="w-full px-4 py-3 rounded-lg border border-neutral-300 text-neutral-900 font-medium hover:bg-neutral-100 transition-all">

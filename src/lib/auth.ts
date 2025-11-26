@@ -84,7 +84,7 @@ export const authOptions: AuthOptions = {
     },
   },
   pages: {
-    signIn: '/', // Specify your sign-in page
+    signIn: '/login', // Specify your sign-in page
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',

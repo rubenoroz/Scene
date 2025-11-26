@@ -2303,6 +2303,10 @@
     }
   }
 
+  .focus\:border-transparent:focus {
+    border-color: #0000;
+  }
+
   .focus\:bg-slate-100:focus {
     background-color: var(--color-slate-100);
   }
