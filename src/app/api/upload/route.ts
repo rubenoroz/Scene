@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
                 return NextResponse.json({ message: "Task not found" }, { status: 404 });
             }
 
-            const isAssigned = task.assignees.some(a => a.id === session.user.id);
+            const isAssigned = task.assignees.some((a: { id: string }) => a.id === session.user.id);
             if (!isAssigned) {
                 return NextResponse.json({ message: "Forbidden: You are not assigned to this task" }, { status: 403 });
             }
