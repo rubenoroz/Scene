@@ -68,9 +68,11 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
         body: JSON.stringify({ isHiddenInGantt: newHiddenState }),
       });
       if (response.ok) {
-        onTaskUpdate();
+        // onTaskUpdate(); // Already updated optimistically? No, we updated local state but not parent.
+        onTaskUpdate({ isHiddenInGantt: newHiddenState });
       } else {
         setIsHidden(!newHiddenState); // Revert on failure
+        onTaskUpdate({ isHiddenInGantt: !newHiddenState }); // Revert parent
         alert("Failed to update Gantt visibility.");
       }
     } catch (error) {
@@ -435,6 +437,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
 
                     // Optimistic update
                     setStartDate(newDate);
+                    onTaskUpdate({ startDate: newDate }); // Update parent immediately
 
                     try {
                       const response = await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
@@ -442,15 +445,15 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ startDate: newDate }),
                       });
-                      if (response.ok) {
-                        onTaskUpdate();
-                      } else {
+                      if (!response.ok) {
                         // Revert on failure
                         setStartDate(previousDate);
+                        onTaskUpdate({ startDate: previousDate });
                       }
                     } catch (error) {
                       // Revert on error
                       setStartDate(previousDate);
+                      onTaskUpdate({ startDate: previousDate });
                       console.error("Error updating start date:", error);
                     }
                   }}
@@ -468,6 +471,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
 
                     // Optimistic update
                     setEndDate(newDate);
+                    onTaskUpdate({ endDate: newDate }); // Update parent immediately
 
                     try {
                       const response = await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
@@ -475,15 +479,15 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ endDate: newDate }),
                       });
-                      if (response.ok) {
-                        onTaskUpdate();
-                      } else {
+                      if (!response.ok) {
                         // Revert on failure
                         setEndDate(previousDate);
+                        onTaskUpdate({ endDate: previousDate });
                       }
                     } catch (error) {
                       // Revert on error
                       setEndDate(previousDate);
+                      onTaskUpdate({ endDate: previousDate });
                       console.error("Error updating end date:", error);
                     }
                   }}
@@ -503,7 +507,8 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ toleranceDate: newDate }),
                       });
-                      onTaskUpdate({ toleranceDate: newDate });
+                      // onTaskUpdate({ toleranceDate: newDate }); // Already called optimistically? No, let's call it before fetch if we want optimistic.
+                      // The current code calls it AFTER fetch. Let's move it up.
                     } catch (error) {
                       console.error("Error updating tolerance date:", error);
                     }
@@ -520,13 +525,13 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
               <button
                 onClick={async () => {
                   setPriority("LOW");
+                  onTaskUpdate({ priority: "LOW" }); // Optimistic
                   try {
                     await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
                       method: "PUT",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ priority: "LOW" }),
                     });
-                    onTaskUpdate({ priority: "LOW" });
                   } catch (error) {
                     console.error("Error updating priority:", error);
                   }
@@ -542,13 +547,13 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
               <button
                 onClick={async () => {
                   setPriority("MEDIUM");
+                  onTaskUpdate({ priority: "MEDIUM" }); // Optimistic
                   try {
                     await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
                       method: "PUT",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ priority: "MEDIUM" }),
                     });
-                    onTaskUpdate({ priority: "MEDIUM" });
                   } catch (error) {
                     console.error("Error updating priority:", error);
                   }
@@ -564,13 +569,13 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
               <button
                 onClick={async () => {
                   setPriority("HIGH");
+                  onTaskUpdate({ priority: "HIGH" }); // Optimistic
                   try {
                     await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
                       method: "PUT",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ priority: "HIGH" }),
                     });
-                    onTaskUpdate({ priority: "HIGH" });
                   } catch (error) {
                     console.error("Error updating priority:", error);
                   }
@@ -586,13 +591,13 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
               <button
                 onClick={async () => {
                   setPriority("URGENT");
+                  onTaskUpdate({ priority: "URGENT" }); // Optimistic
                   try {
                     await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
                       method: "PUT",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ priority: "URGENT" }),
                     });
-                    onTaskUpdate({ priority: "URGENT" });
                   } catch (error) {
                     console.error("Error updating priority:", error);
                   }

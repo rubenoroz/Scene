@@ -176,15 +176,14 @@ export async function PUT(
     if (currentTask.parentId) {
       const parentId = currentTask.parentId;
 
-      // Fetch all siblings to calculate new average
-      const siblings = await prisma.task.findMany({
+      // Optimize: Use aggregate to calculate average progress in DB
+      const aggregations = await prisma.task.aggregate({
         where: { parentId: parentId },
-        select: { progress: true }
+        _avg: { progress: true },
+        _count: { progress: true }
       });
 
-      // Calculate average progress
-      const totalProgress = siblings.reduce((sum: number, task: { progress: number | null }) => sum + (task.progress || 0), 0);
-      const averageProgress = Math.round(totalProgress / siblings.length);
+      const averageProgress = Math.round(aggregations._avg.progress || 0);
 
       // Update parent task progress
       await prisma.task.update({
@@ -195,26 +194,37 @@ export async function PUT(
 
     // Handle cascade completion if progress is 100
     if (progress === 100) {
-      // Recursive function to get all descendant IDs
-      const getAllDescendantIds = async (taskId: string): Promise<string[]> => {
-        const children = await prisma.task.findMany({
-          where: { parentId: taskId },
-          select: { id: true }
-        });
+      // Optimized recursive function to get all descendant IDs
+      // We fetch only IDs, which is lighter.
+      const getAllDescendantIds = async (rootId: string): Promise<string[]> => {
+        // Fetch all potential descendants in one go if possible, or layer by layer.
+        // For deep hierarchies, layer by layer is safer to avoid recursion limits in code,
+        // but fetching all tasks for the project and building a tree in memory is often faster for < 10k tasks.
+        // Given we don't want to fetch the whole project here, let's stick to a more efficient recursive fetch.
 
-        if (children.length === 0) return [];
+        let allDescendants: string[] = [];
+        let currentLevelIds = [rootId];
 
-        const childIds = children.map((c: { id: string }) => c.id);
-        const descendantIdsPromises = childIds.map((id: string) => getAllDescendantIds(id));
-        const descendantIdsArrays = await Promise.all(descendantIdsPromises);
-        const descendantIds = descendantIdsArrays.flat();
+        while (currentLevelIds.length > 0) {
+          const children = await prisma.task.findMany({
+            where: { parentId: { in: currentLevelIds } },
+            select: { id: true }
+          });
 
-        return [...childIds, ...descendantIds];
+          if (children.length === 0) break;
+
+          const childIds = children.map(c => c.id);
+          allDescendants.push(...childIds);
+          currentLevelIds = childIds;
+        }
+
+        return allDescendants;
       };
 
       const descendantIds = await getAllDescendantIds(taskId);
 
       if (descendantIds.length > 0) {
+        // Bulk update all descendants
         await prisma.task.updateMany({
           where: { id: { in: descendantIds } },
           data: { progress: 100 }
@@ -251,27 +261,36 @@ export async function DELETE(
       return NextResponse.json({ message: "Forbidden" }, { status: 403 });
     }
 
-    // Recursive function to delete all descendants
-    async function deleteTaskAndDescendants(taskId: string) {
-      // Get all children
-      const children = await prisma.task.findMany({
-        where: { parentId: taskId },
-        select: { id: true }
-      });
+    // Iterative function to delete all descendants level by level
+    async function deleteWithDescendants(rootId: string) {
+      // 1. Collect all IDs level by level
+      const levels: string[][] = [];
+      let currentLevelIds = [rootId];
 
-      // Recursively delete children first
-      for (const child of children) {
-        await deleteTaskAndDescendants(child.id);
+      while (currentLevelIds.length > 0) {
+        levels.push(currentLevelIds);
+
+        const children = await prisma.task.findMany({
+          where: { parentId: { in: currentLevelIds } },
+          select: { id: true }
+        });
+
+        if (children.length === 0) break;
+        currentLevelIds = children.map(c => c.id);
       }
 
-      // Delete the task itself
-      await prisma.task.delete({
-        where: { id: taskId },
-      });
+      // 2. Delete from bottom up (deepest level first)
+      for (let i = levels.length - 1; i >= 0; i--) {
+        const idsToDelete = levels[i];
+        if (idsToDelete.length > 0) {
+          await prisma.task.deleteMany({
+            where: { id: { in: idsToDelete } }
+          });
+        }
+      }
     }
 
-    // Start recursive deletion
-    await deleteTaskAndDescendants(taskId);
+    await deleteWithDescendants(taskId);
 
     return NextResponse.json({ message: "Task deleted" }, { status: 200 });
   } catch (error) {

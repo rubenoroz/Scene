@@ -1899,3 +1899,40 @@ Import trace:
     ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
     ./src/app/projects/[id]/page.tsx [Client Component Browser]
     ./src/app/projects/[id]/page.tsx [Server Component]
+[01:02:40.634] Browser ERROR   ./src/components/kanban/TaskDetailModal.tsx:516:19
+Parsing ecmascript source code failed
+  514 |                     }
+  515 |                   }}
+> 516 |                   }}
+      |                   ^
+  517 |                 />
+  518 |               </div>
+  519 |             </div>
+
+Expected '</', got '}'
+
+Import trace:
+  Client Component Browser:
+    ./src/components/kanban/TaskDetailModal.tsx [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+[01:03:07.100] Server  LOG      ✓ Compiled in 242ms
+[01:03:07.642] Browser ERROR   ./src/components/kanban/TaskDetailModal.tsx:516:19
+Parsing ecmascript source code failed
+  514 |                     }
+  515 |                   }}
+> 516 |                   }}
+      |                   ^
+  517 |                 />
+  518 |               </div>
+  519 |             </div>
+
+Expected '</', got '}'
+
+Import trace:
+  Client Component Browser:
+    ./src/components/kanban/TaskDetailModal.tsx [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]

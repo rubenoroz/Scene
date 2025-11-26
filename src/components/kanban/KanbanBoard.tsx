@@ -615,6 +615,21 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     if (!can(PERMISSIONS.CREATE_TASK)) return;
     const newTaskTitle = prompt("Enter new task title:");
     if (newTaskTitle) {
+      // Optimistic update
+      const tempId = `temp-${Date.now()}`;
+      const tempTask: FetchedTask = {
+        id: tempId,
+        title: newTaskTitle,
+        columnId,
+        projectId,
+        order: tasks.filter(t => t.columnId === columnId).length,
+        assignees: [], // Initially empty
+        // Add other required fields with defaults
+      };
+
+      const originalTasks = tasks;
+      setTasks([...tasks, tempTask]);
+
       try {
         const response = await fetch(`/api/projects/${projectId}/tasks`, {
           method: "POST",
@@ -623,12 +638,16 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
         });
         if (response.ok) {
           console.log("handleCreateTask: Task added successfully, calling mutate()");
-          mutate(); // Re-fetch data to include the new task
+          mutate(); // Re-fetch data to include the new task with real ID
         } else {
           console.error("Failed to add task");
+          setTasks(originalTasks); // Revert on failure
+          alert("Failed to create task.");
         }
       } catch (error) {
         console.error("Error adding task:", error);
+        setTasks(originalTasks); // Revert on error
+        alert("Error creating task.");
       }
     }
   };
