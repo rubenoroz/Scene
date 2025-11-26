@@ -187,7 +187,7 @@ export async function PUT(
         if (children.length === 0) return [];
 
         const childIds = children.map((c: { id: string }) => c.id);
-        const descendantIdsPromises = childIds.map(id => getAllDescendantIds(id));
+        const descendantIdsPromises = childIds.map((id: string) => getAllDescendantIds(id));
         const descendantIdsArrays = await Promise.all(descendantIdsPromises);
         const descendantIds = descendantIdsArrays.flat();
 
