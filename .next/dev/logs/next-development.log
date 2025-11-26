@@ -113,3 +113,412 @@ Import trace:
 [00:18:16.636] Server  LOG     JWT Callback - User: undefined
 [00:18:16.638] Server  LOG     Session Callback - Session: {}
 [00:18:16.655] Server  LOG     Session Callback - Token: {}
+[00:27:57.826] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:57.850] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:57.917] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.000] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.008] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.009] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.012] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.013] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.014] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.029] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.033] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.040] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.041] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.046] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.047] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.048] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.049] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.050] Server  ERROR    ⨯ ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:27:59.645] Browser ERROR   ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[00:28:04.633] Browser ERROR   ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[00:28:07.634] Browser ERROR   ./src/lib/excel.ts:1:1
+Module not found: Can't resolve 'xlsx'
+> 1 | import * as XLSX from 'xlsx';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | interface ExportTask {
+  4 |     id: string;
+
+Import trace:
+  Client Component Browser:
+    ./src/lib/excel.ts [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[00:28:32.866] Server  LOG      ✓ Compiled in 1877ms

@@ -829,8 +829,11 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       }
     };
 
-    // Find roots in the filtered set
-    const roots = filteredTasks.filter(t => !t.parentId || !taskMap.has(t.parentId));
+    // Find roots in the filtered set, excluding hidden tasks
+    const roots = filteredTasks.filter(t =>
+      (!t.parentId || !taskMap.has(t.parentId)) &&
+      !t.isHiddenInGantt
+    );
     roots.forEach(t => processTask(t, 0));
 
     exportToExcel(exportData, columns, "Proyecto");

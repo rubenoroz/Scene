@@ -6189,60 +6189,162 @@ __turbopack_context__.s([
     "exportToExcel",
     ()=>exportToExcel
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$xlsx$2f$xlsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/xlsx/xlsx.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$exceljs$2f$dist$2f$exceljs$2e$min$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/exceljs/dist/exceljs.min.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$file$2d$saver$2f$dist$2f$FileSaver$2e$min$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/file-saver/dist/FileSaver.min.js [app-client] (ecmascript)");
 ;
-const exportToExcel = (tasks, columns, projectName)=>{
-    // Create a map of column IDs to names for status lookup
-    const columnMap = new Map(columns.map((c)=>[
-            c.id,
-            c.name
-        ]));
-    // Transform data for Excel
-    const data = tasks.map((task)=>{
-        const status = columnMap.get(task.columnId || '') || 'Unknown';
-        const assignees = task.assignees?.map((a)=>a.name || a.email).join(', ') || '';
-        // Indent title based on level to show hierarchy
-        const indentation = task.level ? '  '.repeat(task.level) : '';
-        const title = indentation + task.title;
-        return {
-            'Tarea': title,
-            'Estado': status,
-            'Prioridad': task.priority || '',
-            'Asignado a': assignees,
-            'Fecha Inicio': task.startDate ? new Date(task.startDate).toLocaleDateString() : '',
-            'Fecha Fin': task.endDate ? new Date(task.endDate).toLocaleDateString() : ''
-        };
-    });
-    // Create workbook and worksheet
-    const wb = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$xlsx$2f$xlsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["utils"].book_new();
-    const ws = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$xlsx$2f$xlsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["utils"].json_to_sheet(data);
-    // Auto-size columns (simple approximation)
-    const colWidths = [
+;
+const exportToExcel = async (tasks, columns, projectName)=>{
+    const workbook = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$exceljs$2f$dist$2f$exceljs$2e$min$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].Workbook();
+    const worksheet = workbook.addWorksheet('Cronograma');
+    // --- 1. Setup Columns ---
+    worksheet.columns = [
         {
-            wch: 40
+            header: 'Tarea',
+            key: 'title',
+            width: 40
         },
         {
-            wch: 15
+            header: 'Estado',
+            key: 'status',
+            width: 15
         },
         {
-            wch: 10
+            header: 'Prioridad',
+            key: 'priority',
+            width: 12
         },
         {
-            wch: 25
+            header: 'Asignado a',
+            key: 'assignees',
+            width: 25
         },
         {
-            wch: 12
+            header: 'Inicio',
+            key: 'startDate',
+            width: 12
         },
         {
-            wch: 12
+            header: 'Fin',
+            key: 'endDate',
+            width: 12
         }
     ];
-    ws['!cols'] = colWidths;
-    // Add worksheet to workbook
-    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$xlsx$2f$xlsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["utils"].book_append_sheet(wb, ws, 'Cronograma');
-    // Generate Excel file
-    const fileName = `${projectName.replace(/\s+/g, '_')}_Gantt.xlsx`;
-    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$xlsx$2f$xlsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["writeFile"](wb, fileName);
+    // --- 2. Calculate Timeline Range ---
+    const dates = tasks.flatMap((t)=>[
+            t.startDate,
+            t.endDate
+        ]).filter(Boolean).map((d)=>new Date(d));
+    let minDate = dates.length ? new Date(Math.min(...dates.map((d)=>d.getTime()))) : new Date();
+    let maxDate = dates.length ? new Date(Math.max(...dates.map((d)=>d.getTime()))) : new Date();
+    // Add padding
+    minDate.setDate(minDate.getDate() - 3);
+    maxDate.setDate(maxDate.getDate() + 7);
+    // --- 3. Add Timeline Headers ---
+    // We'll add dates starting from column G (index 7, 1-based)
+    let currentDate = new Date(minDate);
+    let colIndex = 7;
+    const dateColMap = new Map();
+    while(currentDate <= maxDate){
+        const dateStr = currentDate.toISOString().split('T')[0];
+        const cell = worksheet.getCell(1, colIndex);
+        cell.value = currentDate.getDate(); // Just the day number
+        cell.alignment = {
+            horizontal: 'center'
+        };
+        // Style the header
+        cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: {
+                argb: 'FFE0E0E0'
+            }
+        };
+        cell.border = {
+            left: {
+                style: 'thin',
+                color: {
+                    argb: 'FFCCCCCC'
+                }
+            },
+            right: {
+                style: 'thin',
+                color: {
+                    argb: 'FFCCCCCC'
+                }
+            }
+        };
+        // Add month header above if it's the first day or first col
+        if (currentDate.getDate() === 1 || colIndex === 7) {
+        // We could merge cells for months, but for simplicity let's just put it in the tooltip or comment
+        // Or maybe add a row above. For now, simple day numbers.
+        }
+        dateColMap.set(dateStr, colIndex);
+        // Set column width for the timeline
+        worksheet.getColumn(colIndex).width = 4;
+        currentDate.setDate(currentDate.getDate() + 1);
+        colIndex++;
+    }
+    // --- 4. Add Data and Bars ---
+    const columnMap = new Map(columns.map((c)=>[
+            c.id,
+            c
+        ]));
+    tasks.forEach((task, index)=>{
+        const rowIndex = index + 2; // 1-based, +1 for header
+        const row = worksheet.getRow(rowIndex);
+        // Basic Data
+        const statusCol = columnMap.get(task.columnId || '');
+        const statusName = statusCol?.name || 'Unknown';
+        const statusColor = statusCol?.color || '#E0E0E0';
+        const assignees = task.assignees?.map((a)=>a.name || a.email).join(', ') || '';
+        // Indentation for hierarchy
+        const indentation = task.level ? '    '.repeat(task.level) : '';
+        row.getCell('title').value = indentation + task.title;
+        row.getCell('status').value = statusName;
+        row.getCell('priority').value = task.priority;
+        row.getCell('assignees').value = assignees;
+        row.getCell('startDate').value = task.startDate ? new Date(task.startDate).toLocaleDateString() : '';
+        row.getCell('endDate').value = task.endDate ? new Date(task.endDate).toLocaleDateString() : '';
+        // Gantt Bar Coloring
+        if (task.startDate && task.endDate) {
+            const start = new Date(task.startDate);
+            const end = new Date(task.endDate);
+            let curr = new Date(start);
+            while(curr <= end){
+                const dateStr = curr.toISOString().split('T')[0];
+                const colIdx = dateColMap.get(dateStr);
+                if (colIdx) {
+                    const cell = row.getCell(colIdx);
+                    // Remove # from hex color
+                    const argbColor = 'FF' + (statusColor.replace('#', '') || '3B82F6');
+                    cell.fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: {
+                            argb: argbColor
+                        }
+                    };
+                }
+                curr.setDate(curr.getDate() + 1);
+            }
+        }
+    });
+    // --- 5. Final Styling ---
+    // Header row style
+    worksheet.getRow(1).font = {
+        bold: true
+    };
+    worksheet.getRow(1).border = {
+        bottom: {
+            style: 'medium'
+        }
+    };
+    // Generate File
+    const buffer = await workbook.xlsx.writeBuffer();
+    const fileName = `${projectName.replace(/\s+/g, '_')}_Gantt_Visual.xlsx`;
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$file$2d$saver$2f$dist$2f$FileSaver$2e$min$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["saveAs"])(new Blob([
+        buffer
+    ]), fileName);
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
@@ -7172,8 +7274,8 @@ function KanbanBoard({ projectId }) {
                 });
             }
         };
-        // Find roots in the filtered set
-        const roots = filteredTasks.filter((t)=>!t.parentId || !taskMap.has(t.parentId));
+        // Find roots in the filtered set, excluding hidden tasks
+        const roots = filteredTasks.filter((t)=>(!t.parentId || !taskMap.has(t.parentId)) && !t.isHiddenInGantt);
         roots.forEach((t)=>processTask(t, 0));
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$excel$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["exportToExcel"])(exportData, columns, "Proyecto");
     };
@@ -7201,7 +7303,7 @@ function KanbanBoard({ projectId }) {
         children: "Failed to load kanban board."
     }, void 0, false, {
         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-        lineNumber: 853,
+        lineNumber: 856,
         columnNumber: 21
     }, this);
     const activeTaskContent = activeItem?.data.current?.type === "Task" ? tasks.find((t)=>t.id === activeItem.id) : null;
@@ -7219,7 +7321,7 @@ function KanbanBoard({ projectId }) {
                                 children: "< Project"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 864,
+                                lineNumber: 867,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7242,12 +7344,12 @@ function KanbanBoard({ projectId }) {
                                                 }))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 870,
+                                            lineNumber: 873,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 869,
+                                        lineNumber: 872,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7261,14 +7363,14 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 890,
+                                                lineNumber: 893,
                                                 columnNumber: 15
                                             }, this),
                                             showArchivedTasks ? "Activas" : "Archivadas"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 883,
+                                        lineNumber: 886,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7282,20 +7384,20 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 901,
+                                                lineNumber: 904,
                                                 columnNumber: 34
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__["EyeOff"], {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 901,
+                                                lineNumber: 904,
                                                 columnNumber: 69
                                             }, this),
                                             showHiddenTasks ? "Ocultar" : "Mostrar"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 894,
+                                        lineNumber: 897,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7308,14 +7410,14 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 913,
+                                                lineNumber: 916,
                                                 columnNumber: 15
                                             }, this),
                                             viewMode === 'kanban' ? 'Ganttifícalo' : 'Kanban'
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 904,
+                                        lineNumber: 907,
                                         columnNumber: 13
                                     }, this),
                                     viewMode === 'gantt' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7329,14 +7431,14 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 924,
+                                                lineNumber: 927,
                                                 columnNumber: 17
                                             }, this),
                                             "Imprimir"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 917,
+                                        lineNumber: 920,
                                         columnNumber: 15
                                     }, this),
                                     viewMode === 'gantt' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7350,14 +7452,14 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 936,
+                                                lineNumber: 939,
                                                 columnNumber: 17
                                             }, this),
                                             "Excel"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 929,
+                                        lineNumber: 932,
                                         columnNumber: 15
                                     }, this),
                                     can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -7372,14 +7474,14 @@ function KanbanBoard({ projectId }) {
                                                         className: "w-4 h-4 mr-2"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                        lineNumber: 948,
+                                                        lineNumber: 951,
                                                         columnNumber: 19
                                                     }, this),
                                                     "Settings"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 942,
+                                                lineNumber: 945,
                                                 columnNumber: 17
                                             }, this),
                                             can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7388,7 +7490,7 @@ function KanbanBoard({ projectId }) {
                                                 children: "Add Column"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 953,
+                                                lineNumber: 956,
                                                 columnNumber: 19
                                             }, this)
                                         ]
@@ -7396,13 +7498,13 @@ function KanbanBoard({ projectId }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 867,
+                                lineNumber: 870,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                        lineNumber: 863,
+                        lineNumber: 866,
                         columnNumber: 9
                     }, this),
                     !fetchedColumns && columns.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7411,12 +7513,12 @@ function KanbanBoard({ projectId }) {
                             children: "Loading..."
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 963,
+                            lineNumber: 966,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                        lineNumber: 962,
+                        lineNumber: 965,
                         columnNumber: 11
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex-1 overflow-hidden",
@@ -7455,23 +7557,23 @@ function KanbanBoard({ projectId }) {
                                                     onToggleGanttVisibility: handleToggleGanttVisibility
                                                 }, col.id, false, {
                                                     fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                    lineNumber: 985,
+                                                    lineNumber: 988,
                                                     columnNumber: 27
                                                 }, this);
                                             })
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 979,
+                                            lineNumber: 982,
                                             columnNumber: 21
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 978,
+                                        lineNumber: 981,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                    lineNumber: 977,
+                                    lineNumber: 980,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createPortal"])(/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DragOverlay"], {
@@ -7482,7 +7584,7 @@ function KanbanBoard({ projectId }) {
                                             subtasksCount: activeTaskContent.children?.length || 0
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 1012,
+                                            lineNumber: 1015,
                                             columnNumber: 23
                                         }, this) : null,
                                         activeItem && activeItem.data.current?.type === "Column" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7492,24 +7594,24 @@ function KanbanBoard({ projectId }) {
                                                 children: findColumn(activeItem.id.toString())?.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1020,
+                                                lineNumber: 1023,
                                                 columnNumber: 25
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 1019,
+                                            lineNumber: 1022,
                                             columnNumber: 23
                                         }, this) : null
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                    lineNumber: 1010,
+                                    lineNumber: 1013,
                                     columnNumber: 19
                                 }, this), document.body)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 970,
+                            lineNumber: 973,
                             columnNumber: 15
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "h-full px-8 pt-8 pb-10 gantt-print-container",
@@ -7520,23 +7622,23 @@ function KanbanBoard({ projectId }) {
                                 onTaskUpdate: mutate
                             }, void 0, false, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 1030,
+                                lineNumber: 1033,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1029,
+                            lineNumber: 1032,
                             columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                        lineNumber: 966,
+                        lineNumber: 969,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 861,
+                lineNumber: 864,
                 columnNumber: 7
             }, this),
             isSettingsOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createPortal"])(/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7551,12 +7653,12 @@ function KanbanBoard({ projectId }) {
                                 size: 24
                             }, void 0, false, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 1049,
+                                lineNumber: 1052,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1045,
+                            lineNumber: 1048,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7565,23 +7667,23 @@ function KanbanBoard({ projectId }) {
                                 projectId: projectId
                             }, void 0, false, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 1052,
+                                lineNumber: 1055,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1051,
+                            lineNumber: 1054,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                    lineNumber: 1044,
+                    lineNumber: 1047,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 1043,
+                lineNumber: 1046,
                 columnNumber: 9
             }, this), document.body),
             selectedTask && isModalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$TaskDetailModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TaskDetailModal"], {
@@ -7591,13 +7693,13 @@ function KanbanBoard({ projectId }) {
                 availableUsers: projectUsers
             }, selectedTask.id, false, {
                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 1060,
+                lineNumber: 1063,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-        lineNumber: 860,
+        lineNumber: 863,
         columnNumber: 5
     }, this);
 }
