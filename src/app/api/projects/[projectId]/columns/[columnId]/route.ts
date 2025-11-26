@@ -6,7 +6,7 @@ import { getUserRoleInProject, hasPermission, PERMISSIONS } from "@/lib/permissi
 // GET /api/projects/[projectId]/columns/[columnId]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { projectId: string; columnId: string } }
+  { params }: { params: Promise<{ projectId: string; columnId: string }> }
 ) {
   try {
     const session = await auth();
@@ -14,7 +14,7 @@ export async function GET(
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { projectId, columnId } = params;
+    const { projectId, columnId } = await params;
 
     const column = await prisma.column.findUnique({
       where: { id: columnId, projectId },
