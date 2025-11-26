@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { getUserRoleInProject, hasPermission, PERMISSIONS } from "@/lib/permissions";
+import { PrismaClient } from '@prisma/client'; // Add this import
 
 // POST /api/projects/[projectId]/clone
 export async function POST(
@@ -52,7 +53,7 @@ export async function POST(
         }
 
         // 2. Create new project
-        const newProject = await prisma.$transaction(async (tx) => {
+        const newProject = await prisma.$transaction(async (tx: PrismaClient) => {
             const project = await tx.project.create({
                 data: {
                     name: `Copy of ${sourceProject.name}`,
