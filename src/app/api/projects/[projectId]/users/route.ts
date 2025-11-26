@@ -75,7 +75,7 @@ export async function GET(
         // If not, we add them.
 
         // Add workspace users first (base roles)
-        project.workspace.workspaceUsers.forEach(wu => {
+        project.workspace.workspaceUsers.forEach((wu: any) => {
             userMap.set(wu.userId, {
                 user: wu.user,
                 role: wu.role === 'ADMIN' ? 'ADMIN' : 'ARTIST', // Default mapping if not explicit in project
@@ -85,7 +85,7 @@ export async function GET(
         });
 
         // Override with project specific roles
-        projectUsers.forEach(pu => {
+        projectUsers.forEach((pu: any) => {
             const existing = userMap.get(pu.userId);
             userMap.set(pu.userId, {
                 user: pu.user,
