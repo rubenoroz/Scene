@@ -1229,14 +1229,20 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$prisma$2f$client$2f$index$2d$browser$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@prisma/client/index-browser.js [app-client] (ecmascript)");
 ;
-// Force reload for schema changes
+// Optimized for serverless environments (Vercel + Supabase)
 const prismaClientSingleton = ()=>{
-    return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$prisma$2f$client$2f$index$2d$browser$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PrismaClient"]();
+    return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$prisma$2f$client$2f$index$2d$browser$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PrismaClient"]({
+        log: ("TURBOPACK compile-time truthy", 1) ? [
+            'error',
+            'warn'
+        ] : "TURBOPACK unreachable",
+        datasources: {
+            db: {
+                url: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env.DATABASE_URL
+            }
+        }
+    });
 };
-// Workaround: Force new client instance to pick up schema changes in dev
-if ("TURBOPACK compile-time truthy", 1) {
-    globalThis.prisma = undefined;
-}
 const prisma = globalThis.prisma ?? prismaClientSingleton();
 const __TURBOPACK__default__export__ = prisma;
 if ("TURBOPACK compile-time truthy", 1) globalThis.prisma = prisma;

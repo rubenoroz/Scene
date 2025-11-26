@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     const isArchived = searchParams.get("archived") === "true";
 
     // Get projects where user is owner OR a project member
-    const projects = await prisma.project.findMany(({
+    const projects = await prisma.project.findMany({
       where: {
         OR: [
           { ownerId: userId },
@@ -36,7 +36,7 @@ export async function GET(request: Request) {
         name: true,
         description: true,
       },
-    }));
+    });
 
     return NextResponse.json(projects, { status: 200 });
   } catch (error) {
