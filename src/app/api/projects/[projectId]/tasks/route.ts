@@ -33,7 +33,7 @@ export async function GET(
             image: true,
           },
         },
-        children: true, // Include subtasks
+        // children: true, // Removed to avoid recursion and data duplication. Frontend will reconstruct hierarchy.
       },
     });
 

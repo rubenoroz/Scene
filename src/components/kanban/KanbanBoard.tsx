@@ -70,15 +70,30 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export function KanbanBoard({ projectId }: KanbanBoardProps) {
   const { data: session } = useSession();
   const { can } = usePermissions(projectId);
-  const { data: fetchedColumns, error, mutate } = useSWR<FetchedColumn[]>(
+  const { data: fetchedColumns, error: columnsError, mutate: mutateColumns } = useSWR<FetchedColumn[]>(
     `/api/projects/${projectId}/columns`,
     fetcher,
     {
-      revalidateOnFocus: true, // Refresh when user returns to tab
-      revalidateOnReconnect: true, // Refresh when internet reconnects
-      refreshInterval: 10000, // Poll every 10 seconds for real-time updates
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      refreshInterval: 10000,
     }
   );
+
+  const { data: fetchedTasks, error: tasksError, mutate: mutateTasks } = useSWR<FetchedTask[]>(
+    `/api/projects/${projectId}/tasks`,
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      refreshInterval: 10000,
+    }
+  );
+
+  // Combined mutate function
+  const mutate = useCallback(async () => {
+    await Promise.all([mutateColumns(), mutateTasks()]);
+  }, [mutateColumns, mutateTasks]);
 
   const [columns, setColumns] = useState<FetchedColumn[]>([]);
   const [tasks, setTasks] = useState<FetchedTask[]>([]);
@@ -97,6 +112,50 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     }
     return new Set();
   });
+
+  // Reconstruct hierarchy from flat tasks
+  const processedData = useMemo(() => {
+    if (!fetchedColumns || !fetchedTasks) return { columns: [], tasks: [] };
+
+    // 1. Create a map of tasks by ID for easy lookup
+    const taskMap = new Map<string, FetchedTask>();
+    fetchedTasks.forEach(t => {
+      taskMap.set(t.id, { ...t, children: [] }); // Initialize children array
+    });
+
+    // 2. Build the tree structure
+    const rootTasks: FetchedTask[] = [];
+
+    // Sort tasks by order first to ensure children are added in correct order if that matters,
+    // though we usually sort children later.
+    const sortedTasks = [...fetchedTasks].sort((a, b) => a.order - b.order);
+
+    sortedTasks.forEach(t => {
+      const task = taskMap.get(t.id)!;
+      if (t.parentId && taskMap.has(t.parentId)) {
+        const parent = taskMap.get(t.parentId)!;
+        parent.children = parent.children || [];
+        parent.children.push(task);
+      } else {
+        rootTasks.push(task);
+      }
+    });
+
+    // 3. Assign root tasks to columns
+    const columnsWithTasks = fetchedColumns.map(col => ({
+      ...col,
+      tasks: rootTasks.filter(t => t.columnId === col.id).sort((a, b) => a.order - b.order)
+    }));
+
+    return { columns: columnsWithTasks, tasks: Array.from(taskMap.values()) };
+  }, [fetchedColumns, fetchedTasks]);
+
+  useEffect(() => {
+    if (processedData.columns.length > 0) {
+      setColumns(processedData.columns);
+      setTasks(processedData.tasks);
+    }
+  }, [processedData]);
 
   // Hidden tasks state - persisted in localStorage
   const [hiddenTasks, setHiddenTasks] = useState<Set<string>>(() => {
@@ -246,16 +305,9 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     }
   }, [tasks, activeFilter, customFilterCriteria, session?.user?.id]);
 
-  React.useEffect(() => {
-    if (fetchedColumns && Array.isArray(fetchedColumns)) {
-      console.log("useEffect: fetchedColumns updated", fetchedColumns);
-      setColumns(fetchedColumns);
-      const allTasks = fetchedColumns.flatMap((col) =>
-        col.tasks.map((task) => ({ ...task, columnId: col.id }))
-      );
-      setTasks(allTasks);
-    }
-  }, [fetchedColumns]);
+  // Effect to sync columns when fetchedColumns changes
+  // Removed: Handled by processedData useMemo and useEffect above
+
 
   // Save collapsed state to localStorage whenever it changes
   useEffect(() => {

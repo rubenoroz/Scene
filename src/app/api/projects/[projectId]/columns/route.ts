@@ -19,30 +19,6 @@ export async function GET(
     const columns = await prisma.column.findMany({
       where: { projectId },
       orderBy: { order: "asc" },
-      include: {
-        tasks: {
-          orderBy: { order: "asc" },
-          include: {
-            children: {
-              include: {
-                children: {
-                  include: {
-                    children: {
-                      include: {
-                        children: {
-                          include: {
-                            children: true, // 5th level
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
     });
 
     return NextResponse.json(columns);

@@ -1936,3 +1936,21 @@ Import trace:
     ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
     ./src/app/projects/[id]/page.tsx [Client Component Browser]
     ./src/app/projects/[id]/page.tsx [Server Component]
+[01:14:21.648] Browser ERROR   ./src/components/kanban/KanbanBoard.tsx:305:6
+Parsing ecmascript source code failed
+  303 |       default:
+  304 |         return tasks;
+> 305 |     }, [tasks, activeFilter, customFilterCriteria, session?.user?.id]);
+      |      ^
+  306 |
+  307 |   // Effect to sync columns when fetchedColumns changes
+  308 |   // Removed: Handled by processedData useMemo and useEffect above
+
+Expression expected
+
+Import trace:
+  Client Component Browser:
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+[01:14:44.442] Server  LOG      ✓ Compiled in 512ms
