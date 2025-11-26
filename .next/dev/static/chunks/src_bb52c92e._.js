@@ -6566,8 +6566,8 @@ function KanbanBoard({ projectId }) {
                                 "KanbanBoard.useEffect.fetchProjectUsers": (u)=>u.user
                             }["KanbanBoard.useEffect.fetchProjectUsers"]));
                         }
-                    } catch (error1) {
-                        console.error("Error fetching project users:", error1);
+                    } catch (error) {
+                        console.error("Error fetching project users:", error);
                     }
                 }
             }["KanbanBoard.useEffect.fetchProjectUsers"];
@@ -7106,8 +7106,8 @@ function KanbanBoard({ projectId }) {
                     console.log("onDragEnd: Task moved successfully on server");
                     // Revalidate to ensure consistency with server
                     mutate();
-                } catch (error1) {
-                    console.error("onDragEnd: Error moving task", error1);
+                } catch (error) {
+                    console.error("onDragEnd: Error moving task", error);
                     // Revert optimistic update on error
                     mutate();
                     alert("An error occurred while moving the task.");
@@ -7143,8 +7143,8 @@ function KanbanBoard({ projectId }) {
                 } else {
                     console.error("Failed to add column");
                 }
-            } catch (error1) {
-                console.error("Error adding column:", error1);
+            } catch (error) {
+                console.error("Error adding column:", error);
             }
         }
     };
@@ -7187,8 +7187,8 @@ function KanbanBoard({ projectId }) {
                     setTasks(originalTasks); // Revert on failure
                     alert("Failed to create task.");
                 }
-            } catch (error1) {
-                console.error("Error adding task:", error1);
+            } catch (error) {
+                console.error("Error adding task:", error);
                 setTasks(originalTasks); // Revert on error
                 alert("Error creating task.");
             }
@@ -7214,8 +7214,8 @@ function KanbanBoard({ projectId }) {
                 } else {
                     console.error("Failed to edit column name");
                 }
-            } catch (error1) {
-                console.error("Error editing column name:", error1);
+            } catch (error) {
+                console.error("Error editing column name:", error);
             }
         }
     };
@@ -7246,10 +7246,10 @@ function KanbanBoard({ projectId }) {
                 alert("Failed to update column color.");
             }
         // No need to call mutate() on success as we already updated optimistically
-        } catch (error1) {
+        } catch (error) {
             // Revert on error
             setColumns(originalColumns);
-            console.error("Error updating column color:", error1);
+            console.error("Error updating column color:", error);
             alert("An error occurred while updating the color.");
         }
     };
@@ -7266,8 +7266,8 @@ function KanbanBoard({ projectId }) {
                 } else {
                     console.error("Failed to delete column");
                 }
-            } catch (error1) {
-                console.error("Error deleting column:", error1);
+            } catch (error) {
+                console.error("Error deleting column:", error);
             }
         }
     };
@@ -7312,9 +7312,9 @@ function KanbanBoard({ projectId }) {
                 setTasks(originalTasks);
                 console.error("Failed to update progress");
             }
-        } catch (error1) {
+        } catch (error) {
             setTasks(originalTasks);
-            console.error("Error updating progress:", error1);
+            console.error("Error updating progress:", error);
         }
     };
     const handleToggleGanttVisibility = async (taskId)=>{
@@ -7350,9 +7350,9 @@ function KanbanBoard({ projectId }) {
             }
             // No need to mutate immediately if optimistic update works, but good for consistency
             mutate();
-        } catch (error1) {
+        } catch (error) {
             setTasks(originalTasks);
-            console.error("Error updating Gantt visibility:", error1);
+            console.error("Error updating Gantt visibility:", error);
         }
     };
     const handleExportExcel = ()=>{
@@ -7417,12 +7417,12 @@ function KanbanBoard({ projectId }) {
         selectedTaskId,
         mutate
     ]);
-    if (error) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    if (columnsError || tasksError) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         children: "Failed to load kanban board."
     }, void 0, false, {
         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
         lineNumber: 926,
-        columnNumber: 21
+        columnNumber: 42
     }, this);
     const activeTaskContent = activeItem?.data.current?.type === "Task" ? tasks.find((t)=>t.id === activeItem.id) : null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {

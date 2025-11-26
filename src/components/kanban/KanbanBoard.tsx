@@ -923,7 +923,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
   }, [selectedTaskId, mutate]);
 
 
-  if (error) return <div>Failed to load kanban board.</div>;
+  if (columnsError || tasksError) return <div>Failed to load kanban board.</div>;
 
   const activeTaskContent = activeItem?.data.current?.type === "Task"
     ? tasks.find(t => t.id === activeItem.id)
