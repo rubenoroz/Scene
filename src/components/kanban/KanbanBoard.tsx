@@ -324,7 +324,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       if (!task.parentId) return true;
 
       // Check if any ancestor is collapsed AND in the same column
-      let currentParentId = task.parentId;
+      let currentParentId: string | null | undefined = task.parentId;
       while (currentParentId) {
         const parent = tasks.find(t => t.id === currentParentId);
         if (!parent) break;
