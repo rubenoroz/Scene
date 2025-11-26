@@ -53,7 +53,7 @@ export async function POST(
         }
 
         // 2. Create new project
-        const newProject = await prisma.$transaction(async (tx: PrismaClient) => {
+        const newProject = await prisma.$transaction(async (tx) => {
             const project = await tx.project.create({
                 data: {
                     name: `Copy of ${sourceProject.name}`,
