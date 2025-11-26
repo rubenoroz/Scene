@@ -50,7 +50,8 @@ type FetchedTask = {
   assignees?: { id: string; name: string | null; email: string | null; image: string | null }[];
   endDate?: string | null;
   progress?: number;
-  isArchived?: boolean; // Add isArchived
+  isArchived?: boolean;
+  isHiddenInGantt?: boolean; // Add isHiddenInGantt
 };
 
 type FetchedColumn = {
@@ -751,6 +752,58 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     }
   };
 
+  const handleToggleGanttVisibility = async (taskId: string) => {
+    if (!can(PERMISSIONS.EDIT_ANY_TASK)) {
+      // Check if it's own task
+      const task = tasks.find(t => t.id === taskId);
+      const isOwnTask = task?.assignees?.some(a => a.id === session?.user?.id);
+      if (!isOwnTask && !can(PERMISSIONS.EDIT_OWN_TASK)) return;
+    }
+
+    const task = tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    const newIsHidden = !task.isHiddenInGantt;
+
+    // Optimistic update
+    const originalTasks = tasks;
+    const updatedTasks = tasks.map((t) =>
+      t.id === taskId ? { ...t, isHiddenInGantt: newIsHidden } : t
+    );
+    setTasks(updatedTasks);
+
+    try {
+      const response = await fetch(`/api/projects/${projectId}/tasks/${taskId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isHiddenInGantt: newIsHidden }),
+      });
+
+      if (!response.ok) {
+        setTasks(originalTasks);
+        console.error("Failed to update Gantt visibility");
+      }
+      // No need to mutate immediately if optimistic update works, but good for consistency
+      mutate();
+    } catch (error) {
+      setTasks(originalTasks);
+      console.error("Error updating Gantt visibility:", error);
+    }
+  };
+
+  // Global optimistic update handler for TaskDetailModal
+  const handleTaskUpdate = useCallback((updatedTaskData?: Partial<FetchedTask>) => {
+    if (updatedTaskData && selectedTaskId) {
+      setTasks((prevTasks) =>
+        prevTasks.map((t) =>
+          t.id === selectedTaskId ? { ...t, ...updatedTaskData } : t
+        )
+      );
+    }
+    // Always trigger a background revalidation
+    mutate();
+  }, [selectedTaskId, mutate]);
+
 
   if (error) return <div>Failed to load kanban board.</div>;
 
@@ -877,6 +930,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                             onToggleCollapse={toggleTaskCollapse}
                             onToggleHide={toggleTaskHide}
                             hiddenTasks={hiddenTasks}
+                            onToggleGanttVisibility={handleToggleGanttVisibility} // New prop
                           />
                         );
                       })}
@@ -938,7 +992,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
           key={selectedTask.id}
           task={selectedTask}
           onClose={handleCloseModal}
-          onTaskUpdate={mutate}
+          onTaskUpdate={handleTaskUpdate}
           availableUsers={projectUsers}
         />
       )}

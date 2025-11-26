@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { CheckSquare, Link2, ChevronDown, ChevronRight, Eye, EyeOff } from "lucide-react";
+import { CheckSquare, Link2, ChevronDown, ChevronRight, Eye, EyeOff, BarChart3 } from "lucide-react";
 
 const PRIORITY_COLORS = {
   LOW: "#D1FAE5",
@@ -33,6 +33,8 @@ export function Task({
   onToggleCollapse, // New prop
   isHidden = false, // New prop
   onToggleHide, // New prop
+  isHiddenInGantt = false, // New prop
+  onToggleGanttVisibility, // New prop
 }: {
   id: string;
   title: string;
@@ -50,6 +52,8 @@ export function Task({
   onToggleCollapse?: (taskId: string) => void; // New prop
   isHidden?: boolean; // New prop
   onToggleHide?: (taskId: string) => void; // New prop
+  isHiddenInGantt?: boolean; // New prop
+  onToggleGanttVisibility?: (taskId: string) => void; // New prop
 }) {
   const {
     attributes,
@@ -128,6 +132,20 @@ export function Task({
             title={isHidden ? "Mostrar tarea" : "Ocultar tarea temporalmente"}
           >
             {isHidden ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
+        )}
+
+        {/* Gantt Visibility Button */}
+        {onToggleGanttVisibility && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleGanttVisibility(id);
+            }}
+            className={`p-1 hover:bg-gray-200 rounded transition-colors flex-shrink-0 ${isHiddenInGantt ? 'text-red-500 opacity-100' : 'text-gray-400 hover:text-blue-600 opacity-0 group-hover:opacity-100'}`}
+            title={isHiddenInGantt ? "Mostrar en Gantt" : "Ocultar en Gantt"}
+          >
+            <BarChart3 size={16} className={isHiddenInGantt ? "opacity-50" : ""} />
           </button>
         )}
 

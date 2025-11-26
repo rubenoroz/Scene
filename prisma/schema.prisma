@@ -112,6 +112,14 @@ model Task {
   children Task[]  @relation("TaskHierarchy")
 
   isHiddenInGantt Boolean @default(false)
+
+  @@index([projectId])
+  @@index([columnId])
+  @@index([parentId])
+  @@index([order])
+  @@index([isHiddenInGantt])
+  @@index([startDate])
+  @@index([endDate])
 }
 
 

@@ -43,7 +43,7 @@ interface TaskDetailModalProps {
     isArchived?: boolean;
   } | null;
   onClose: () => void;
-  onTaskUpdate: () => void;
+  onTaskUpdate: (updatedTask?: any) => void;
   availableUsers: { id: string; name: string | null; email: string | null; image: string | null }[];
 }
 
@@ -503,7 +503,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ toleranceDate: newDate }),
                       });
-                      onTaskUpdate();
+                      onTaskUpdate({ toleranceDate: newDate });
                     } catch (error) {
                       console.error("Error updating tolerance date:", error);
                     }
@@ -526,7 +526,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ priority: "LOW" }),
                     });
-                    onTaskUpdate();
+                    onTaskUpdate({ priority: "LOW" });
                   } catch (error) {
                     console.error("Error updating priority:", error);
                   }
@@ -548,7 +548,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ priority: "MEDIUM" }),
                     });
-                    onTaskUpdate();
+                    onTaskUpdate({ priority: "MEDIUM" });
                   } catch (error) {
                     console.error("Error updating priority:", error);
                   }
@@ -570,7 +570,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ priority: "HIGH" }),
                     });
-                    onTaskUpdate();
+                    onTaskUpdate({ priority: "HIGH" });
                   } catch (error) {
                     console.error("Error updating priority:", error);
                   }
@@ -592,7 +592,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ priority: "URGENT" }),
                     });
-                    onTaskUpdate();
+                    onTaskUpdate({ priority: "URGENT" });
                   } catch (error) {
                     console.error("Error updating priority:", error);
                   }
@@ -668,7 +668,13 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify({ assignees: newAssignees }),
                             });
-                            onTaskUpdate();
+                            onTaskUpdate({ assignees: newAssignees }); // This might be tricky if we need full user objects, but ID might suffice for some views or we need to pass full objects if available. 
+                            // Actually, KanbanBoard uses FetchedTask which has assignees as objects. 
+                            // We are passing IDs here. This might break optimistic update if Kanban expects objects.
+                            // Let's check FetchedTask type. It expects objects.
+                            // We should pass the filtered list of objects if possible, or just trigger revalidate.
+                            // For removal, we can filter the current list.
+                            // onTaskUpdate({ assignees: task?.assignees?.filter(a => a.id !== assignee.id) });
                           } catch (error) {
                             console.error("Error removing assignee:", error);
                           }
@@ -726,7 +732,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ tags: newTags }),
                           });
-                          onTaskUpdate();
+                          onTaskUpdate({ tags: newTags });
                         } catch (error) {
                           console.error("Error removing tag:", error);
                         }
@@ -784,7 +790,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ tags: newTags }),
                     });
-                    onTaskUpdate();
+                    onTaskUpdate({ tags: newTags });
                   } catch (error) {
                     console.error("Error adding tag:", error);
                   }
@@ -863,7 +869,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ links: newLinks }),
                       });
-                      onTaskUpdate();
+                      onTaskUpdate({ links: newLinks });
                     } catch (error) {
                       console.error("Error adding link:", error);
                     }

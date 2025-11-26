@@ -28,6 +28,7 @@ interface ColumnProps {
   onToggleCollapse: (taskId: string) => void;
   hiddenTasks: Set<string>; // New prop
   onToggleHide: (taskId: string) => void; // New prop
+  onToggleGanttVisibility?: (taskId: string) => void; // New prop
 }
 
 export function Column({ id, title, color, cardColor, tasks, onEditName, onDelete, onCreateTask, onTaskClick, onColorChange, onProgressChange,
@@ -35,6 +36,7 @@ export function Column({ id, title, color, cardColor, tasks, onEditName, onDelet
   onToggleCollapse,
   hiddenTasks,
   onToggleHide,
+  onToggleGanttVisibility, // New prop
 }: ColumnProps) {
   const { setNodeRef: setDroppableNodeRef } = useDroppable({
     id,
@@ -175,6 +177,8 @@ export function Column({ id, title, color, cardColor, tasks, onEditName, onDelet
                 onToggleCollapse={onToggleCollapse}
                 isHidden={hiddenTasks.has(task.id)}
                 onToggleHide={onToggleHide}
+                isHiddenInGantt={task.isHiddenInGantt} // Pass isHiddenInGantt
+                onToggleGanttVisibility={onToggleGanttVisibility} // Pass handler
               />
             );
           })}

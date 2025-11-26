@@ -112,12 +112,15 @@ export async function POST(
       });
 
       // Shift all tasks after the insertion point down by 1
-      for (const task of tasksToShift) {
-        await prisma.task.update({
-          where: { id: task.id },
-          data: { order: task.order + 1 },
-        });
-      }
+      // Shift all tasks after the insertion point down by 1
+      await Promise.all(
+        tasksToShift.map((task) =>
+          prisma.task.update({
+            where: { id: task.id },
+            data: { order: task.order + 1 },
+          })
+        )
+      );
 
       // Place the new subtask right after the insertion point
       newOrder = insertAfterOrder + 1;
