@@ -257,6 +257,53 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
   // Fetch available users for assignment
 
 
+  const handleDuplicateTask = async () => {
+    if (!task) return;
+
+    if (!confirm("¿Duplicar esta tarea y todas sus subtareas?")) return;
+
+    try {
+      const response = await fetch(`/api/projects/${task.projectId}/tasks/${task.id}/duplicate`, {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        onTaskUpdate();
+        onClose();
+      } else {
+        alert("Error al duplicar la tarea");
+      }
+    } catch (error) {
+      console.error("Error duplicating task:", error);
+      alert("Error al duplicar la tarea");
+    }
+  };
+
+  const handleArchiveTask = async () => {
+    if (!task) return;
+
+    const action = task.isArchived ? "restaurar" : "archivar";
+    if (!confirm(`¿${action.charAt(0).toUpperCase() + action.slice(1)} esta tarea?`)) return;
+
+    try {
+      const response = await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isArchived: !task.isArchived }),
+      });
+
+      if (response.ok) {
+        onTaskUpdate();
+        onClose();
+      } else {
+        alert(`Error al ${action} la tarea`);
+      }
+    } catch (error) {
+      console.error(`Error ${action}ing task:`, error);
+      alert(`Error al ${action} la tarea`);
+    }
+  };
+
   const handleAddSubtask = async () => {
     if (!subtaskTitle.trim() || !task) return;
 
@@ -314,12 +361,36 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
       >
         <div className="modal-header flex justify-between items-center pb-4 border-b border-gray-200 mb-6 cursor-move -mt-[10px]">
           <h2 className="text-2xl font-bold text-[#0F172A]">{task.title}</h2>
-          <button
-            onClick={onClose}
-            className="modal-close-btn"
-          >
-            <X size={16} stroke="white" fill="white" />
-          </button>
+          <div className="flex items-center gap-2">
+            {/* Duplicate button - only for admins/managers */}
+            {can(PERMISSIONS.MANAGE_PROJECT) && (
+              <>
+                <button
+                  onClick={handleDuplicateTask}
+                  className="px-3 py-1.5 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+                  title="Duplicar tarea"
+                >
+                  Duplicar
+                </button>
+                <button
+                  onClick={handleArchiveTask}
+                  className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${task.isArchived
+                    ? "bg-green-100 text-green-700 hover:bg-green-200"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
+                  title={task.isArchived ? "Restaurar tarea" : "Archivar tarea"}
+                >
+                  {task.isArchived ? "Restaurar" : "Archivar"}
+                </button>
+              </>
+            )}
+            <button
+              onClick={onClose}
+              className="modal-close-btn"
+            >
+              <X size={16} stroke="white" fill="white" />
+            </button>
+          </div>
         </div>
         <div className="modal-body overflow-y-auto max-h-[60vh] space-y-6 mt-[5px]">
           <div>
@@ -546,13 +617,13 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
               <button
                 id="gantt-toggle"
                 onClick={handleToggleGanttVisibility}
-                className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors ${isHidden ? 'bg-gray-300' : 'bg-blue-500'
-                  }`}
+                className={`relative inline - flex items - center h - 6 rounded - full w - 11 transition - colors ${isHidden ? 'bg-gray-300' : 'bg-blue-500'
+                  } `}
                 disabled={!canEdit}
               >
                 <span
-                  className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform ${isHidden ? 'translate-x-1' : 'translate-x-6'
-                    }`}
+                  className={`inline - block w - 4 h - 4 transform bg - white rounded - full transition - transform ${isHidden ? 'translate-x-1' : 'translate-x-6'
+                    } `}
                 />
               </button>
             </div>
@@ -831,7 +902,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                       }
                     }}
                   />
-                  <span className={`flex-1 ${item.completed ? 'line-through text-gray-500' : 'text-gray-700'}`}>
+                  <span className={`flex - 1 ${item.completed ? 'line-through text-gray-500' : 'text-gray-700'} `}>
                     {item.text}
                   </span>
                   <button
@@ -988,7 +1059,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                 if (!subtasks || subtasks.length === 0) return [];
 
                 return subtasks.map((subtask) => (
-                  <li key={subtask.id} style={{ marginLeft: `${depth * 16}px` }} className="text-gray-700 flex items-start gap-2 leading-relaxed">
+                  <li key={subtask.id} style={{ marginLeft: `${depth * 16} px` }} className="text-gray-700 flex items-start gap-2 leading-relaxed">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
                     <div className="flex-1">
                       <div className="flex justify-between items-center">
@@ -1041,7 +1112,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                       <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                         <div
                           className="bg-blue-500 h-1.5 rounded-full"
-                          style={{ width: `${subtask.progress || 0}%` }}
+                          style={{ width: `${subtask.progress || 0}% ` }}
                         ></div>
                       </div>
                     </div>
@@ -1117,7 +1188,7 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
               <button
                 className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
                 onClick={async () => {
-                  if (confirm(`¿Estás seguro de que quieres eliminar "${task.title}"?${task.children && task.children.length > 0 ? ' Esto también eliminará todas sus subtareas.' : ''}`)) {
+                  if (confirm(`¿Estás seguro de que quieres eliminar "${task.title}" ? ${task.children && task.children.length > 0 ? ' Esto también eliminará todas sus subtareas.' : ''} `)) {
                     try {
                       const response = await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
                         method: "DELETE",

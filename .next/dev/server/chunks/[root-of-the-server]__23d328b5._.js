@@ -56,14 +56,20 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/@prisma/client [external] (@prisma/client, cjs)");
 ;
-// Force reload for schema changes
+// Optimized for serverless environments (Vercel + Supabase)
 const prismaClientSingleton = ()=>{
-    return new __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$29$__["PrismaClient"]();
+    return new __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$29$__["PrismaClient"]({
+        log: ("TURBOPACK compile-time truthy", 1) ? [
+            'error',
+            'warn'
+        ] : "TURBOPACK unreachable",
+        datasources: {
+            db: {
+                url: process.env.DATABASE_URL
+            }
+        }
+    });
 };
-// Workaround: Force new client instance to pick up schema changes in dev
-if ("TURBOPACK compile-time truthy", 1) {
-    globalThis.prisma = undefined;
-}
 const prisma = globalThis.prisma ?? prismaClientSingleton();
 const __TURBOPACK__default__export__ = prisma;
 if ("TURBOPACK compile-time truthy", 1) globalThis.prisma = prisma;
@@ -296,6 +302,11 @@ const PERMISSIONS = {
         'PROJECT_MANAGER',
         'ARTIST'
     ],
+    MOVE_OWN_TASK: [
+        'ADMIN',
+        'PROJECT_MANAGER',
+        'ARTIST'
+    ],
     DELETE_TASK: [
         'ADMIN',
         'PROJECT_MANAGER'
@@ -437,7 +448,12 @@ async function PUT(req, { params }) {
         const isOwnTask = currentTask.assignees.some((a)=>a.id === session.user.id);
         const canEditAny = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["hasPermission"])(userRole, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["PERMISSIONS"].EDIT_ANY_TASK);
         const canEditOwn = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["hasPermission"])(userRole, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["PERMISSIONS"].EDIT_OWN_TASK) && isOwnTask;
-        if (!canEditAny && !canEditOwn) {
+        const canMoveOwn = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["hasPermission"])(userRole, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["PERMISSIONS"].MOVE_OWN_TASK) && isOwnTask;
+        // Special case: if only moving task (columnId or order), check MOVE_OWN_TASK
+        const isOnlyMoving = (columnId !== undefined || order !== undefined) && !title && !description && !assignees && !startDate && !endDate && !toleranceDate && !links && !attachments && !images && !tags && !priority && !checklist && !color && !isHiddenInGantt && !progress;
+        if (isOnlyMoving && !canEditAny && canMoveOwn) {
+        // Allow Artists to move their own tasks
+        } else if (!canEditAny && !canEditOwn) {
             // If trying to assign users, check ASSIGN_TASK permission specifically
             if (assignees && !(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["hasPermission"])(userRole, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["PERMISSIONS"].ASSIGN_TASK)) {
                 return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
@@ -462,9 +478,16 @@ async function PUT(req, { params }) {
         if (columnId !== undefined) updateData.columnId = columnId;
         if (order !== undefined) updateData.order = order;
         if (parentId !== undefined) updateData.parentId = parentId;
-        if (startDate !== undefined) updateData.startDate = startDate;
-        if (endDate !== undefined) updateData.endDate = endDate;
-        if (toleranceDate !== undefined) updateData.toleranceDate = toleranceDate;
+        // Handle dates - convert strings to Date objects if needed
+        if (startDate !== undefined) {
+            updateData.startDate = startDate ? new Date(startDate) : null;
+        }
+        if (endDate !== undefined) {
+            updateData.endDate = endDate ? new Date(endDate) : null;
+        }
+        if (toleranceDate !== undefined) {
+            updateData.toleranceDate = toleranceDate ? new Date(toleranceDate) : null;
+        }
         if (links !== undefined) updateData.links = links;
         if (attachments !== undefined) updateData.attachments = attachments;
         if (images !== undefined) updateData.images = images;
@@ -473,7 +496,7 @@ async function PUT(req, { params }) {
         if (checklist !== undefined) updateData.checklist = checklist;
         if (color !== undefined) updateData.color = color;
         if (isHiddenInGantt !== undefined) updateData.isHiddenInGantt = isHiddenInGantt;
-        if (progress !== undefined) updateData.progress = progress; // Add progress
+        if (progress !== undefined) updateData.progress = progress;
         // Si solo se envía color o isHiddenInGantt, permite actualizar solo esos campos
         if (Object.keys(updateData).length === 1 && (updateData.color !== undefined || updateData.isHiddenInGantt !== undefined) && assignees === undefined) {
             const updatedTask = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.update({
@@ -638,12 +661,30 @@ async function DELETE(req, { params }) {
                 status: 403
             });
         }
-        await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.delete({
-            where: {
-                id: taskId,
-                projectId
+        // Recursive function to delete all descendants
+        async function deleteTaskAndDescendants(taskId) {
+            // Get all children
+            const children = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.findMany({
+                where: {
+                    parentId: taskId
+                },
+                select: {
+                    id: true
+                }
+            });
+            // Recursively delete children first
+            for (const child of children){
+                await deleteTaskAndDescendants(child.id);
             }
-        });
+            // Delete the task itself
+            await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.delete({
+                where: {
+                    id: taskId
+                }
+            });
+        }
+        // Start recursive deletion
+        await deleteTaskAndDescendants(taskId);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             message: "Task deleted"
         }, {

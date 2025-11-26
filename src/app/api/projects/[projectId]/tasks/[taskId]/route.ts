@@ -251,9 +251,27 @@ export async function DELETE(
       return NextResponse.json({ message: "Forbidden" }, { status: 403 });
     }
 
-    await prisma.task.delete({
-      where: { id: taskId, projectId },
-    });
+    // Recursive function to delete all descendants
+    async function deleteTaskAndDescendants(taskId: string) {
+      // Get all children
+      const children = await prisma.task.findMany({
+        where: { parentId: taskId },
+        select: { id: true }
+      });
+
+      // Recursively delete children first
+      for (const child of children) {
+        await deleteTaskAndDescendants(child.id);
+      }
+
+      // Delete the task itself
+      await prisma.task.delete({
+        where: { id: taskId },
+      });
+    }
+
+    // Start recursive deletion
+    await deleteTaskAndDescendants(taskId);
 
     return NextResponse.json({ message: "Task deleted" }, { status: 200 });
   } catch (error) {

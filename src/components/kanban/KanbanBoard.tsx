@@ -27,7 +27,7 @@ import { usePermissions } from "@/hooks/usePermissions";
 import { PERMISSIONS } from "@/lib/permissions";
 import { ProjectSettings } from "../project/ProjectSettings";
 import { GanttChart } from "../gantt/GanttChart";
-import { Settings, X, BarChart3 } from "lucide-react";
+import { Settings, X, BarChart3, Eye, EyeOff, Archive } from "lucide-react";
 
 interface KanbanBoardProps {
   projectId: string;
@@ -49,7 +49,8 @@ type FetchedTask = {
   attachments?: string | null;
   assignees?: { id: string; name: string | null; email: string | null; image: string | null }[];
   endDate?: string | null;
-  progress?: number; // Add progress
+  progress?: number;
+  isArchived?: boolean; // Add isArchived
 };
 
 type FetchedColumn = {
@@ -85,6 +86,28 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
   const [activeFilter, setActiveFilter] = useState<FilterType | string>("all");
   const [customFilterCriteria, setCustomFilterCriteria] = useState<FilterCriteria | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  // Collapsed tasks state - persisted in localStorage
+  const [collapsedTasks, setCollapsedTasks] = useState<Set<string>>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(`collapsed-tasks-${projectId}`);
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    }
+    return new Set();
+  });
+
+  // Hidden tasks state - persisted in localStorage
+  const [hiddenTasks, setHiddenTasks] = useState<Set<string>>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(`hidden-tasks-${projectId}`);
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    }
+    return new Set();
+    return new Set();
+  });
+  const [showHiddenTasks, setShowHiddenTasks] = useState(false);
+  const [showArchivedTasks, setShowArchivedTasks] = useState(false); // New state for archived tasks
+
   const [projectUsers, setProjectUsers] = useState<{ id: string; name: string | null; email: string | null; image: string | null }[]>([]);
   const [viewMode, setViewMode] = useState<'kanban' | 'gantt'>('kanban');
 
@@ -232,6 +255,90 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       setTasks(allTasks);
     }
   }, [fetchedColumns]);
+
+  // Save collapsed state to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(
+        `collapsed-tasks-${projectId}`,
+        JSON.stringify(Array.from(collapsedTasks))
+      );
+    }
+  }, [collapsedTasks, projectId]);
+
+  // Toggle collapse state for a task
+  const toggleTaskCollapse = (taskId: string) => {
+    setCollapsedTasks(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(taskId)) {
+        newSet.delete(taskId);
+      } else {
+        newSet.add(taskId);
+      }
+      return newSet;
+    });
+  };
+
+  // Save hidden state to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(
+        `hidden-tasks-${projectId}`,
+        JSON.stringify(Array.from(hiddenTasks))
+      );
+    }
+  }, [hiddenTasks, projectId]);
+
+  // Toggle hidden state for a task
+  const toggleTaskHide = (taskId: string) => {
+    setHiddenTasks(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(taskId)) {
+        newSet.delete(taskId);
+      } else {
+        newSet.add(taskId);
+      }
+      return newSet;
+    });
+  };
+
+  // Filter out subtasks of collapsed parent tasks (only if in same column) AND archived tasks AND hidden tasks
+  const visibleTasks = useMemo(() => {
+    return tasks.filter(task => {
+      // Handle archived tasks
+      if (task.isArchived) {
+        return showArchivedTasks; // Only show if toggle is on
+      }
+      // If showing archived tasks, hide non-archived ones? No, usually show both or toggle view.
+      // Let's assume "Show Archived" adds them to the view or switches view.
+      // User asked "where can I view archived", so maybe a toggle "View Archived" is best.
+      // If showArchivedTasks is true, maybe ONLY show archived tasks? Or show mixed?
+      // Common pattern: "Archived" is a separate filter/view.
+      // Let's make it so if showArchivedTasks is true, we ONLY show archived tasks.
+      if (showArchivedTasks) return false;
+
+      // Hide temporarily hidden tasks (unless showHiddenTasks is true)
+      if (!showHiddenTasks && hiddenTasks.has(task.id)) return false;
+
+      // If task has no parent, it's always visible (unless archived/hidden)
+      if (!task.parentId) return true;
+
+      // Check if any ancestor is collapsed AND in the same column
+      let currentParentId = task.parentId;
+      while (currentParentId) {
+        const parent = tasks.find(t => t.id === currentParentId);
+        if (!parent) break;
+
+        // Only hide if parent is collapsed AND task is in same column as parent
+        if (collapsedTasks.has(currentParentId) && task.columnId === parent.columnId) {
+          return false; // Hide if parent is collapsed and in same column
+        }
+
+        currentParentId = parent.parentId || null;
+      }
+      return true;
+    });
+  }, [tasks, collapsedTasks, hiddenTasks, showHiddenTasks, showArchivedTasks]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -451,33 +558,32 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
         }
       });
 
-      // Update backend
+      // Update server in background
       try {
         const response = await fetch(`/api/projects/${projectId}/tasks/${activeId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ columnId: newColumnId, order: newOrder }),
         });
-
         if (!response.ok) {
-          const errorData = await response.json();
-          console.error("onDragEnd: Failed to move task", errorData);
-          // Revert optimistic update
+          console.error("onDragEnd: Failed to move task on server");
+          // Revert optimistic update on failure
           mutate();
-          alert(`Failed to move task: ${errorData.message || "Unknown error"}`);
+          alert("Failed to move task. Please try again.");
           return;
         }
-        console.log("onDragEnd: Task moved successfully, calling mutate()");
-        mutate(); // Re-mutate to refetch and ensure state consistency
+        console.log("onDragEnd: Task moved successfully on server");
+        // Revalidate to ensure consistency with server
+        mutate();
       } catch (error) {
         console.error("onDragEnd: Error moving task", error);
+        // Revert optimistic update on error
         mutate();
         alert("An error occurred while moving the task.");
       }
       return;
     }
-    console.log("onDragEnd: No valid drag operation, calling mutate()");
-    mutate(); // If nothing moved or dropped outside, re-mutate to ensure consistency
+    console.log("onDragEnd: No valid drag operation");
   }, [columns, tasks, projectId, mutate]);
 
   // Function to add a new column
@@ -675,6 +781,28 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                 availableColumns={columns.map(col => ({ id: col.id, name: col.name }))}
               />
             </div>
+            {/* Show Archived Tasks Toggle */}
+            <Button
+              onClick={() => setShowArchivedTasks(!showArchivedTasks)}
+              variant="ghost"
+              size="sm"
+              className={`bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showArchivedTasks ? 'bg-amber-50 text-amber-600 border-amber-200' : ''}`}
+              title={showArchivedTasks ? "Volver a tareas activas" : "Ver tareas archivadas"}
+            >
+              <Archive className="w-4 h-4 mr-2" />
+              {showArchivedTasks ? "Activas" : "Archivadas"}
+            </Button>
+            {/* Show Hidden Tasks Toggle */}
+            <Button
+              onClick={() => setShowHiddenTasks(!showHiddenTasks)}
+              variant="ghost"
+              size="sm"
+              className={`bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showHiddenTasks ? 'bg-blue-50 text-blue-600 border-blue-200' : ''}`}
+              title={showHiddenTasks ? "Ocultar tareas escondidas" : "Mostrar tareas escondidas"}
+            >
+              {showHiddenTasks ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
+              {showHiddenTasks ? "Ocultar" : "Mostrar"}
+            </Button>
             <Button
               onClick={() => setViewMode(viewMode === 'kanban' ? 'gantt' : 'kanban')}
               variant="ghost"
@@ -729,7 +857,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                     <div className="flex gap-4 h-full">
                       {columns.map((col) => {
                         // Filter tasks for this column
-                        const columnTasks = filteredTasks.filter(task => task.columnId === col.id).sort((a, b) => a.order - b.order);
+                        const columnTasks = visibleTasks.filter(task => task.columnId === col.id && filteredTasks.includes(task)).sort((a, b) => a.order - b.order);
 
                         return (
                           <Column
@@ -745,6 +873,10 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                             onTaskClick={handleTaskClick}
                             onColorChange={handleColorChange}
                             onProgressChange={handleProgressChange} // Pass handler
+                            collapsedTasks={collapsedTasks}
+                            onToggleCollapse={toggleTaskCollapse}
+                            onToggleHide={toggleTaskHide}
+                            hiddenTasks={hiddenTasks}
                           />
                         );
                       })}

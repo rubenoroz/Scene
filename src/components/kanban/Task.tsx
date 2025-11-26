@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { CheckSquare, Link2 } from "lucide-react";
+import { CheckSquare, Link2, ChevronDown, ChevronRight, Eye, EyeOff } from "lucide-react";
 
 const PRIORITY_COLORS = {
   LOW: "#D1FAE5",
@@ -29,6 +29,10 @@ export function Task({
   cardColor, // New prop
   progress, // New prop
   onProgressChange, // New prop
+  isCollapsed = false, // New prop
+  onToggleCollapse, // New prop
+  isHidden = false, // New prop
+  onToggleHide, // New prop
 }: {
   id: string;
   title: string;
@@ -42,6 +46,10 @@ export function Task({
   cardColor?: string; // New prop
   progress?: number; // New prop
   onProgressChange?: (taskId: string, newProgress: number) => void; // New prop
+  isCollapsed?: boolean; // New prop
+  onToggleCollapse?: (taskId: string) => void; // New prop
+  isHidden?: boolean; // New prop
+  onToggleHide?: (taskId: string) => void; // New prop
 }) {
   const {
     attributes,
@@ -75,7 +83,7 @@ export function Task({
       {...attributes}
       {...listeners}
       onClick={onClick ? () => onClick(id) : undefined}
-      className={`card p-4 rounded-lg shadow-sm transition-all duration-300 ease-out hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] ${isDragging ? "dragging shadow-2xl scale-105" : ""}`}
+      className={`card p-4 rounded-lg shadow-sm transition-all duration-300 ease-out hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] group ${isDragging ? "dragging shadow-2xl scale-105" : ""}`}
     >
       {/* Priority Badge */}
       {priority && (
@@ -90,12 +98,46 @@ export function Task({
         </div>
       )}
 
-      <h3
-        className="text-sm font-medium text-gray-800 truncate"
-        title={title}
-      >
-        {title}
-      </h3>
+      {/* Chevron button for tasks with subtasks */}
+      <div className="flex items-center gap-2">
+        {subtasksCount > 0 && onToggleCollapse && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleCollapse(id);
+            }}
+            className="p-1 hover:bg-gray-200 rounded transition-colors flex-shrink-0"
+            title={isCollapsed ? "Expandir subtareas" : "Colapsar subtareas"}
+          >
+            {isCollapsed ? (
+              <ChevronRight size={16} className="text-gray-600" />
+            ) : (
+              <ChevronDown size={16} className="text-gray-600" />
+            )}
+          </button>
+        )}
+
+        {/* Hide Button */}
+        {onToggleHide && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleHide(id);
+            }}
+            className={`p-1 hover:bg-gray-200 rounded transition-colors flex-shrink-0 ${isHidden ? 'text-blue-600 opacity-100' : 'text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100'}`}
+            title={isHidden ? "Mostrar tarea" : "Ocultar tarea temporalmente"}
+          >
+            {isHidden ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
+        )}
+
+        <h3
+          className="text-sm font-medium text-gray-800 truncate flex-1"
+          title={title}
+        >
+          {title}
+        </h3>
+      </div>
 
       {/* Metadata Row */}
       <div className="flex items-center gap-2 mt-2 flex-wrap">
@@ -188,8 +230,8 @@ export function Task({
             if (onProgressChange) onProgressChange(id, 100);
           }}
           className={`p-1 rounded-full transition-all duration-200 hover:scale-110 active:scale-95 ${progress === 100
-              ? "text-green-600 bg-green-100 hover:bg-green-200 shadow-sm"
-              : "text-gray-400 hover:text-green-600 hover:bg-gray-100"
+            ? "text-green-600 bg-green-100 hover:bg-green-200 shadow-sm"
+            : "text-gray-400 hover:text-green-600 hover:bg-gray-100"
             }`}
           title="Marcar como completada"
         >

@@ -56,14 +56,20 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/@prisma/client [external] (@prisma/client, cjs)");
 ;
-// Force reload for schema changes
+// Optimized for serverless environments (Vercel + Supabase)
 const prismaClientSingleton = ()=>{
-    return new __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$29$__["PrismaClient"]();
+    return new __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$29$__["PrismaClient"]({
+        log: ("TURBOPACK compile-time truthy", 1) ? [
+            'error',
+            'warn'
+        ] : "TURBOPACK unreachable",
+        datasources: {
+            db: {
+                url: process.env.DATABASE_URL
+            }
+        }
+    });
 };
-// Workaround: Force new client instance to pick up schema changes in dev
-if ("TURBOPACK compile-time truthy", 1) {
-    globalThis.prisma = undefined;
-}
 const prisma = globalThis.prisma ?? prismaClientSingleton();
 const __TURBOPACK__default__export__ = prisma;
 if ("TURBOPACK compile-time truthy", 1) globalThis.prisma = prisma;
@@ -214,10 +220,18 @@ const authOptions = {
                 session.user.isSuperAdmin = token.isSuperAdmin; // Assign isSuperAdmin from the token
             }
             return session;
+        },
+        async redirect ({ url, baseUrl }) {
+            // Redirect to dashboard after successful login
+            if (url.startsWith(baseUrl)) {
+                return url;
+            }
+            // Default redirect to dashboard
+            return `${baseUrl}/dashboard`;
         }
     },
     pages: {
-        signIn: '/'
+        signIn: '/login'
     },
     secret: process.env.NEXTAUTH_SECRET,
     debug: ("TURBOPACK compile-time value", "development") === 'development'

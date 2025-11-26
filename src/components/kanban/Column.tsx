@@ -23,10 +23,19 @@ interface ColumnProps {
   onCreateTask: (columnId: string) => void;
   onTaskClick: (taskId: string) => void;
   onColorChange: (columnId: string, newColumnColor: string, newCardColor: string) => void;
-  onProgressChange: (taskId: string, newProgress: number) => void; // New prop
+  onProgressChange: (taskId: string, newProgress: number) => void;
+  collapsedTasks: Set<string>;
+  onToggleCollapse: (taskId: string) => void;
+  hiddenTasks: Set<string>; // New prop
+  onToggleHide: (taskId: string) => void; // New prop
 }
 
-export function Column({ id, title, color, cardColor, tasks, onEditName, onDelete, onCreateTask, onTaskClick, onColorChange, onProgressChange }: ColumnProps) {
+export function Column({ id, title, color, cardColor, tasks, onEditName, onDelete, onCreateTask, onTaskClick, onColorChange, onProgressChange,
+  collapsedTasks,
+  onToggleCollapse,
+  hiddenTasks,
+  onToggleHide,
+}: ColumnProps) {
   const { setNodeRef: setDroppableNodeRef } = useDroppable({
     id,
     data: {
@@ -161,7 +170,11 @@ export function Column({ id, title, color, cardColor, tasks, onEditName, onDelet
                 checklist={task.checklist ? JSON.parse(task.checklist) : []}
                 cardColor={cardColor}
                 progress={task.progress} // Pass progress
-                onProgressChange={onProgressChange} // Pass handler
+                onProgressChange={onProgressChange}
+                isCollapsed={collapsedTasks.has(task.id)}
+                onToggleCollapse={onToggleCollapse}
+                isHidden={hiddenTasks.has(task.id)}
+                onToggleHide={onToggleHide}
               />
             );
           })}
