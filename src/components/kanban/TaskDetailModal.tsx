@@ -40,6 +40,7 @@ interface TaskDetailModalProps {
     color?: string; // optional custom color
     isHiddenInGantt?: boolean;
     progress?: number; // Add progress
+    isArchived?: boolean;
   } | null;
   onClose: () => void;
   onTaskUpdate: () => void;
