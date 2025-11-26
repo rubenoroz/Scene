@@ -231,8 +231,12 @@ export function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }: GanttC
     const flatTasks = useMemo(() => {
         const result: (GanttTask & { level: number })[] = [];
         const taskMap = new Map(tasksWithDates.map(t => [t.id, t]));
+        const processedIds = new Set<string>();
 
         const flatten = (task: GanttTask, level: number) => {
+            if (processedIds.has(task.id)) return;
+            processedIds.add(task.id);
+
             result.push({ ...task, level });
             if (task.children) {
                 task.children.forEach(childRef => {
@@ -244,8 +248,12 @@ export function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }: GanttC
             }
         };
 
-        const topLevelTasks = tasksWithDates.filter(task => !task.parentId);
-        topLevelTasks.forEach(task => flatten(task, 0));
+        // Identify roots: tasks with no parent OR parent not in the map (orphaned)
+        const roots = tasksWithDates.filter(task =>
+            !task.parentId || !taskMap.has(task.parentId)
+        );
+
+        roots.forEach(task => flatten(task, 0));
 
         return result;
     }, [tasksWithDates]);

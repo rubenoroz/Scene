@@ -5931,8 +5931,11 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                         t
                     ]
             }["GanttChart.useMemo[flatTasks]"]));
+            const processedIds = new Set();
             const flatten = {
                 "GanttChart.useMemo[flatTasks].flatten": (task, level)=>{
+                    if (processedIds.has(task.id)) return;
+                    processedIds.add(task.id);
                     result.push({
                         ...task,
                         level
@@ -5949,10 +5952,11 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                     }
                 }
             }["GanttChart.useMemo[flatTasks].flatten"];
-            const topLevelTasks = tasksWithDates.filter({
-                "GanttChart.useMemo[flatTasks].topLevelTasks": (task)=>!task.parentId
-            }["GanttChart.useMemo[flatTasks].topLevelTasks"]);
-            topLevelTasks.forEach({
+            // Identify roots: tasks with no parent OR parent not in the map (orphaned)
+            const roots = tasksWithDates.filter({
+                "GanttChart.useMemo[flatTasks].roots": (task)=>!task.parentId || !taskMap.has(task.parentId)
+            }["GanttChart.useMemo[flatTasks].roots"]);
+            roots.forEach({
                 "GanttChart.useMemo[flatTasks]": (task)=>flatten(task, 0)
             }["GanttChart.useMemo[flatTasks]"]);
             return result;
@@ -5971,7 +5975,7 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                         children: "No hay tareas con fechas configuradas"
                     }, void 0, false, {
                         fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                        lineNumber: 257,
+                        lineNumber: 265,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5979,18 +5983,18 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                         children: "Agrega fechas de inicio y fin a tus tareas para verlas en el Gantt"
                     }, void 0, false, {
                         fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                        lineNumber: 258,
+                        lineNumber: 266,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                lineNumber: 256,
+                lineNumber: 264,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/components/gantt/GanttChart.tsx",
-            lineNumber: 255,
+            lineNumber: 263,
             columnNumber: 13
         }, this);
     }
@@ -6005,7 +6009,7 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                         children: "Tarea"
                     }, void 0, false, {
                         fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                        lineNumber: 268,
+                        lineNumber: 276,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6019,18 +6023,18 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                                 children: month.label
                             }, idx, false, {
                                 fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                lineNumber: 273,
+                                lineNumber: 281,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                        lineNumber: 271,
+                        lineNumber: 279,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                lineNumber: 267,
+                lineNumber: 275,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6054,7 +6058,7 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                                         children: "└"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                        lineNumber: 302,
+                                        lineNumber: 310,
                                         columnNumber: 37
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -6062,13 +6066,13 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                                         children: task.title
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                        lineNumber: 304,
+                                        lineNumber: 312,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                lineNumber: 296,
+                                lineNumber: 304,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6091,7 +6095,7 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                                                     title: "Arrastrar para cambiar fecha de inicio"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                                    lineNumber: 322,
+                                                    lineNumber: 330,
                                                     columnNumber: 45
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6100,7 +6104,7 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                                                     children: task.title
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                                    lineNumber: 329,
+                                                    lineNumber: 337,
                                                     columnNumber: 45
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6109,13 +6113,13 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                                                     title: "Arrastrar para cambiar fecha de fin"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                                    lineNumber: 337,
+                                                    lineNumber: 345,
                                                     columnNumber: 45
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                            lineNumber: 316,
+                                            lineNumber: 324,
                                             columnNumber: 41
                                         }, this);
                                     })(),
@@ -6132,41 +6136,41 @@ function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }) {
                                                 className: "w-1 h-full bg-red-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                                lineNumber: 357,
+                                                lineNumber: 365,
                                                 columnNumber: 45
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                            lineNumber: 356,
+                                            lineNumber: 364,
                                             columnNumber: 41
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                        lineNumber: 348,
+                                        lineNumber: 356,
                                         columnNumber: 37
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                                lineNumber: 310,
+                                lineNumber: 318,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, task.id, true, {
                         fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                        lineNumber: 291,
+                        lineNumber: 299,
                         columnNumber: 25
                     }, this);
                 })
             }, void 0, false, {
                 fileName: "[project]/src/components/gantt/GanttChart.tsx",
-                lineNumber: 285,
+                lineNumber: 293,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/gantt/GanttChart.tsx",
-        lineNumber: 265,
+        lineNumber: 273,
         columnNumber: 9
     }, this);
 }
