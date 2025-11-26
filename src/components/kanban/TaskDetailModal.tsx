@@ -168,6 +168,9 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
 
   // Rich fields state
   const [priority, setPriority] = useState<string>(task?.priority || "MEDIUM");
+  const [startDate, setStartDate] = useState<string | null>(task?.startDate || null);
+  const [endDate, setEndDate] = useState<string | null>(task?.endDate || null);
+  const [toleranceDate, setToleranceDate] = useState<string | null>(task?.toleranceDate || null);
   const [tags, setTags] = useState<{ name: string, color: string }[]>(
     task?.tags ? JSON.parse(task.tags) : []
   );
@@ -353,17 +356,29 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                 <input
                   type="date"
                   className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
-                  value={task.startDate ? new Date(task.startDate).toISOString().split('T')[0] : ''}
+                  value={startDate ? new Date(startDate).toISOString().split('T')[0] : ''}
                   onChange={async (e) => {
                     const newDate = e.target.value || null;
+                    const previousDate = startDate;
+
+                    // Optimistic update
+                    setStartDate(newDate);
+
                     try {
-                      await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
+                      const response = await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ startDate: newDate }),
                       });
-                      onTaskUpdate();
+                      if (response.ok) {
+                        onTaskUpdate();
+                      } else {
+                        // Revert on failure
+                        setStartDate(previousDate);
+                      }
                     } catch (error) {
+                      // Revert on error
+                      setStartDate(previousDate);
                       console.error("Error updating start date:", error);
                     }
                   }}
@@ -374,17 +389,29 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
                 <input
                   type="date"
                   className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
-                  value={task.endDate ? new Date(task.endDate).toISOString().split('T')[0] : ''}
+                  value={endDate ? new Date(endDate).toISOString().split('T')[0] : ''}
                   onChange={async (e) => {
                     const newDate = e.target.value || null;
+                    const previousDate = endDate;
+
+                    // Optimistic update
+                    setEndDate(newDate);
+
                     try {
-                      await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
+                      const response = await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ endDate: newDate }),
                       });
-                      onTaskUpdate();
+                      if (response.ok) {
+                        onTaskUpdate();
+                      } else {
+                        // Revert on failure
+                        setEndDate(previousDate);
+                      }
                     } catch (error) {
+                      // Revert on error
+                      setEndDate(previousDate);
                       console.error("Error updating end date:", error);
                     }
                   }}

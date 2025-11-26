@@ -58,8 +58,17 @@ export async function PUT(
 
     const canEditAny = hasPermission(userRole, PERMISSIONS.EDIT_ANY_TASK);
     const canEditOwn = hasPermission(userRole, PERMISSIONS.EDIT_OWN_TASK) && isOwnTask;
+    const canMoveOwn = hasPermission(userRole, PERMISSIONS.MOVE_OWN_TASK) && isOwnTask;
 
-    if (!canEditAny && !canEditOwn) {
+    // Special case: if only moving task (columnId or order), check MOVE_OWN_TASK
+    const isOnlyMoving = (columnId !== undefined || order !== undefined) &&
+      !title && !description && !assignees && !startDate && !endDate &&
+      !toleranceDate && !links && !attachments && !images && !tags &&
+      !priority && !checklist && !color && !isHiddenInGantt && !progress;
+
+    if (isOnlyMoving && !canEditAny && canMoveOwn) {
+      // Allow Artists to move their own tasks
+    } else if (!canEditAny && !canEditOwn) {
       // If trying to assign users, check ASSIGN_TASK permission specifically
       if (assignees && !hasPermission(userRole, PERMISSIONS.ASSIGN_TASK)) {
         return NextResponse.json({ message: "Forbidden" }, { status: 403 });

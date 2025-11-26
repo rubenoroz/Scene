@@ -38,7 +38,7 @@ interface ProjectUser {
 
 export function ProjectSettings({ projectId }: ProjectSettingsProps) {
     const { data: session } = useSession();
-    const { can } = usePermissions(projectId);
+    const { can, isLoading: permissionsLoading } = usePermissions(projectId);
     const [users, setUsers] = useState<ProjectUser[]>([]);
     const [loading, setLoading] = useState(true);
     const [inviteEmail, setInviteEmail] = useState("");
@@ -143,11 +143,15 @@ export function ProjectSettings({ projectId }: ProjectSettingsProps) {
         }
     };
 
+    // Check loading states first
+    if (loading || permissionsLoading) {
+        return <div className="p-4">Loading...</div>;
+    }
+
+    // Check permissions after loading
     if (!can(PERMISSIONS.MANAGE_PROJECT)) {
         return <div className="p-4">You do not have permission to view project settings.</div>;
     }
-
-    if (loading) return <div>Loading users...</div>;
 
     return (
         <div className="space-y-8">

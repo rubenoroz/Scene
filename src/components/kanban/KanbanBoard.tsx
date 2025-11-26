@@ -69,7 +69,12 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
   const { can } = usePermissions(projectId);
   const { data: fetchedColumns, error, mutate } = useSWR<FetchedColumn[]>(
     `/api/projects/${projectId}/columns`,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: true, // Refresh when user returns to tab
+      revalidateOnReconnect: true, // Refresh when internet reconnects
+      refreshInterval: 10000, // Poll every 10 seconds for real-time updates
+    }
   );
 
   const [columns, setColumns] = useState<FetchedColumn[]>([]);
@@ -693,7 +698,10 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                   <Settings className="w-4 h-4 mr-2" />
                   Settings
                 </Button>
-                <Button onClick={handleAddColumn} className="btn-primary">Add Column</Button>
+                {/* Add Column Button - Only for Managers */}
+                {can(PERMISSIONS.MANAGE_PROJECT) && (
+                  <Button onClick={handleAddColumn} className="btn-primary">Add Column</Button>
+                )}
               </>
             )}
           </div>
