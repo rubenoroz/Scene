@@ -27,7 +27,8 @@ import { usePermissions } from "@/hooks/usePermissions";
 import { PERMISSIONS } from "@/lib/permissions";
 import { ProjectSettings } from "../project/ProjectSettings";
 import { GanttChart } from "../gantt/GanttChart";
-import { Settings, X, BarChart3, Eye, EyeOff, Archive, Printer } from "lucide-react";
+import { Settings, X, BarChart3, Eye, EyeOff, Archive, Printer, FileSpreadsheet } from "lucide-react";
+import { exportToExcel } from "@/lib/excel";
 
 interface KanbanBoardProps {
   projectId: string;
@@ -791,6 +792,50 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     }
   };
 
+  const handleExportExcel = () => {
+    // Prepare data for export
+    // We need to flatten the tasks same way Gantt does to preserve order/hierarchy if possible
+    // Or just use the filteredTasks directly.
+    // Let's use filteredTasks but we need to calculate levels if we want indentation.
+
+    // Actually, let's reuse the flattening logic from GanttChart if we can, 
+    // but that's inside GanttChart. 
+    // For now, let's just export the flat list of filtered tasks.
+    // We can try to reconstruct hierarchy if needed, but flat list is often better for Excel.
+    // However, the utility supports 'level'.
+
+    // Let's do a simple hierarchy calculation here
+    const taskMap = new Map(filteredTasks.map(t => [t.id, t]));
+    const processedIds = new Set<string>();
+    const exportData: any[] = [];
+
+    const processTask = (task: FetchedTask, level: number) => {
+      if (processedIds.has(task.id)) return;
+      processedIds.add(task.id);
+
+      exportData.push({ ...task, level });
+
+      if (task.children) {
+        task.children.forEach(child => {
+          // The children in 'task.children' might not be the full objects if not eager loaded deep enough,
+          // but filteredTasks should have them.
+          // Actually, filteredTasks is a flat array.
+          // We need to find the child in filteredTasks to get its full data.
+          const fullChild = taskMap.get(child.id);
+          if (fullChild) {
+            processTask(fullChild, level + 1);
+          }
+        });
+      }
+    };
+
+    // Find roots in the filtered set
+    const roots = filteredTasks.filter(t => !t.parentId || !taskMap.has(t.parentId));
+    roots.forEach(t => processTask(t, 0));
+
+    exportToExcel(exportData, columns, "Proyecto");
+  };
+
   // Global optimistic update handler for TaskDetailModal
   const handleTaskUpdate = useCallback((updatedTaskData?: Partial<FetchedTask>) => {
     if (updatedTaskData && selectedTaskId) {
@@ -878,6 +923,18 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
               >
                 <Printer className="w-4 h-4 mr-2" />
                 Imprimir
+              </Button>
+            )}
+            {viewMode === 'gantt' && (
+              <Button
+                onClick={handleExportExcel}
+                variant="ghost"
+                size="sm"
+                className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+                title="Descargar Excel"
+              >
+                <FileSpreadsheet className="w-4 h-4 mr-2" />
+                Excel
               </Button>
             )}
             {can(PERMISSIONS.MANAGE_PROJECT) && (

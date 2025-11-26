@@ -109,3 +109,7 @@ Import trace:
 [00:06:13.775] Server  LOG     Session Callback - Session: {}
 [00:06:13.777] Server  LOG     Session Callback - Token: {}
 [00:14:31.094] Server  LOG      ✓ Compiled in 827ms
+[00:18:16.635] Server  LOG     JWT Callback - Token: {}
+[00:18:16.636] Server  LOG     JWT Callback - User: undefined
+[00:18:16.638] Server  LOG     Session Callback - Session: {}
+[00:18:16.655] Server  LOG     Session Callback - Token: {}
