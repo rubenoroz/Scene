@@ -3211,3 +3211,119 @@ Invalid value for argument `endDate`: premature end of input. Expected ISO-8601 
 Error: PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in ``).
 If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report
 [25:41:58.411] Server  LOG      ✓ Compiled in 1560ms
+[25:49:02.674] Server  WARN    [next-auth][warn][DEBUG_ENABLED] "\nhttps://next-auth.js.org/warnings#debug_enabled"
+[25:49:02.680] Server  WARN    [next-auth][warn][DEBUG_ENABLED] "\nhttps://next-auth.js.org/warnings#debug_enabled"
+[25:49:02.687] Server  LOG     JWT Callback - Token: {}
+[25:49:02.688] Server  LOG     JWT Callback - User: undefined
+[25:49:02.690] Server  LOG     Session Callback - Session: {}
+[25:49:02.728] Server  LOG     Session Callback - Token: {}
+[25:49:02.730] Server  LOG     JWT Callback - Token: {}
+[25:49:02.730] Server  LOG     JWT Callback - User: undefined
+[25:49:02.730] Server  LOG     Session Callback - Session: {}
+[25:49:02.741] Server  LOG     Session Callback - Token: {}
+[25:49:03.083] Server  WARN    [next-auth][warn][DEBUG_ENABLED] "\nhttps://next-auth.js.org/warnings#debug_enabled"
+[25:49:03.090] Server  LOG     JWT Callback - Token: {}
+[25:49:03.090] Server  LOG     JWT Callback - User: undefined
+[25:49:03.090] Server  LOG     Session Callback - Session: {}
+[25:49:03.090] Server  LOG     Session Callback - Token: {}
+[25:49:03.099] Server  LOG     [Role Check] User: cmictuju30000bc4sqzswqrr8, Project: cmictvb480003bc4sjtzuqwlj
+[25:49:03.113] Server  LOG     [Role Check] Resolved Role: ADMIN
+[25:49:12.614] Server  WARN    [next-auth][warn][DEBUG_ENABLED] "\nhttps://next-auth.js.org/warnings#debug_enabled"
+[25:49:12.618] Server  LOG     JWT Callback - Token: {}
+[25:49:12.618] Server  LOG     JWT Callback - User: undefined
+[25:49:12.618] Server  LOG     Session Callback - Session: {}
+[25:49:12.618] Server  LOG     Session Callback - Token: {}
+[25:49:12.807] Server  ERROR   Error updating task: PrismaClientValidationError: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.update()` invocation in
+/Users/rubenoroz/scena-v1/.next/dev/server/chunks/[root-of-the-server]__23d328b5._.js:541:172
+
+  538         }
+  539     });
+  540 } else {
+→ 541     updatedTask = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.update({
+            where: {
+              id: "cmictyzif000jbc4sr62krtni",
+              projectId: "cmictvb480003bc4sjtzuqwlj"
+            },
+            data: {
+              endDate: "2026-04-17"
+                       ~~~~~~~~~~~~
+            }
+          })
+
+Invalid value for argument `endDate`: premature end of input. Expected ISO-8601 DateTime.
+[25:49:14.200] Server  LOG     JWT Callback - Token: {}
+[25:49:14.201] Server  LOG     JWT Callback - User: undefined
+[25:49:14.201] Server  LOG     Session Callback - Session: {}
+[25:49:14.201] Server  LOG     Session Callback - Token: {}
+[25:49:14.347] Server  ERROR   Error updating task: PrismaClientValidationError: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.update()` invocation in
+/Users/rubenoroz/scena-v1/.next/dev/server/chunks/[root-of-the-server]__23d328b5._.js:541:172
+
+  538         }
+  539     });
+  540 } else {
+→ 541     updatedTask = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.update({
+            where: {
+              id: "cmictyzif000jbc4sr62krtni",
+              projectId: "cmictvb480003bc4sjtzuqwlj"
+            },
+            data: {
+              endDate: "2026-05-04"
+                       ~~~~~~~~~~~~
+            }
+          })
+
+Invalid value for argument `endDate`: premature end of input. Expected ISO-8601 DateTime.
+[25:49:18.619] Server  LOG     JWT Callback - Token: {}
+[25:49:18.619] Server  LOG     JWT Callback - User: undefined
+[25:49:18.620] Server  LOG     Session Callback - Session: {}
+[25:49:18.620] Server  LOG     Session Callback - Token: {}
+[25:49:18.762] Server  ERROR   Error updating task: PrismaClientValidationError: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.update()` invocation in
+/Users/rubenoroz/scena-v1/.next/dev/server/chunks/[root-of-the-server]__23d328b5._.js:541:172
+
+  538         }
+  539     });
+  540 } else {
+→ 541     updatedTask = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].task.update({
+            where: {
+              id: "cmictyzif000jbc4sr62krtni",
+              projectId: "cmictvb480003bc4sjtzuqwlj"
+            },
+            data: {
+              endDate: "2026-04-12"
+                       ~~~~~~~~~~~~
+            }
+          })
+
+Invalid value for argument `endDate`: premature end of input. Expected ISO-8601 DateTime.
+[25:56:56.628] Server  LOG     JWT Callback - Token: {}
+[25:56:56.628] Server  LOG     JWT Callback - User: undefined
+[25:56:56.631] Server  LOG     Session Callback - Session: {}
+[25:56:56.631] Server  LOG     Session Callback - Token: {}
+[25:56:56.633] Server  LOG     JWT Callback - Token: {}
+[25:56:56.633] Server  LOG     JWT Callback - User: undefined
+[25:56:56.634] Server  LOG     Session Callback - Session: {}
+[25:56:56.634] Server  LOG     Session Callback - Token: {}
+[25:56:56.853] Server  LOG     JWT Callback - Token: {}
+[25:56:56.853] Server  LOG     JWT Callback - User: undefined
+[25:56:56.853] Server  LOG     Session Callback - Session: {}
+[25:56:56.854] Server  LOG     Session Callback - Token: {}
+[25:56:56.855] Server  LOG     [Role Check] User: cmictuju30000bc4sqzswqrr8, Project: cmictvb480003bc4sjtzuqwlj
+[25:56:56.864] Server  LOG     [Role Check] Resolved Role: ADMIN
+[25:56:58.502] Server  LOG     JWT Callback - Token: {}
+[25:56:58.503] Server  LOG     JWT Callback - User: undefined
+[25:56:58.503] Server  LOG     Session Callback - Session: {}
+[25:56:58.503] Server  LOG     Session Callback - Token: {}
+[25:56:58.504] Server  LOG     [Role Check] User: cmictuju30000bc4sqzswqrr8, Project: cmictvb480003bc4sjtzuqwlj
+[25:56:58.507] Server  LOG     [Role Check] Resolved Role: ADMIN
+[25:56:58.518] Server  LOG     JWT Callback - Token: {}
+[25:56:58.519] Server  LOG     JWT Callback - User: undefined
+[25:56:58.519] Server  LOG     Session Callback - Session: {}
+[25:56:58.519] Server  LOG     Session Callback - Token: {}
+[25:56:58.520] Server  LOG     [Role Check] User: cmictuju30000bc4sqzswqrr8, Project: cmictvb480003bc4sjtzuqwlj
+[25:56:58.522] Server  LOG     [Role Check] Resolved Role: ADMIN
+[25:56:58.539] Browser LOG     Task clicked: cmictwsi6000dbc4sytia3pju
+[25:56:58.539] Browser LOG     isModalOpen set to true
+[25:57:04.774] Browser LOG     Modal closed

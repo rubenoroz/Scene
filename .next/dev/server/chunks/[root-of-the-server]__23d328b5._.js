@@ -214,10 +214,18 @@ const authOptions = {
                 session.user.isSuperAdmin = token.isSuperAdmin; // Assign isSuperAdmin from the token
             }
             return session;
+        },
+        async redirect ({ url, baseUrl }) {
+            // Redirect to dashboard after successful login
+            if (url.startsWith(baseUrl)) {
+                return url;
+            }
+            // Default redirect to dashboard
+            return `${baseUrl}/dashboard`;
         }
     },
     pages: {
-        signIn: '/'
+        signIn: '/login'
     },
     secret: process.env.NEXTAUTH_SECRET,
     debug: ("TURBOPACK compile-time value", "development") === 'development'

@@ -77,9 +77,18 @@ export async function PUT(
     if (columnId !== undefined) updateData.columnId = columnId;
     if (order !== undefined) updateData.order = order;
     if (parentId !== undefined) updateData.parentId = parentId;
-    if (startDate !== undefined) updateData.startDate = startDate;
-    if (endDate !== undefined) updateData.endDate = endDate;
-    if (toleranceDate !== undefined) updateData.toleranceDate = toleranceDate;
+
+    // Handle dates - convert strings to Date objects if needed
+    if (startDate !== undefined) {
+      updateData.startDate = startDate ? new Date(startDate) : null;
+    }
+    if (endDate !== undefined) {
+      updateData.endDate = endDate ? new Date(endDate) : null;
+    }
+    if (toleranceDate !== undefined) {
+      updateData.toleranceDate = toleranceDate ? new Date(toleranceDate) : null;
+    }
+
     if (links !== undefined) updateData.links = links;
     if (attachments !== undefined) updateData.attachments = attachments;
     if (images !== undefined) updateData.images = images;
@@ -88,7 +97,7 @@ export async function PUT(
     if (checklist !== undefined) updateData.checklist = checklist;
     if (color !== undefined) updateData.color = color;
     if (isHiddenInGantt !== undefined) updateData.isHiddenInGantt = isHiddenInGantt;
-    if (progress !== undefined) updateData.progress = progress; // Add progress
+    if (progress !== undefined) updateData.progress = progress;
 
     // Si solo se envía color o isHiddenInGantt, permite actualizar solo esos campos
     if (
