@@ -1,0 +1,205 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Core Models for Scena
+
+model Workspace {
+  id            String          @id @default(cuid())
+  name          String
+  users         User[]          @relation("WorkspaceUsers")
+  workspaceUsers WorkspaceUser[]
+  projects      Project[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model WorkspaceUser {
+  id          String    @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        String    @default("ARTIST") // ADMIN, PROJECT_MANAGER, ARTIST, VIEWER
+  createdAt   DateTime  @default(now())
+  
+  @@unique([workspaceId, userId])
+}
+
+
+model Project {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  owner       User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId     String
+  tasks       Task[]
+  columns     Column[]
+  filters     Filter[]
+  projectUsers ProjectUser[]
+  invitations Invitation[]
+  isArchived  Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model ProjectUser {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String   @default("ARTIST") // PROJECT_MANAGER, ARTIST, VIEWER
+  createdAt DateTime @default(now())
+  
+  @@unique([projectId, userId])
+}
+
+model Column {
+  id          String   @id @default(cuid())
+  name        String
+  color       String?  @default("#E0F7FA")
+  cardColor   String?  @default("#FFFFFF")
+  order       Int      @default(0)
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String
+  tasks       Task[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  // status      String   @default("PENDING") // Removed, as columnId now defines "status"
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String
+  column      Column   @relation(fields: [columnId], references: [id], onDelete: Cascade) // New relation to Column
+  columnId    String   // New field
+  order       Int      @default(0) // Display order within a column
+  assignees   User[]   @relation("TaskAssignees")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Date fields for Gantt chart
+  startDate      DateTime?
+  endDate        DateTime?
+  toleranceDate  DateTime?
+
+  color       String?  // Optional custom color for the task (hex)
+  links          String?  // JSON array of {title: string, url: string}
+  attachments    String?  // JSON array of {name: string, url: string, size: number, uploadedAt: string}
+  images         String?  // JSON array of {name: string, url: string, uploadedAt: string}
+  tags           String?  // JSON array of {name: string, color: string}
+  priority       String?  @default("MEDIUM") // LOW, MEDIUM, HIGH, URGENT
+  checklist      String?  // JSON array of {id: string, text: string, completed: boolean}
+  progress       Int      @default(0) // Percentage 0-100
+
+  // For hierarchical tasks (subtasks)
+  parentId String?
+  parent   Task?   @relation("TaskHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children Task[]  @relation("TaskHierarchy")
+
+  isHiddenInGantt Boolean @default(false)
+}
+
+
+// Next-Auth Models
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPERADMIN
+}
+
+model User {
+  id            String       @id @default(cuid())
+  name          String?
+  email         String?      @unique
+  emailVerified DateTime?
+  hashedPassword String?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  tasks         Task[]       @relation("TaskAssignees")
+  workspaces    Workspace[]  @relation("WorkspaceUsers")
+  workspaceUsers WorkspaceUser[]
+  projects      Project[]
+  projectUsers  ProjectUser[]
+  filters       Filter[]     // User's saved filters
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  role          Role         @default(USER) // Add this field
+}
+
+model Filter {
+  id          String   @id @default(cuid())
+  name        String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  criteria    String   // JSON with filter criteria
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Invitation {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  role      String   @default("ARTIST")
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([email, projectId])
+}

@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "Task" ADD COLUMN "attachments" TEXT;
+ALTER TABLE "Task" ADD COLUMN "checklist" TEXT;
+ALTER TABLE "Task" ADD COLUMN "images" TEXT;
+ALTER TABLE "Task" ADD COLUMN "links" TEXT;
+ALTER TABLE "Task" ADD COLUMN "priority" TEXT DEFAULT 'MEDIUM';
+ALTER TABLE "Task" ADD COLUMN "tags" TEXT;

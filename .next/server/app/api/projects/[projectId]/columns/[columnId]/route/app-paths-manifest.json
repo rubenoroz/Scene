@@ -1,0 +1,3 @@
+{
+  "/api/projects/[projectId]/columns/[columnId]/route": "app/api/projects/[projectId]/columns/[columnId]/route.js"
+}

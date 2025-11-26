@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Task" ADD COLUMN "endDate" DATETIME;
+ALTER TABLE "Task" ADD COLUMN "startDate" DATETIME;
+ALTER TABLE "Task" ADD COLUMN "toleranceDate" DATETIME;

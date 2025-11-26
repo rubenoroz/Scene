@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 248 250 252;
+    --foreground: 15 23 42;
+
+    --card: 255 255 255;
+    --card-foreground: 15 23 42;
+
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
+
+    --primary: 37 99 235;
+    --primary-foreground: 255 255 255;
+
+    --secondary: 241 245 249;
+    --secondary-foreground: 15 23 42;
+
+    --muted: 241 245 249;
+    --muted-foreground: 100 116 139;
+
+    --accent: 241 245 249;
+    --accent-foreground: 15 23 42;
+
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
+
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 37 99 235;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 2 6 23;
+    --foreground: 248 250 252;
+
+    --card: 2 6 23;
+    --card-foreground: 248 250 252;
+
+    --popover: 2 6 23;
+    --popover-foreground: 248 250 252;
+
+    --primary: 37 99 235;
+    --primary-foreground: 255 255 255;
+
+    --secondary: 30 41 59;
+    --secondary-foreground: 248 250 252;
+
+    --muted: 30 41 59;
+    --muted-foreground: 148 163 184;
+
+    --accent: 30 41 59;
+    --accent-foreground: 248 250 252;
+
+    --destructive: 127 29 29;
+    --destructive-foreground: 248 250 252;
+
+    --border: 30 41 59;
+    --input: 30 41 59;
+    --ring: 37 99 235;
+  }
+}
+
+@layer base {
+  * {
+    border-color: rgb(var(--border));
+  }
+
+  body {
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+  }
+}
+
+/* === GLOBAL STYLES === */
+
+html,
+body {
+  height: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background: #F8FAFC;
+}
+
+/* === HEADER === */
+
+.header {
+  width: 100%;
+  background: #1E293B;
+  padding: 16px 24px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: #2563EB;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background: #3B82F6;
+}
+
+/* === KANBAN LAYOUT === */
+
+.kanban {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* === COLUMN === */
+
+.column {
+  width: 280px;
+  background: #E6EEF8;
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.column-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* === CARD === */
+
+.card {
+  background: #FFFFFF;
+  /* Reverted to white background color for task cards */
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: 0.15s ease;
+  color: #0F172A;
+  /* Added for text visibility */
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+}
+
+/* Estado seleccionado / activo */
+.card.active {
+  background: #BFDBFE;
+  border-color: #93C5FD;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+}
+
+/* Dragging */
+.card.dragging {
+  transform: scale(1.03);
+  opacity: 0.9;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.2);
+}
+
+/* === MODAL === */
+
+.task-detail-modal {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #E2E8F0;
+  max-width: 32rem;
+  /* max-w-lg */
+  width: 100%;
+  padding: 32px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #EF4444;
+  border: 1px solid white;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.modal-close-btn:hover {
+  background-color: #DC2626;
+}

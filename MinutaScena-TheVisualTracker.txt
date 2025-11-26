@@ -1,0 +1,148 @@
+  Minuta de Proyecto: Scena - The Visual Tracker
+
+  Fecha: 14 de noviembre de 2025
+
+  Estado Actual del Proyecto:
+  El proyecto se encuentra en una fase de desarrollo inicial con la arquitectura base establecida y
+  componentes clave implementados. Sin embargo, el progreso está actualmente bloqueado por un problema de
+  configuración del entorno de desarrollo local del usuario, que impide el correcto funcionamiento del
+  enrutamiento dinámico de Next.js y el procesamiento de CSS.
+
+  ---
+
+  1. Requisitos de Instalación del Entorno de Desarrollo (IMPRESCINDIBLE)
+
+  Para poder desarrollar y ejecutar el proyecto "Scena", es CRÍTICO que el entorno de desarrollo local
+  funcione correctamente. Esto incluye:
+
+   * Node.js y npm:
+       * Versión: Se recomienda la última versión LTS (Long-Term Support) de Node.js.
+       * Gestor de Versiones (Recomendado): nvm (Node Version Manager) para una gestión limpia y flexible de las
+         versiones de Node.js.
+       * Verificación: node -v y npm -v deben mostrar las versiones instaladas y no "command not found".
+       * Problema Actual: El entorno del usuario presenta un problema persistente donde Next.js no resuelve
+         correctamente las rutas dinámicas de la API ni aplica los estilos CSS, incluso después de una
+         reinstalación de Node.js. Este problema debe ser resuelto antes de continuar con el desarrollo.
+
+   * Dependencias del Proyecto (se instalarán con `npm install`):
+       * next: Framework de React.
+       * react, react-dom: Librerías de React.
+       * prisma, @prisma/client: ORM para la base de datos.
+       * next-auth, @auth/prisma-adapter: Autenticación.
+       * bcryptjs: Para hashing de contraseñas.
+       * dotenv-cli: Para cargar variables de entorno.
+       * @dnd-kit/core, @dnd-kit/sortable: Librería para funcionalidad de arrastrar y soltar (Kanban).
+       * next-themes: Para gestión de temas (modo oscuro).
+       * tailwindcss, postcss, autoprefixer: Para estilos CSS.
+       * typescript: Para tipado estático.
+       * eslint, eslint-config-next: Para linting de código.
+
+  ---
+
+  2. Características Implementadas y Pendientes (Visión General)
+
+  El proyecto "Scena" es una aplicación web de gestión visual de proyectos multi-tenant, inspirada en
+  ShotGrid.
+
+   * Características Implementadas (hasta el último estado funcional):
+       * Autenticación: Registro de usuarios, inicio de sesión, protección de rutas con next-auth y Prisma
+         Adapter.
+       * Multi-tenant: Soporte para Workspaces (aunque la interfaz para gestionarlos aún no está completa).
+       * Base de Datos: Esquema de Prisma con modelos para Workspaces, Users, Projects, Tasks.
+       * Interfaz de Usuario (UI/UX):
+           * Diseño moderno con Tailwind CSS y soporte para modo oscuro (next-themes).
+           * Header global con información de usuario y selector de tema.
+           * Página de inicio (login/registro).
+           * Dashboard: Vista general de proyectos del usuario, con tarjetas de proyecto y botón para crear
+             nuevos proyectos.
+           * Página de Detalle de Proyecto: Vista específica de un proyecto, con botón para crear nuevas tareas.
+           * Tablero Kanban: Implementado con dnd-kit para visualizar y gestionar tareas por estado.
+       * API Routes: Endpoints para registro, creación de proyectos, creación de tareas y actualización de
+         estado de tareas.
+
+   * Características Pendientes (Bloqueadas por el problema de entorno):
+       * Funcionalidad de Arrastrar y Soltar en Kanban: Actualmente no funciona debido al problema de
+         enrutamiento de la API.
+       * Implementación de Pie Chart para Dashboard.
+       * Implementación de Gantt Chart para Página de Detalle de Proyecto.
+       * Implementación de comentarios y gestión de activos para tareas.
+       * Implementación de tareas jerárquicas (sub-tareas) y agrupación de tareas.
+
+  ---
+
+  3. Workflow Detallado de Tareas, Subtareas y Etapas (Kanban Mejorado)
+
+  El sistema de gestión de tareas se basará en un tablero Kanban, pero con una estructura jerárquica y de
+  estados más rica, como se describe a continuación:
+
+   * Estados Principales de las Tareas (Columnas del Kanban):
+       1. Pendiente (To Do): Tareas que aún no han comenzado.
+       2. En Progreso (In Progress): Tareas que están siendo trabajadas activamente.
+       3. En Revisión (In Review): Tareas completadas que esperan aprobación o feedback.
+       4. Terminado (Done): Tareas que han sido aprobadas y finalizadas.
+
+   * Estructura Jerárquica de Tareas:
+       * Tarea Principal: La unidad de trabajo más grande dentro de un proyecto.
+       * Subtarea: Una división de una tarea principal. Una tarea principal puede tener múltiples subtareas.
+       * Sub-subtarea (o Elemento de Checklist/Asistencia): Una división de una subtarea. Estas son las unidades
+         más pequeñas y a menudo representan elementos de verificación o "asistencias" que deben ser completadas
+         por diferentes roles.
+
+   * Etapas de Producción (Aplicables a Tareas o Subtareas):
+  Dentro de cada tarea o subtarea, se pueden definir "etapas" que representan fases del proceso de producción.
+  Estas etapas no son estados del Kanban, sino un progreso interno de la tarea.
+
+       * Ejemplo de Workflow de Producción (como lo describiste):
+
+          Proyecto: "Comercial de Producto X"
+
+          Tarea Principal: "Producción de Contenido Audiovisual" (Estado: En Progreso)
+           * Subtarea: "Fase de Pre-producción" (Estado: Terminado)
+               * Guion Finalizado
+               * Locaciones Aprobadas
+               * Casting Completo
+           * Subtarea: "Fase de Producción" (Estado: En Progreso)
+               * Sub-subtarea (Entrevista): "Entrevista con Fulano" (Estado: En Progreso)
+                   * Asistencias/Elementos:
+                       * Fotografía a Cámara (Completado: Sí/No)
+                       * Entrevistador (Completado: Sí/No)
+                       * Audio (Completado: Sí/No)
+                       * Continuidad/Data Manager (Completado: Sí/No)
+                       * Asistentes de Producción (Completado: Sí/No)
+                   * Criterio de Completado de "Entrevista con Fulano": Esta sub-subtarea se considera
+                     "Terminada" solo cuando todas sus asistencias/elementos han sido marcados como completados.
+               * Sub-subtarea (Entrevista): "Entrevista con Sutanito" (Estado: Pendiente)
+                   * Fotografía a Cámara (Completado: No)
+                   * Entrevistador (Completado: No)
+                   * Audio (Completado: No)
+                   * Continuidad/Data Manager (Completado: No)
+                   * Asistentes de Producción (Completado: No)
+               * Sub-subtarea: "Grabación de Voces en Off" (Estado: Pendiente)
+               * Sub-subtarea: "Conducciones" (Estado: Pendiente)
+               * Sub-subtarea: "Motion Graphics" (Estado: Pendiente)
+           * Subtarea: "Fase de Post-producción" (Estado: Pendiente)
+               * Edición de Video
+               * Corrección de Color
+               * Diseño de Sonido
+               * Entrega Final
+   * Consideraciones Adicionales para el Workflow:
+       * Progreso de Tareas: El progreso de una tarea principal o subtarea podría calcularse automáticamente en
+         función del número de sus subtareas/sub-subtareas completadas.
+       * Roles y Asignación: Cada sub-subtarea (asistencia) podría asignarse a un rol o usuario específico.
+       * Comentarios y Archivos: Posibilidad de añadir comentarios y adjuntar archivos a cualquier nivel de
+         tarea.
+
+  ---
+
+  Próximos Pasos (Una vez resuelto el problema de entorno):
+
+   1. Confirmar que un proyecto Next.js limpio funciona correctamente (enrutamiento dinámico y CSS).
+   2. Migrar el código base actual al nuevo entorno funcional.
+   3. Implementar la funcionalidad de arrastrar y soltar en el Kanban.
+   4. Comenzar a desarrollar las características pendientes, priorizando la implementación de la estructura
+      jerárquica de tareas y el workflow detallado.
+
+  ---
+
+  Espero que esta minuta sea clara y te sirva como guía. Por favor, tómate tu tiempo para revisar los pasos de
+  solución del entorno. Estoy aquí para cuando estés listo para continuar.
