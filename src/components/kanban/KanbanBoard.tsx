@@ -105,7 +105,6 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       return saved ? new Set(JSON.parse(saved)) : new Set();
     }
     return new Set();
-    return new Set();
   });
   const [showHiddenTasks, setShowHiddenTasks] = useState(false);
   const [showArchivedTasks, setShowArchivedTasks] = useState(false); // New state for archived tasks
@@ -304,6 +303,9 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     });
   };
 
+  // Memoize task map for O(1) lookup
+  const taskMap = useMemo(() => new Map(tasks.map(t => [t.id, t])), [tasks]);
+
   // Filter out subtasks of collapsed parent tasks (only if in same column) AND archived tasks AND hidden tasks
   const visibleTasks = useMemo(() => {
     return tasks.filter(task => {
@@ -311,12 +313,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       if (task.isArchived) {
         return showArchivedTasks; // Only show if toggle is on
       }
-      // If showing archived tasks, hide non-archived ones? No, usually show both or toggle view.
-      // Let's assume "Show Archived" adds them to the view or switches view.
-      // User asked "where can I view archived", so maybe a toggle "View Archived" is best.
-      // If showArchivedTasks is true, maybe ONLY show archived tasks? Or show mixed?
-      // Common pattern: "Archived" is a separate filter/view.
-      // Let's make it so if showArchivedTasks is true, we ONLY show archived tasks.
+      // If showing archived tasks, hide non-archived ones
       if (showArchivedTasks) return false;
 
       // Hide temporarily hidden tasks (unless showHiddenTasks is true)
@@ -328,7 +325,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       // Check if any ancestor is collapsed AND in the same column
       let currentParentId: string | null | undefined = task.parentId;
       while (currentParentId) {
-        const parent = tasks.find(t => t.id === currentParentId);
+        const parent = taskMap.get(currentParentId);
         if (!parent) break;
 
         // Only hide if parent is collapsed AND task is in same column as parent
@@ -340,7 +337,9 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       }
       return true;
     });
-  }, [tasks, collapsedTasks, hiddenTasks, showHiddenTasks, showArchivedTasks]);
+  }, [tasks, taskMap, collapsedTasks, hiddenTasks, showHiddenTasks, showArchivedTasks]);
+
+  const filteredTaskIds = useMemo(() => new Set(filteredTasks.map(t => t.id)), [filteredTasks]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -982,7 +981,9 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                     <div className="flex gap-4 h-full">
                       {columns.map((col) => {
                         // Filter tasks for this column
-                        const columnTasks = visibleTasks.filter(task => task.columnId === col.id && filteredTasks.includes(task)).sort((a, b) => a.order - b.order);
+                        const columnTasks = visibleTasks
+                          .filter(task => task.columnId === col.id && filteredTaskIds.has(task.id))
+                          .sort((a, b) => a.order - b.order);
 
                         return (
                           <Column
