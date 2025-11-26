@@ -165,7 +165,7 @@ export async function PUT(
       });
 
       // Calculate average progress
-      const totalProgress = siblings.reduce((sum: number, task) => sum + (task.progress || 0), 0);
+      const totalProgress = siblings.reduce((sum: number, task: { progress: number | null }) => sum + (task.progress || 0), 0);
       const averageProgress = Math.round(totalProgress / siblings.length);
 
       // Update parent task progress
