@@ -54,7 +54,7 @@ export async function PUT(
 
     // Check permissions
     const userRole = await getUserRoleInProject(session.user.id, projectId);
-    const isOwnTask = currentTask.assignees.some(a => a.id === session.user.id);
+    const isOwnTask = currentTask.assignees.some((a: { id: string }) => a.id === session.user.id);
 
     const canEditAny = hasPermission(userRole, PERMISSIONS.EDIT_ANY_TASK);
     const canEditOwn = hasPermission(userRole, PERMISSIONS.EDIT_OWN_TASK) && isOwnTask;
