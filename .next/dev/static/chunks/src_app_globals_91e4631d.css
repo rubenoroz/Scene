@@ -2683,6 +2683,44 @@ body {
   background-color: #dc2626;
 }
 
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .gantt-print-container, .gantt-print-container * {
+    visibility: visible;
+  }
+
+  .gantt-print-container {
+    background: #fff;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible !important;
+  }
+
+  .gantt-chart-wrapper {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .cursor-ew-resize, .cursor-pointer {
+    cursor: default !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .header, .sidebar, button {
+    display: none !important;
+  }
+}
+
 @property --tw-translate-x {
   syntax: "*";
   inherits: false;

@@ -212,3 +212,54 @@ body {
 .modal-close-btn:hover {
   background-color: #DC2626;
 }
+
+/* === PRINT STYLES === */
+@media print {
+
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Show only the Gantt chart and its children */
+  .gantt-print-container,
+  .gantt-print-container * {
+    visibility: visible;
+  }
+
+  /* Position the Gantt chart at the top left */
+  .gantt-print-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    overflow: visible !important;
+    background: white;
+  }
+
+  /* Hide scrollbars and ensure full width */
+  .gantt-chart-wrapper {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Hide interactive elements that don't make sense in print */
+  .cursor-ew-resize,
+  .cursor-pointer {
+    cursor: default !important;
+  }
+
+  /* Ensure colors are printed */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide the header and other UI elements explicitly if needed */
+  .header,
+  .sidebar,
+  button {
+    display: none !important;
+  }
+}

@@ -27,7 +27,7 @@ import { usePermissions } from "@/hooks/usePermissions";
 import { PERMISSIONS } from "@/lib/permissions";
 import { ProjectSettings } from "../project/ProjectSettings";
 import { GanttChart } from "../gantt/GanttChart";
-import { Settings, X, BarChart3, Eye, EyeOff, Archive } from "lucide-react";
+import { Settings, X, BarChart3, Eye, EyeOff, Archive, Printer } from "lucide-react";
 
 interface KanbanBoardProps {
   projectId: string;
@@ -868,6 +868,18 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
               <BarChart3 className="w-4 h-4 mr-2" />
               {viewMode === 'kanban' ? 'Ganttifícalo' : 'Kanban'}
             </Button>
+            {viewMode === 'gantt' && (
+              <Button
+                onClick={() => window.print()}
+                variant="ghost"
+                size="sm"
+                className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+                title="Imprimir Gantt a PDF"
+              >
+                <Printer className="w-4 h-4 mr-2" />
+                Imprimir
+              </Button>
+            )}
             {can(PERMISSIONS.MANAGE_PROJECT) && (
               <>
                 <Button
@@ -957,7 +969,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                 )}
               </DndContext>
             ) : (
-              <div className="h-full px-8 pt-8 pb-10">
+              <div className="h-full px-8 pt-8 pb-10 gantt-print-container">
                 <GanttChart
                   tasks={filteredTasks}
                   columns={columns}
