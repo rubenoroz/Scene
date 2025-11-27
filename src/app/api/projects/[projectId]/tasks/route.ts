@@ -25,7 +25,26 @@ export async function GET(
         ...(columnId && { columnId }), // Conditionally add columnId filter
       },
       orderBy: { order: "asc" },
-      include: {
+      select: {
+        id: true,
+        title: true,
+        // description: false, // Exclude heavy text
+        order: true,
+        columnId: true,
+        projectId: true,
+        parentId: true,
+        priority: true,
+        startDate: true,
+        endDate: true,
+        toleranceDate: true,
+        progress: true,
+        isHiddenInGantt: true,
+        // isArchived: true, // Field does not exist in schema
+        // attachments: false, // Exclude heavy JSON
+        // checklist: false,
+        // links: false,
+        // images: false,
+        tags: true, // Keep tags as they are usually small and needed for card display
         assignees: {
           select: {
             id: true,
@@ -33,7 +52,10 @@ export async function GET(
             image: true,
           },
         },
-        // children: true, // Removed to avoid recursion and data duplication. Frontend will reconstruct hierarchy.
+        // We need to know if it has children for the UI, but we don't need the full children objects
+        // since we reconstruct hierarchy in frontend from the flat list.
+        // However, we might want a count or just rely on the flat list.
+        // Let's keep it simple and just return the flat list of lightweight objects.
       },
     });
 

@@ -7,6 +7,7 @@ import { FileUploader } from "./FileUploader";
 import { usePermissions } from "@/hooks/usePermissions";
 import { PERMISSIONS } from "@/lib/permissions";
 import { useSession } from "next-auth/react";
+import useSWR from "swr";
 
 // Recursive type for subtasks
 type Subtask = {
@@ -169,8 +170,59 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
   const canDelete = can(PERMISSIONS.DELETE_TASK);
   const canAssign = can(PERMISSIONS.ASSIGN_TASK);
 
+  // Fetch full task details on mount to get description, attachments, etc.
+  const { data: fullTask, mutate: mutateFullTask } = useSWR(
+    task ? `/api/projects/${task.projectId}/tasks/${task.id}` : null,
+    async (url: string) => {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to fetch task details");
+      return res.json();
+    }
+  );
+
+  // Update local state when fullTask is loaded
+  useEffect(() => {
+    if (fullTask) {
+      if (fullTask.description) setDescription(fullTask.description);
+      if (fullTask.attachments) setAttachments(JSON.parse(fullTask.attachments));
+      if (fullTask.checklist) setChecklist(JSON.parse(fullTask.checklist));
+      if (fullTask.links) setLinks(JSON.parse(fullTask.links));
+      if (fullTask.images) setImages(JSON.parse(fullTask.images));
+    }
+  }, [fullTask]);
+
   // Rich fields state
+  const [title, setTitle] = useState(task?.title || "");
+  const [description, setDescription] = useState(task?.description || "");
+  const [images, setImages] = useState<{ name: string, url: string, uploadedAt: string }[]>(
+    task?.images ? JSON.parse(task.images) : []
+  );
   const [priority, setPriority] = useState<string>(task?.priority || "MEDIUM");
+
+  const handleTitleSave = async () => {
+    if (!task || !title.trim() || title === task.title) return;
+
+    try {
+      // Optimistic update handled by local state, but we should notify parent
+      onTaskUpdate({ title });
+
+      const response = await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title }),
+      });
+
+      if (!response.ok) {
+        setTitle(task.title); // Revert on failure
+        onTaskUpdate({ title: task.title });
+        console.error("Failed to update task title");
+      }
+    } catch (error) {
+      setTitle(task.title); // Revert on error
+      onTaskUpdate({ title: task.title });
+      console.error("Error updating task title:", error);
+    }
+  };
   const [startDate, setStartDate] = useState<string | null>(task?.startDate || null);
   const [endDate, setEndDate] = useState<string | null>(task?.endDate || null);
   const [toleranceDate, setToleranceDate] = useState<string | null>(task?.toleranceDate || null);
@@ -363,7 +415,18 @@ export function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }:
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal-header flex justify-between items-center pb-4 border-b border-gray-200 mb-6 cursor-move -mt-[10px]">
-          <h2 className="text-2xl font-bold text-[#0F172A]">{task.title}</h2>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onBlur={handleTitleSave}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.currentTarget.blur();
+              }
+            }}
+            className="text-2xl font-bold text-[#0F172A] bg-transparent border-none focus:ring-2 focus:ring-blue-500 rounded px-1 w-full mr-4"
+          />
           <div className="flex items-center gap-2">
             {/* Duplicate button - only for admins/managers */}
             {can(PERMISSIONS.MANAGE_PROJECT) && (

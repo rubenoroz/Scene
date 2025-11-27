@@ -1588,9 +1588,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$usePermissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/hooks/usePermissions.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/permissions.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-auth/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/swr/dist/index/index.mjs [app-client] (ecmascript) <locals>");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
+;
 ;
 ;
 ;
@@ -1743,8 +1745,64 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
     const canEdit = can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].EDIT_ANY_TASK) || isOwnTask && can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].EDIT_OWN_TASK);
     const canDelete = can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].DELETE_TASK);
     const canAssign = can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].ASSIGN_TASK);
+    // Fetch full task details on mount to get description, attachments, etc.
+    const { data: fullTask, mutate: mutateFullTask } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"])(task ? `/api/projects/${task.projectId}/tasks/${task.id}` : null, {
+        "TaskDetailModal.useSWR": async (url)=>{
+            const res = await fetch(url);
+            if (!res.ok) throw new Error("Failed to fetch task details");
+            return res.json();
+        }
+    }["TaskDetailModal.useSWR"]);
+    // Update local state when fullTask is loaded
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "TaskDetailModal.useEffect": ()=>{
+            if (fullTask) {
+                if (fullTask.description) setDescription(fullTask.description);
+                if (fullTask.attachments) setAttachments(JSON.parse(fullTask.attachments));
+                if (fullTask.checklist) setChecklist(JSON.parse(fullTask.checklist));
+                if (fullTask.links) setLinks(JSON.parse(fullTask.links));
+                if (fullTask.images) setImages(JSON.parse(fullTask.images));
+            }
+        }
+    }["TaskDetailModal.useEffect"], [
+        fullTask
+    ]);
     // Rich fields state
+    const [title, setTitle] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(task?.title || "");
+    const [description, setDescription] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(task?.description || "");
+    const [images, setImages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(task?.images ? JSON.parse(task.images) : []);
     const [priority, setPriority] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(task?.priority || "MEDIUM");
+    const handleTitleSave = async ()=>{
+        if (!task || !title.trim() || title === task.title) return;
+        try {
+            // Optimistic update handled by local state, but we should notify parent
+            onTaskUpdate({
+                title
+            });
+            const response = await fetch(`/api/projects/${task.projectId}/tasks/${task.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title
+                })
+            });
+            if (!response.ok) {
+                setTitle(task.title); // Revert on failure
+                onTaskUpdate({
+                    title: task.title
+                });
+                console.error("Failed to update task title");
+            }
+        } catch (error) {
+            setTitle(task.title); // Revert on error
+            onTaskUpdate({
+                title: task.title
+            });
+            console.error("Error updating task title:", error);
+        }
+    };
     const [startDate, setStartDate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(task?.startDate || null);
     const [endDate, setEndDate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(task?.endDate || null);
     const [toleranceDate, setToleranceDate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(task?.toleranceDate || null);
@@ -1938,12 +1996,20 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "modal-header flex justify-between items-center pb-4 border-b border-gray-200 mb-6 cursor-move -mt-[10px]",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-2xl font-bold text-[#0F172A]",
-                            children: task.title
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                            type: "text",
+                            value: title,
+                            onChange: (e)=>setTitle(e.target.value),
+                            onBlur: handleTitleSave,
+                            onKeyDown: (e)=>{
+                                if (e.key === "Enter") {
+                                    e.currentTarget.blur();
+                                }
+                            },
+                            className: "text-2xl font-bold text-[#0F172A] bg-transparent border-none focus:ring-2 focus:ring-blue-500 rounded px-1 w-full mr-4"
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 366,
+                            lineNumber: 418,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1958,7 +2024,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: "Duplicar"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 371,
+                                            lineNumber: 434,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1968,7 +2034,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: task.isArchived ? "Restaurar" : "Archivar"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 378,
+                                            lineNumber: 441,
                                             columnNumber: 17
                                         }, this)
                                     ]
@@ -1982,24 +2048,24 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                         fill: "white"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                        lineNumber: 394,
+                                        lineNumber: 457,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 390,
+                                    lineNumber: 453,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 367,
+                            lineNumber: 430,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                    lineNumber: 365,
+                    lineNumber: 417,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2012,7 +2078,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Descripción"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 400,
+                                    lineNumber: 463,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -2041,13 +2107,13 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     disabled: !canEdit
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 401,
+                                    lineNumber: 464,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 399,
+                            lineNumber: 462,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2058,7 +2124,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Fechas"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 426,
+                                    lineNumber: 489,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2071,7 +2137,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: "Fecha de inicio"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 429,
+                                                    lineNumber: 492,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2114,13 +2180,13 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     }
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 430,
+                                                    lineNumber: 493,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 428,
+                                            lineNumber: 491,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2130,7 +2196,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: "Fecha de finalización"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 463,
+                                                    lineNumber: 526,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2173,13 +2239,13 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     }
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 464,
+                                                    lineNumber: 527,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 462,
+                                            lineNumber: 525,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2189,7 +2255,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: "Fecha de tolerancia"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 497,
+                                                    lineNumber: 560,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2216,25 +2282,25 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     }
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 498,
+                                                    lineNumber: 561,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 496,
+                                            lineNumber: 559,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 427,
+                                    lineNumber: 490,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 425,
+                            lineNumber: 488,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2245,7 +2311,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Prioridad"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 523,
+                                    lineNumber: 586,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2276,7 +2342,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: "Baja"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 525,
+                                            lineNumber: 588,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2304,7 +2370,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: "Media"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 547,
+                                            lineNumber: 610,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2332,7 +2398,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: "Alta"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 569,
+                                            lineNumber: 632,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2360,19 +2426,19 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: "Urgente"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 591,
+                                            lineNumber: 654,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 524,
+                                    lineNumber: 587,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 522,
+                            lineNumber: 585,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2383,7 +2449,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Visibilidad en Gantt"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 618,
+                                    lineNumber: 681,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2395,7 +2461,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: isHidden ? "Oculta en el diagrama de Gantt" : "Visible en el diagrama de Gantt"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 620,
+                                            lineNumber: 683,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2407,24 +2473,24 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                 className: `inline - block w - 4 h - 4 transform bg - white rounded - full transition - transform ${isHidden ? 'translate-x-1' : 'translate-x-6'} `
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                lineNumber: 630,
+                                                lineNumber: 693,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 623,
+                                            lineNumber: 686,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 619,
+                                    lineNumber: 682,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 617,
+                            lineNumber: 680,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2435,7 +2501,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Asignado a"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 640,
+                                    lineNumber: 703,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2452,14 +2518,14 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     className: "w-6 h-6 rounded-full"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 653,
+                                                    lineNumber: 716,
                                                     columnNumber: 23
                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "w-6 h-6 rounded-full bg-blue-200 flex items-center justify-center text-xs font-medium text-neutral-900",
                                                     children: (assignee.name || assignee.email || "?")[0].toUpperCase()
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 659,
+                                                    lineNumber: 722,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2467,7 +2533,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: assignee.name || assignee.email
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 663,
+                                                    lineNumber: 726,
                                                     columnNumber: 21
                                                 }, this),
                                                 canAssign && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2501,19 +2567,19 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: "×"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 665,
+                                                    lineNumber: 728,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, assignee.id, true, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 648,
+                                            lineNumber: 711,
                                             columnNumber: 19
                                         }, this);
                                     })
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 641,
+                                    lineNumber: 704,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -2531,7 +2597,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: "Agregar usuario..."
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 705,
+                                            lineNumber: 768,
                                             columnNumber: 15
                                         }, this),
                                         availableUsers.filter((user)=>!selectedAssignees.includes(user.id)).map((user)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2539,19 +2605,19 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                 children: user.name || user.email
                                             }, user.id, false, {
                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                lineNumber: 709,
+                                                lineNumber: 772,
                                                 columnNumber: 19
                                             }, this))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 695,
+                                    lineNumber: 758,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 639,
+                            lineNumber: 702,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2562,7 +2628,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Etiquetas"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 718,
+                                    lineNumber: 781,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2570,7 +2636,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Separa múltiples etiquetas con comas o presiona Enter para agregar"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 719,
+                                    lineNumber: 782,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2608,18 +2674,18 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: "×"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 729,
+                                                    lineNumber: 792,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, index, true, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 722,
+                                            lineNumber: 785,
                                             columnNumber: 17
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 720,
+                                    lineNumber: 783,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2665,7 +2731,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             disabled: !canEdit
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 753,
+                                            lineNumber: 816,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2711,19 +2777,19 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: "Agregar"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 779,
+                                            lineNumber: 842,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 752,
+                                    lineNumber: 815,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 717,
+                            lineNumber: 780,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2734,7 +2800,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Enlaces"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 812,
+                                    lineNumber: 875,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2750,7 +2816,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: link.title || link.url
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 816,
+                                                    lineNumber: 879,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2776,18 +2842,18 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: "×"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 824,
+                                                    lineNumber: 887,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, index, true, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 815,
+                                            lineNumber: 878,
                                             columnNumber: 17
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 813,
+                                    lineNumber: 876,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2801,7 +2867,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             onChange: (e)=>setNewLinkTitle(e.target.value)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 847,
+                                            lineNumber: 910,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2815,7 +2881,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     onChange: (e)=>setNewLinkUrl(e.target.value)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 855,
+                                                    lineNumber: 918,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2853,25 +2919,25 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: "Agregar"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 862,
+                                                    lineNumber: 925,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 854,
+                                            lineNumber: 917,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 846,
+                                    lineNumber: 909,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 811,
+                            lineNumber: 874,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2882,7 +2948,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Checklist"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 891,
+                                    lineNumber: 954,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2890,7 +2956,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Agrega items a tu lista de tareas y marca como completados"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 892,
+                                    lineNumber: 955,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2925,7 +2991,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     }
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 896,
+                                                    lineNumber: 959,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2933,7 +2999,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: item.text
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 917,
+                                                    lineNumber: 980,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2959,18 +3025,18 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                     children: "×"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 920,
+                                                    lineNumber: 983,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, item.id, true, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 895,
+                                            lineNumber: 958,
                                             columnNumber: 17
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 893,
+                                    lineNumber: 956,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3008,7 +3074,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             }
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 943,
+                                            lineNumber: 1006,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3044,19 +3110,19 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                             children: "Agregar"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 963,
+                                            lineNumber: 1026,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 942,
+                                    lineNumber: 1005,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 890,
+                            lineNumber: 953,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3067,7 +3133,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Archivos Adjuntos"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 990,
+                                    lineNumber: 1053,
                                     columnNumber: 13
                                 }, this),
                                 attachments.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3082,7 +3148,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                             className: "w-5 h-5 text-gray-400 flex-shrink-0"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                            lineNumber: 1001,
+                                                            lineNumber: 1064,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3093,7 +3159,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                                     children: file.name
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                    lineNumber: 1003,
+                                                                    lineNumber: 1066,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3105,19 +3171,19 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                    lineNumber: 1004,
+                                                                    lineNumber: 1067,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                            lineNumber: 1002,
+                                                            lineNumber: 1065,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 1000,
+                                                    lineNumber: 1063,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3132,12 +3198,12 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                                 size: 16
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                lineNumber: 1016,
+                                                                lineNumber: 1079,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                            lineNumber: 1010,
+                                                            lineNumber: 1073,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3165,29 +3231,29 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                                 size: 16
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                lineNumber: 1036,
+                                                                lineNumber: 1099,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                            lineNumber: 1018,
+                                                            lineNumber: 1081,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                    lineNumber: 1009,
+                                                    lineNumber: 1072,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, index, true, {
                                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                            lineNumber: 996,
+                                            lineNumber: 1059,
                                             columnNumber: 19
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 994,
+                                    lineNumber: 1057,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$FileUploader$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FileUploader"], {
@@ -3216,13 +3282,13 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 1045,
+                                    lineNumber: 1108,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 989,
+                            lineNumber: 1052,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3233,7 +3299,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                     children: "Subtasks"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                    lineNumber: 1066,
+                                    lineNumber: 1129,
                                     columnNumber: 13
                                 }, this),
                                 (()=>{
@@ -3249,7 +3315,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                         className: "mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                        lineNumber: 1075,
+                                                        lineNumber: 1138,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3262,7 +3328,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                                         children: subtask.title
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                        lineNumber: 1078,
+                                                                        lineNumber: 1141,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3300,7 +3366,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                                                         disabled: !canEdit
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                                        lineNumber: 1083,
+                                                                                        lineNumber: 1146,
                                                                                         columnNumber: 31
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3308,13 +3374,13 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                                                         children: "%"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                                        lineNumber: 1106,
+                                                                                        lineNumber: 1169,
                                                                                         columnNumber: 31
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                                lineNumber: 1082,
+                                                                                lineNumber: 1145,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             canEdit && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3328,30 +3394,30 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                                                     size: 16
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                                    lineNumber: 1118,
+                                                                                    lineNumber: 1181,
                                                                                     columnNumber: 58
                                                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__["Eye"], {
                                                                                     size: 16
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                                    lineNumber: 1118,
+                                                                                    lineNumber: 1181,
                                                                                     columnNumber: 81
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                                lineNumber: 1110,
+                                                                                lineNumber: 1173,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                        lineNumber: 1079,
+                                                                        lineNumber: 1142,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                lineNumber: 1077,
+                                                                lineNumber: 1140,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3363,18 +3429,18 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                                     }
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                    lineNumber: 1125,
+                                                                    lineNumber: 1188,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                                lineNumber: 1124,
+                                                                lineNumber: 1187,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                        lineNumber: 1076,
+                                                        lineNumber: 1139,
                                                         columnNumber: 21
                                                     }, this),
                                                     subtask.children && subtask.children.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -3382,13 +3448,13 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                         children: renderSubtasks(subtask.children, depth + 1)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                        lineNumber: 1132,
+                                                        lineNumber: 1195,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, subtask.id, true, {
                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                lineNumber: 1074,
+                                                lineNumber: 1137,
                                                 columnNumber: 19
                                             }, this));
                                     };
@@ -3416,14 +3482,14 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                 children: renderSubtasks(task.children)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                lineNumber: 1162,
+                                                lineNumber: 1225,
                                                 columnNumber: 21
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 className: "text-gray-500 italic mb-4",
                                                 children: "No subtasks yet."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                lineNumber: 1166,
+                                                lineNumber: 1229,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3443,7 +3509,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                         disabled: !canAddSubtask
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                        lineNumber: 1171,
+                                                        lineNumber: 1234,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3453,13 +3519,13 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                                         children: isAddingSubtask ? 'Adding...' : 'Add Subtask'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                        lineNumber: 1184,
+                                                        lineNumber: 1247,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                                lineNumber: 1170,
+                                                lineNumber: 1233,
                                                 columnNumber: 19
                                             }, this)
                                         ]
@@ -3468,7 +3534,7 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 1065,
+                            lineNumber: 1128,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3499,44 +3565,45 @@ function TaskDetailModal({ task, onClose, onTaskUpdate, availableUsers }) {
                                         className: "inline-block mr-2"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                        lineNumber: 1222,
+                                        lineNumber: 1285,
                                         columnNumber: 17
                                     }, this),
                                     "Eliminar Tarea"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                                lineNumber: 1200,
+                                lineNumber: 1263,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                            lineNumber: 1198,
+                            lineNumber: 1261,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-                    lineNumber: 398,
+                    lineNumber: 461,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-            lineNumber: 351,
+            lineNumber: 403,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/kanban/TaskDetailModal.tsx",
-        lineNumber: 347,
+        lineNumber: 399,
         columnNumber: 5
     }, this), document.body);
 }
-_s(TaskDetailModal, "90jcS4iMQCtddMjNyCfnpGU4KCg=", false, function() {
+_s(TaskDetailModal, "u315OiflAZJvumt2ZVNfS9k9SX4=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$usePermissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePermissions"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$usePermissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePermissions"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"]
     ];
 });
 _c = TaskDetailModal;
@@ -5003,14 +5070,55 @@ function ProjectSettings({ projectId }) {
     const [inviteRole, setInviteRole] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ROLES"].ARTIST);
     const [isInviting, setIsInviting] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [invitations, setInvitations] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [projectName, setProjectName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [isUpdatingName, setIsUpdatingName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ProjectSettings.useEffect": ()=>{
             fetchUsers();
             fetchInvitations();
+            fetchProjectDetails();
         }
     }["ProjectSettings.useEffect"], [
         projectId
     ]);
+    const fetchProjectDetails = async ()=>{
+        try {
+            const res = await fetch(`/api/projects/${projectId}`);
+            if (res.ok) {
+                const data = await res.json();
+                setProjectName(data.name);
+            }
+        } catch (error) {
+            console.error("Error fetching project details:", error);
+        }
+    };
+    const handleUpdateProjectName = async ()=>{
+        if (!projectName.trim()) return;
+        setIsUpdatingName(true);
+        try {
+            const res = await fetch(`/api/projects/${projectId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: projectName
+                })
+            });
+            if (res.ok) {
+                alert("Project name updated successfully!");
+                // Optionally trigger a global refresh or context update if needed
+                window.location.reload(); // Simple way to refresh the name in the header/sidebar
+            } else {
+                alert("Failed to update project name");
+            }
+        } catch (error) {
+            console.error("Error updating project name:", error);
+            alert("Error updating project name");
+        } finally{
+            setIsUpdatingName(false);
+        }
+    };
     const fetchUsers = async ()=>{
         try {
             const res = await fetch(`/api/projects/${projectId}/users`);
@@ -5108,7 +5216,7 @@ function ProjectSettings({ projectId }) {
             children: "Loading..."
         }, void 0, false, {
             fileName: "[project]/src/components/project/ProjectSettings.tsx",
-            lineNumber: 148,
+            lineNumber: 188,
             columnNumber: 16
         }, this);
     }
@@ -5119,7 +5227,7 @@ function ProjectSettings({ projectId }) {
             children: "You do not have permission to view project settings."
         }, void 0, false, {
             fileName: "[project]/src/components/project/ProjectSettings.tsx",
-            lineNumber: 153,
+            lineNumber: 193,
             columnNumber: 16
         }, this);
     }
@@ -5135,19 +5243,82 @@ function ProjectSettings({ projectId }) {
                             className: "w-5 h-5"
                         }, void 0, false, {
                             fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                            lineNumber: 160,
+                            lineNumber: 200,
                             columnNumber: 21
                         }, this),
                         " Project Access & Roles"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                    lineNumber: 159,
+                    lineNumber: 199,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                lineNumber: 158,
+                lineNumber: 198,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "bg-white p-4 rounded-lg border border-slate-200",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                        className: "text-sm font-medium mb-3 text-slate-700",
+                        children: "General Settings"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/project/ProjectSettings.tsx",
+                        lineNumber: 206,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex gap-4 items-end",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex-1 space-y-1.5",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                        className: "text-sm font-medium text-slate-700",
+                                        children: "Project Name"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/project/ProjectSettings.tsx",
+                                        lineNumber: 209,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                                        type: "text",
+                                        value: projectName,
+                                        onChange: (e)=>setProjectName(e.target.value),
+                                        className: "bg-white h-10"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/project/ProjectSettings.tsx",
+                                        lineNumber: 210,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/project/ProjectSettings.tsx",
+                                lineNumber: 208,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                onClick: handleUpdateProjectName,
+                                disabled: isUpdatingName || !projectName.trim(),
+                                className: "h-10",
+                                children: isUpdatingName ? "Saving..." : "Save Name"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/project/ProjectSettings.tsx",
+                                lineNumber: 217,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/project/ProjectSettings.tsx",
+                        lineNumber: 207,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/project/ProjectSettings.tsx",
+                lineNumber: 205,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5158,7 +5329,7 @@ function ProjectSettings({ projectId }) {
                         children: "Invite User to Project"
                     }, void 0, false, {
                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                        lineNumber: 166,
+                        lineNumber: 229,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -5173,7 +5344,7 @@ function ProjectSettings({ projectId }) {
                                         children: "Email Address"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                        lineNumber: 169,
+                                        lineNumber: 232,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -5185,13 +5356,13 @@ function ProjectSettings({ projectId }) {
                                         className: "bg-white h-10"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                        lineNumber: 170,
+                                        lineNumber: 233,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                lineNumber: 168,
+                                lineNumber: 231,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5202,7 +5373,7 @@ function ProjectSettings({ projectId }) {
                                         children: "Role"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                        lineNumber: 180,
+                                        lineNumber: 243,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -5213,12 +5384,12 @@ function ProjectSettings({ projectId }) {
                                                 className: "bg-white h-10",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 183,
+                                                    lineNumber: 246,
                                                     columnNumber: 33
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 182,
+                                                lineNumber: 245,
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -5228,7 +5399,7 @@ function ProjectSettings({ projectId }) {
                                                         children: "Project Manager"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                        lineNumber: 186,
+                                                        lineNumber: 249,
                                                         columnNumber: 33
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -5236,7 +5407,7 @@ function ProjectSettings({ projectId }) {
                                                         children: "Artist"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                        lineNumber: 187,
+                                                        lineNumber: 250,
                                                         columnNumber: 33
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -5244,25 +5415,25 @@ function ProjectSettings({ projectId }) {
                                                         children: "Viewer"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                        lineNumber: 188,
+                                                        lineNumber: 251,
                                                         columnNumber: 33
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 185,
+                                                lineNumber: 248,
                                                 columnNumber: 29
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                        lineNumber: 181,
+                                        lineNumber: 244,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                lineNumber: 179,
+                                lineNumber: 242,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5277,7 +5448,7 @@ function ProjectSettings({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 195,
+                                                lineNumber: 258,
                                                 columnNumber: 61
                                             }, this),
                                             " Invite"
@@ -5285,24 +5456,24 @@ function ProjectSettings({ projectId }) {
                                     }, void 0, true)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                    lineNumber: 194,
+                                    lineNumber: 257,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                lineNumber: 193,
+                                lineNumber: 256,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                        lineNumber: 167,
+                        lineNumber: 230,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                lineNumber: 165,
+                lineNumber: 228,
                 columnNumber: 13
             }, this),
             invitations.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5312,7 +5483,7 @@ function ProjectSettings({ projectId }) {
                         children: "Pending Invitations"
                     }, void 0, false, {
                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                        lineNumber: 204,
+                        lineNumber: 267,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5326,28 +5497,28 @@ function ProjectSettings({ projectId }) {
                                                 children: "Email"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 209,
+                                                lineNumber: 272,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
                                                 children: "Role"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 210,
+                                                lineNumber: 273,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
                                                 children: "Sent At"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 211,
+                                                lineNumber: 274,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
                                                 children: "Expires"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 212,
+                                                lineNumber: 275,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -5355,18 +5526,18 @@ function ProjectSettings({ projectId }) {
                                                 children: "Link"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 213,
+                                                lineNumber: 276,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                        lineNumber: 208,
+                                        lineNumber: 271,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                    lineNumber: 207,
+                                    lineNumber: 270,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -5376,28 +5547,28 @@ function ProjectSettings({ projectId }) {
                                                     children: inv.email
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 219,
+                                                    lineNumber: 282,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                                     children: inv.role
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 220,
+                                                    lineNumber: 283,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                                     children: new Date(inv.createdAt).toLocaleDateString()
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 221,
+                                                    lineNumber: 284,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                                     children: new Date(inv.expiresAt).toLocaleDateString()
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 222,
+                                                    lineNumber: 285,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -5413,40 +5584,40 @@ function ProjectSettings({ projectId }) {
                                                         children: "Copy Link"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                        lineNumber: 224,
+                                                        lineNumber: 287,
                                                         columnNumber: 45
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 223,
+                                                    lineNumber: 286,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, inv.id, true, {
                                             fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                            lineNumber: 218,
+                                            lineNumber: 281,
                                             columnNumber: 37
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                    lineNumber: 216,
+                                    lineNumber: 279,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                            lineNumber: 206,
+                            lineNumber: 269,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                        lineNumber: 205,
+                        lineNumber: 268,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                lineNumber: 203,
+                lineNumber: 266,
                 columnNumber: 17
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5456,7 +5627,7 @@ function ProjectSettings({ projectId }) {
                         children: "Project Members"
                     }, void 0, false, {
                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                        lineNumber: 246,
+                        lineNumber: 309,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5470,28 +5641,28 @@ function ProjectSettings({ projectId }) {
                                                 children: "User"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 251,
+                                                lineNumber: 314,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
                                                 children: "Email"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 252,
+                                                lineNumber: 315,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
                                                 children: "Access Source"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 253,
+                                                lineNumber: 316,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
                                                 children: "Role"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 254,
+                                                lineNumber: 317,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableHead"], {
@@ -5499,18 +5670,18 @@ function ProjectSettings({ projectId }) {
                                                 children: "Actions"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                lineNumber: 255,
+                                                lineNumber: 318,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                        lineNumber: 250,
+                                        lineNumber: 313,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                    lineNumber: 249,
+                                    lineNumber: 312,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -5527,26 +5698,26 @@ function ProjectSettings({ projectId }) {
                                                                 className: "w-6 h-6 rounded-full"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                                lineNumber: 264,
+                                                                lineNumber: 327,
                                                                 columnNumber: 49
                                                             }, this),
                                                             u.user.name || "Unknown"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                        lineNumber: 262,
+                                                        lineNumber: 325,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 261,
+                                                    lineNumber: 324,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
                                                     children: u.user.email
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 269,
+                                                    lineNumber: 332,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -5555,12 +5726,12 @@ function ProjectSettings({ projectId }) {
                                                         children: u.source === 'owner' ? 'Owner' : u.source === 'workspace' ? 'Workspace' : 'Project'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                        lineNumber: 271,
+                                                        lineNumber: 334,
                                                         columnNumber: 41
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 270,
+                                                    lineNumber: 333,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -5569,7 +5740,7 @@ function ProjectSettings({ projectId }) {
                                                         children: "Admin"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                        lineNumber: 281,
+                                                        lineNumber: 344,
                                                         columnNumber: 45
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
                                                         value: u.role,
@@ -5580,12 +5751,12 @@ function ProjectSettings({ projectId }) {
                                                                 className: "w-32 h-8",
                                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                                    lineNumber: 289,
+                                                                    lineNumber: 352,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                                lineNumber: 288,
+                                                                lineNumber: 351,
                                                                 columnNumber: 49
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -5595,7 +5766,7 @@ function ProjectSettings({ projectId }) {
                                                                         children: "Admin"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                                        lineNumber: 292,
+                                                                        lineNumber: 355,
                                                                         columnNumber: 53
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -5603,7 +5774,7 @@ function ProjectSettings({ projectId }) {
                                                                         children: "Manager"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                                        lineNumber: 293,
+                                                                        lineNumber: 356,
                                                                         columnNumber: 53
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -5611,7 +5782,7 @@ function ProjectSettings({ projectId }) {
                                                                         children: "Artist"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                                        lineNumber: 294,
+                                                                        lineNumber: 357,
                                                                         columnNumber: 53
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -5619,24 +5790,24 @@ function ProjectSettings({ projectId }) {
                                                                         children: "Viewer"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                                        lineNumber: 295,
+                                                                        lineNumber: 358,
                                                                         columnNumber: 53
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                                lineNumber: 291,
+                                                                lineNumber: 354,
                                                                 columnNumber: 49
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                        lineNumber: 283,
+                                                        lineNumber: 346,
                                                         columnNumber: 45
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 279,
+                                                    lineNumber: 342,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -5650,55 +5821,55 @@ function ProjectSettings({ projectId }) {
                                                             className: "w-4 h-4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                            lineNumber: 308,
+                                                            lineNumber: 371,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                        lineNumber: 302,
+                                                        lineNumber: 365,
                                                         columnNumber: 45
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                                    lineNumber: 300,
+                                                    lineNumber: 363,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, u.user.id, true, {
                                             fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                            lineNumber: 260,
+                                            lineNumber: 323,
                                             columnNumber: 33
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                                    lineNumber: 258,
+                                    lineNumber: 321,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                            lineNumber: 248,
+                            lineNumber: 311,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                        lineNumber: 247,
+                        lineNumber: 310,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/project/ProjectSettings.tsx",
-                lineNumber: 245,
+                lineNumber: 308,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/project/ProjectSettings.tsx",
-        lineNumber: 157,
+        lineNumber: 197,
         columnNumber: 9
     }, this);
 }
-_s(ProjectSettings, "EEwwEK57aYKdlenFP2uYaJGG58U=", false, function() {
+_s(ProjectSettings, "MqatYcYvqCDJg3aIEa+IsU0XqLs=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$usePermissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePermissions"]
@@ -6423,7 +6594,14 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-const fetcher = (url)=>fetch(url).then((res)=>res.json());
+const fetcher = async (url)=>{
+    const res = await fetch(url);
+    if (!res.ok) {
+        const error = new Error('An error occurred while fetching the data.');
+        throw error;
+    }
+    return res.json();
+};
 function KanbanBoard({ projectId }) {
     _s();
     const { data: session } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"])();
@@ -6472,10 +6650,12 @@ function KanbanBoard({ projectId }) {
     // Reconstruct hierarchy from flat tasks
     const processedData = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "KanbanBoard.useMemo[processedData]": ()=>{
-            if (!fetchedColumns || !fetchedTasks) return {
-                columns: [],
-                tasks: []
-            };
+            if (!fetchedColumns || !fetchedTasks || !Array.isArray(fetchedColumns) || !Array.isArray(fetchedTasks)) {
+                return {
+                    columns: [],
+                    tasks: []
+                };
+            }
             // 1. Create a map of tasks by ID for easy lookup
             const taskMap = new Map();
             fetchedTasks.forEach({
@@ -6498,6 +6678,7 @@ function KanbanBoard({ projectId }) {
             sortedTasks.forEach({
                 "KanbanBoard.useMemo[processedData]": (t)=>{
                     const task = taskMap.get(t.id);
+                    if (!task) return; // Safety check
                     if (t.parentId && taskMap.has(t.parentId)) {
                         const parent = taskMap.get(t.parentId);
                         parent.children = parent.children || [];
@@ -7421,7 +7602,7 @@ function KanbanBoard({ projectId }) {
         children: "Failed to load kanban board."
     }, void 0, false, {
         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-        lineNumber: 926,
+        lineNumber: 936,
         columnNumber: 42
     }, this);
     const activeTaskContent = activeItem?.data.current?.type === "Task" ? tasks.find((t)=>t.id === activeItem.id) : null;
@@ -7439,7 +7620,7 @@ function KanbanBoard({ projectId }) {
                                 children: "< Project"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 937,
+                                lineNumber: 947,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7462,12 +7643,12 @@ function KanbanBoard({ projectId }) {
                                                 }))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 943,
+                                            lineNumber: 953,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 942,
+                                        lineNumber: 952,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7481,14 +7662,14 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 963,
+                                                lineNumber: 973,
                                                 columnNumber: 15
                                             }, this),
                                             showArchivedTasks ? "Activas" : "Archivadas"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 956,
+                                        lineNumber: 966,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7502,20 +7683,20 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 974,
+                                                lineNumber: 984,
                                                 columnNumber: 34
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__["EyeOff"], {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 974,
+                                                lineNumber: 984,
                                                 columnNumber: 69
                                             }, this),
                                             showHiddenTasks ? "Ocultar" : "Mostrar"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 967,
+                                        lineNumber: 977,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7528,14 +7709,14 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 986,
+                                                lineNumber: 996,
                                                 columnNumber: 15
                                             }, this),
                                             viewMode === 'kanban' ? 'Ganttifícalo' : 'Kanban'
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 977,
+                                        lineNumber: 987,
                                         columnNumber: 13
                                     }, this),
                                     viewMode === 'gantt' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7549,14 +7730,14 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 997,
+                                                lineNumber: 1007,
                                                 columnNumber: 17
                                             }, this),
                                             "Imprimir"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 990,
+                                        lineNumber: 1000,
                                         columnNumber: 15
                                     }, this),
                                     viewMode === 'gantt' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7570,14 +7751,14 @@ function KanbanBoard({ projectId }) {
                                                 className: "w-4 h-4 mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1009,
+                                                lineNumber: 1019,
                                                 columnNumber: 17
                                             }, this),
                                             "Excel"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 1002,
+                                        lineNumber: 1012,
                                         columnNumber: 15
                                     }, this),
                                     can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -7592,14 +7773,14 @@ function KanbanBoard({ projectId }) {
                                                         className: "w-4 h-4 mr-2"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                        lineNumber: 1021,
+                                                        lineNumber: 1031,
                                                         columnNumber: 19
                                                     }, this),
                                                     "Settings"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1015,
+                                                lineNumber: 1025,
                                                 columnNumber: 17
                                             }, this),
                                             can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -7608,7 +7789,7 @@ function KanbanBoard({ projectId }) {
                                                 children: "Add Column"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1026,
+                                                lineNumber: 1036,
                                                 columnNumber: 19
                                             }, this)
                                         ]
@@ -7616,13 +7797,13 @@ function KanbanBoard({ projectId }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 940,
+                                lineNumber: 950,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                        lineNumber: 936,
+                        lineNumber: 946,
                         columnNumber: 9
                     }, this),
                     !fetchedColumns && columns.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7631,12 +7812,12 @@ function KanbanBoard({ projectId }) {
                             children: "Loading..."
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1036,
+                            lineNumber: 1046,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                        lineNumber: 1035,
+                        lineNumber: 1045,
                         columnNumber: 11
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex-1 overflow-hidden",
@@ -7675,23 +7856,23 @@ function KanbanBoard({ projectId }) {
                                                     onToggleGanttVisibility: handleToggleGanttVisibility
                                                 }, col.id, false, {
                                                     fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                    lineNumber: 1060,
+                                                    lineNumber: 1070,
                                                     columnNumber: 27
                                                 }, this);
                                             })
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 1052,
+                                            lineNumber: 1062,
                                             columnNumber: 21
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 1051,
+                                        lineNumber: 1061,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                    lineNumber: 1050,
+                                    lineNumber: 1060,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createPortal"])(/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DragOverlay"], {
@@ -7702,7 +7883,7 @@ function KanbanBoard({ projectId }) {
                                             subtasksCount: activeTaskContent.children?.length || 0
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 1087,
+                                            lineNumber: 1097,
                                             columnNumber: 23
                                         }, this) : null,
                                         activeItem && activeItem.data.current?.type === "Column" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7712,24 +7893,24 @@ function KanbanBoard({ projectId }) {
                                                 children: findColumn(activeItem.id.toString())?.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1095,
+                                                lineNumber: 1105,
                                                 columnNumber: 25
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 1094,
+                                            lineNumber: 1104,
                                             columnNumber: 23
                                         }, this) : null
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                    lineNumber: 1085,
+                                    lineNumber: 1095,
                                     columnNumber: 19
                                 }, this), document.body)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1043,
+                            lineNumber: 1053,
                             columnNumber: 15
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "h-full px-8 pt-8 pb-10 gantt-print-container",
@@ -7740,23 +7921,23 @@ function KanbanBoard({ projectId }) {
                                 onTaskUpdate: mutate
                             }, void 0, false, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 1105,
+                                lineNumber: 1115,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1104,
+                            lineNumber: 1114,
                             columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                        lineNumber: 1039,
+                        lineNumber: 1049,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 934,
+                lineNumber: 944,
                 columnNumber: 7
             }, this),
             isSettingsOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createPortal"])(/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7771,12 +7952,12 @@ function KanbanBoard({ projectId }) {
                                 size: 24
                             }, void 0, false, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 1124,
+                                lineNumber: 1134,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1120,
+                            lineNumber: 1130,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7785,23 +7966,23 @@ function KanbanBoard({ projectId }) {
                                 projectId: projectId
                             }, void 0, false, {
                                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 1127,
+                                lineNumber: 1137,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1126,
+                            lineNumber: 1136,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                    lineNumber: 1119,
+                    lineNumber: 1129,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 1118,
+                lineNumber: 1128,
                 columnNumber: 9
             }, this), document.body),
             selectedTask && isModalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$TaskDetailModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TaskDetailModal"], {
@@ -7811,13 +7992,13 @@ function KanbanBoard({ projectId }) {
                 availableUsers: projectUsers
             }, selectedTask.id, false, {
                 fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 1135,
+                lineNumber: 1145,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-        lineNumber: 933,
+        lineNumber: 943,
         columnNumber: 5
     }, this);
 }

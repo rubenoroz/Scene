@@ -45,11 +45,51 @@ export function ProjectSettings({ projectId }: ProjectSettingsProps) {
     const [inviteRole, setInviteRole] = useState<string>(ROLES.ARTIST);
     const [isInviting, setIsInviting] = useState(false);
     const [invitations, setInvitations] = useState<any[]>([]);
+    const [projectName, setProjectName] = useState("");
+    const [isUpdatingName, setIsUpdatingName] = useState(false);
 
     useEffect(() => {
         fetchUsers();
         fetchInvitations();
+        fetchProjectDetails();
     }, [projectId]);
+
+    const fetchProjectDetails = async () => {
+        try {
+            const res = await fetch(`/api/projects/${projectId}`);
+            if (res.ok) {
+                const data = await res.json();
+                setProjectName(data.name);
+            }
+        } catch (error) {
+            console.error("Error fetching project details:", error);
+        }
+    };
+
+    const handleUpdateProjectName = async () => {
+        if (!projectName.trim()) return;
+        setIsUpdatingName(true);
+        try {
+            const res = await fetch(`/api/projects/${projectId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: projectName }),
+            });
+
+            if (res.ok) {
+                alert("Project name updated successfully!");
+                // Optionally trigger a global refresh or context update if needed
+                window.location.reload(); // Simple way to refresh the name in the header/sidebar
+            } else {
+                alert("Failed to update project name");
+            }
+        } catch (error) {
+            console.error("Error updating project name:", error);
+            alert("Error updating project name");
+        } finally {
+            setIsUpdatingName(false);
+        }
+    };
 
     const fetchUsers = async () => {
         try {
@@ -159,6 +199,29 @@ export function ProjectSettings({ projectId }: ProjectSettingsProps) {
                 <h2 className="text-xl font-bold flex items-center gap-2">
                     <Shield className="w-5 h-5" /> Project Access & Roles
                 </h2>
+            </div>
+
+            {/* General Settings */}
+            <div className="bg-white p-4 rounded-lg border border-slate-200">
+                <h3 className="text-sm font-medium mb-3 text-slate-700">General Settings</h3>
+                <div className="flex gap-4 items-end">
+                    <div className="flex-1 space-y-1.5">
+                        <label className="text-sm font-medium text-slate-700">Project Name</label>
+                        <Input
+                            type="text"
+                            value={projectName}
+                            onChange={(e) => setProjectName(e.target.value)}
+                            className="bg-white h-10"
+                        />
+                    </div>
+                    <Button
+                        onClick={handleUpdateProjectName}
+                        disabled={isUpdatingName || !projectName.trim()}
+                        className="h-10"
+                    >
+                        {isUpdatingName ? "Saving..." : "Save Name"}
+                    </Button>
+                </div>
             </div>
 
             {/* Invite User Form */}

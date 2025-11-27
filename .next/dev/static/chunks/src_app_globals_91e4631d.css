@@ -1150,6 +1150,10 @@
     align-items: center;
   }
 
+  .items-end {
+    align-items: flex-end;
+  }
+
   .items-start {
     align-items: flex-start;
   }
@@ -1322,6 +1326,11 @@
     border-style: dashed;
   }
 
+  .border-none {
+    --tw-border-style: none;
+    border-style: none;
+  }
+
   .border-amber-200 {
     border-color: var(--color-amber-200);
   }
@@ -1484,6 +1493,10 @@
 
   .bg-slate-50 {
     background-color: var(--color-slate-50);
+  }
+
+  .bg-transparent {
+    background-color: #0000;
   }
 
   .bg-white {

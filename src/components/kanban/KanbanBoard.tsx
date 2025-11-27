@@ -65,7 +65,14 @@ type FetchedColumn = {
   tasks: FetchedTask[];
 };
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    const error = new Error('An error occurred while fetching the data.');
+    throw error;
+  }
+  return res.json();
+};
 
 export function KanbanBoard({ projectId }: KanbanBoardProps) {
   const { data: session } = useSession();
@@ -115,7 +122,9 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
 
   // Reconstruct hierarchy from flat tasks
   const processedData = useMemo(() => {
-    if (!fetchedColumns || !fetchedTasks) return { columns: [], tasks: [] };
+    if (!fetchedColumns || !fetchedTasks || !Array.isArray(fetchedColumns) || !Array.isArray(fetchedTasks)) {
+      return { columns: [], tasks: [] };
+    }
 
     // 1. Create a map of tasks by ID for easy lookup
     const taskMap = new Map<string, FetchedTask>();
@@ -131,7 +140,8 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     const sortedTasks = [...fetchedTasks].sort((a, b) => a.order - b.order);
 
     sortedTasks.forEach(t => {
-      const task = taskMap.get(t.id)!;
+      const task = taskMap.get(t.id);
+      if (!task) return; // Safety check
       if (t.parentId && taskMap.has(t.parentId)) {
         const parent = taskMap.get(t.parentId)!;
         parent.children = parent.children || [];
