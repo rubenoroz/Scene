@@ -22,7 +22,7 @@ export default function Home() {
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
           {/* Logo/Header */}
           <div className="text-center mb-8 flex flex-col items-center">
-            <div className="relative w-64 h-24">
+            <div className="relative w-96 h-36">
               <Image
                 src="/Scena_c.svg"
                 alt="Scena Logo"
@@ -85,7 +85,7 @@ export default function Home() {
 
         {/* Footer text */}
         <p className="text-center mt-6 text-sm text-neutral-500">
-          Simplifica la complejidad de la producción visual
+          Simplifica la complejidad de la producción audiovisual
         </p>
       </div>
     </div>
