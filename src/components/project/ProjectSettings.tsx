@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
     Select,
     SelectContent,
@@ -46,7 +47,8 @@ export function ProjectSettings({ projectId }: ProjectSettingsProps) {
     const [isInviting, setIsInviting] = useState(false);
     const [invitations, setInvitations] = useState<any[]>([]);
     const [projectName, setProjectName] = useState("");
-    const [isUpdatingName, setIsUpdatingName] = useState(false);
+    const [projectDescription, setProjectDescription] = useState("");
+    const [isUpdatingSettings, setIsUpdatingSettings] = useState(false);
 
     useEffect(() => {
         fetchUsers();
@@ -60,34 +62,37 @@ export function ProjectSettings({ projectId }: ProjectSettingsProps) {
             if (res.ok) {
                 const data = await res.json();
                 setProjectName(data.name);
+                setProjectDescription(data.description || "");
             }
         } catch (error) {
             console.error("Error fetching project details:", error);
         }
     };
 
-    const handleUpdateProjectName = async () => {
+    const handleUpdateProject = async () => {
         if (!projectName.trim()) return;
-        setIsUpdatingName(true);
+        setIsUpdatingSettings(true);
         try {
             const res = await fetch(`/api/projects/${projectId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name: projectName }),
+                body: JSON.stringify({
+                    name: projectName,
+                    description: projectDescription
+                }),
             });
 
             if (res.ok) {
-                alert("Project name updated successfully!");
-                // Optionally trigger a global refresh or context update if needed
-                window.location.reload(); // Simple way to refresh the name in the header/sidebar
+                alert("Project settings updated successfully!");
+                window.location.reload();
             } else {
-                alert("Failed to update project name");
+                alert("Failed to update project settings");
             }
         } catch (error) {
-            console.error("Error updating project name:", error);
-            alert("Error updating project name");
+            console.error("Error updating project settings:", error);
+            alert("Error updating project settings");
         } finally {
-            setIsUpdatingName(false);
+            setIsUpdatingSettings(false);
         }
     };
 
@@ -204,23 +209,37 @@ export function ProjectSettings({ projectId }: ProjectSettingsProps) {
             {/* General Settings */}
             <div className="bg-white p-4 rounded-lg border border-slate-200">
                 <h3 className="text-sm font-medium mb-3 text-slate-700">General Settings</h3>
-                <div className="flex gap-4 items-end">
-                    <div className="flex-1 space-y-1.5">
-                        <label className="text-sm font-medium text-slate-700">Project Name</label>
-                        <Input
-                            type="text"
-                            value={projectName}
-                            onChange={(e) => setProjectName(e.target.value)}
-                            className="bg-white h-10"
+                <div className="flex flex-col gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                            <label className="text-sm font-medium text-slate-700">Project Name</label>
+                            <Input
+                                type="text"
+                                value={projectName}
+                                onChange={(e) => setProjectName(e.target.value)}
+                                className="bg-white"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                        <label className="text-sm font-medium text-slate-700">Description</label>
+                        <Textarea
+                            value={projectDescription}
+                            onChange={(e) => setProjectDescription(e.target.value)}
+                            className="bg-white min-h-[100px]"
+                            placeholder="Describe your project..."
                         />
                     </div>
-                    <Button
-                        onClick={handleUpdateProjectName}
-                        disabled={isUpdatingName || !projectName.trim()}
-                        className="h-10"
-                    >
-                        {isUpdatingName ? "Saving..." : "Save Name"}
-                    </Button>
+
+                    <div className="flex justify-end">
+                        <Button
+                            onClick={handleUpdateProject}
+                            disabled={isUpdatingSettings || !projectName.trim()}
+                        >
+                            {isUpdatingSettings ? "Saving..." : "Save Changes"}
+                        </Button>
+                    </div>
                 </div>
             </div>
 

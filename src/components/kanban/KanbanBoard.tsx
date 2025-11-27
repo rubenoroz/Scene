@@ -1165,6 +1165,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
         isOpen={isStatsModalOpen}
         onClose={() => setIsStatsModalOpen(false)}
         tasks={tasks}
+        columns={columns}
       />
 
       {selectedTask && isModalOpen && (
