@@ -6,5 +6,6 @@
   "/api/projects/[projectId]/users/route": "app/api/projects/[projectId]/users/route.js",
   "/api/projects/route": "app/api/projects/route.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/projects/[id]/page": "app/projects/[id]/page.js"
+  "/projects/[id]/page": "app/projects/[id]/page.js",
+  "/projects/new/page": "app/projects/new/page.js"
 }

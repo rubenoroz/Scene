@@ -4052,3 +4052,46 @@ Import trace:
 [07:24:43.660] Server  LOG      ✓ Compiled in 253ms
 [07:27:28.566] Server  LOG      ✓ Compiled in 670ms
 [07:34:44.027] Server  LOG      ✓ Compiled in 938ms
+[07:42:50.066] Server  LOG     JWT Callback - Token: {}
+[07:42:50.068] Server  LOG     JWT Callback - User: undefined
+[07:42:50.070] Server  LOG     Session Callback - Session: {}
+[07:42:50.131] Server  LOG     Session Callback - Token: {}
+[07:43:23.236] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[07:43:23.872] Server  LOG     JWT Callback - Token: {}
+[07:43:23.877] Server  LOG     JWT Callback - User: undefined
+[07:43:23.894] Server  LOG     Session Callback - Session: {}
+[07:43:23.895] Server  LOG     Session Callback - Token: {}
+[07:43:23.912] Browser ERROR   uncaughtError: ReferenceError: Can't find variable: UserMenu
+[07:43:25.628] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[07:43:33.864] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[07:43:33.875] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[07:43:33.875] Browser ERROR   unhandledRejection: undefined
+[07:43:33.875] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[07:43:48.617] Server  LOG      ✓ Compiled in 470ms
+[07:43:57.907] Server  LOG      ✓ Compiled in 7ms
+[07:43:57.988] Server  LOG     JWT Callback - Token: {}
+[07:43:57.991] Server  LOG     JWT Callback - User: undefined
+[07:43:57.993] Server  LOG     Session Callback - Session: {}
+[07:43:57.994] Server  LOG     Session Callback - Token: {}
+[07:43:58.111] Server  LOG     JWT Callback - Token: {}
+[07:43:58.111] Server  LOG     JWT Callback - User: undefined
+[07:43:58.111] Server  LOG     Session Callback - Session: {}
+[07:43:58.112] Server  LOG     Session Callback - Token: {}
+[07:44:06.925] Server  LOG      ○ Compiling /projects/new ...
+[07:44:25.276] Server  LOG     JWT Callback - Token: {}
+[07:44:25.276] Server  LOG     JWT Callback - User: undefined
+[07:44:25.277] Server  LOG     Session Callback - Session: {}
+[07:44:25.277] Server  LOG     Session Callback - Token: {}
+[07:44:35.234] Server  LOG     JWT Callback - Token: {}
+[07:44:35.235] Server  LOG     JWT Callback - User: undefined
+[07:44:35.236] Server  LOG     Session Callback - Session: {}
+[07:44:35.236] Server  LOG     Session Callback - Token: {}
+[07:44:41.265] Server  LOG     JWT Callback - Token: {}
+[07:44:41.270] Server  LOG     JWT Callback - User: undefined
+[07:44:41.273] Server  LOG     Session Callback - Session: {}
+[07:44:41.274] Server  LOG     Session Callback - Token: {}
+[07:44:41.775] Server  LOG     JWT Callback - Token: {}
+[07:44:41.776] Server  LOG     JWT Callback - User: undefined
+[07:44:41.776] Server  LOG     Session Callback - Session: {}
+[07:44:41.776] Server  LOG     Session Callback - Token: {}
+[07:44:46.088] Server  LOG      ✓ Compiled in 1351ms

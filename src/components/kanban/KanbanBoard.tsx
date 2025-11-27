@@ -27,7 +27,15 @@ import { usePermissions } from "@/hooks/usePermissions";
 import { PERMISSIONS } from "@/lib/permissions";
 import { ProjectSettings } from "../project/ProjectSettings";
 import { GanttChart } from "../gantt/GanttChart";
-import { Settings, X, BarChart3, Eye, EyeOff, Archive, Printer, FileSpreadsheet, PieChart as PieChartIcon } from "lucide-react";
+import { Settings, X, BarChart3, Eye, EyeOff, Archive, Printer, FileSpreadsheet, PieChart as PieChartIcon, Menu } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel
+} from "@/components/ui/dropdown-menu";
 import dynamic from "next/dynamic";
 
 const ProjectStatisticsModal = dynamic(
@@ -986,92 +994,157 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                 availableColumns={columns.map(col => ({ id: col.id, name: col.name }))}
               />
             </div>
-            {/* Show Archived Tasks Toggle */}
-            <Button
-              onClick={() => setShowArchivedTasks(!showArchivedTasks)}
-              variant="ghost"
-              size="sm"
-              className={`bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showArchivedTasks ? 'bg-amber-50 text-amber-600 border-amber-200' : ''}`}
-              title={showArchivedTasks ? "Volver a tareas activas" : "Ver tareas archivadas"}
-            >
-              <Archive className="w-4 h-4 mr-2" />
-              {showArchivedTasks ? "Activas" : "Archivadas"}
-            </Button>
-            {/* Show Hidden Tasks Toggle */}
-            <Button
-              onClick={() => setShowHiddenTasks(!showHiddenTasks)}
-              variant="ghost"
-              size="sm"
-              className={`bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showHiddenTasks ? 'bg-blue-50 text-blue-600 border-blue-200' : ''}`}
-              title={showHiddenTasks ? "Ocultar tareas escondidas" : "Mostrar tareas escondidas"}
-            >
-              {showHiddenTasks ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
-              {showHiddenTasks ? "Ocultar" : "Mostrar"}
-            </Button>
-            <Button
-              onClick={() => setViewMode(viewMode === 'kanban' ? 'gantt' : 'kanban')}
-              variant="ghost"
-              size="sm"
-              className={`${viewMode === 'gantt'
-                ? 'bg-blue-500 text-white hover:bg-blue-600'
-                : 'bg-white text-slate-700 hover:bg-slate-100'
-                } border border-slate-200 shadow-sm transition-all`}
-            >
-              <BarChart3 className="w-4 h-4 mr-2" />
-              {viewMode === 'kanban' ? 'Ganttifícalo' : 'Kanban'}
-            </Button>
-            {viewMode === 'gantt' && (
+            {/* Desktop Controls */}
+            <div className="hidden md:flex items-center gap-2">
+              {/* Show Archived Tasks Toggle */}
               <Button
-                onClick={() => window.print()}
+                onClick={() => setShowArchivedTasks(!showArchivedTasks)}
                 variant="ghost"
                 size="sm"
-                className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
-                title="Imprimir Gantt a PDF"
+                className={`bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showArchivedTasks ? 'bg-amber-50 text-amber-600 border-amber-200' : ''}`}
+                title={showArchivedTasks ? "Volver a tareas activas" : "Ver tareas archivadas"}
               >
-                <Printer className="w-4 h-4 mr-2" />
-                Imprimir
+                <Archive className="w-4 h-4 mr-2" />
+                {showArchivedTasks ? "Activas" : "Archivadas"}
               </Button>
-            )}
-            {viewMode === 'gantt' && (
+              {/* Show Hidden Tasks Toggle */}
               <Button
-                onClick={handleExportExcel}
+                onClick={() => setShowHiddenTasks(!showHiddenTasks)}
                 variant="ghost"
                 size="sm"
-                className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
-                title="Descargar Excel"
+                className={`bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showHiddenTasks ? 'bg-blue-50 text-blue-600 border-blue-200' : ''}`}
+                title={showHiddenTasks ? "Ocultar tareas escondidas" : "Mostrar tareas escondidas"}
               >
-                <FileSpreadsheet className="w-4 h-4 mr-2" />
-                Excel
+                {showHiddenTasks ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
+                {showHiddenTasks ? "Ocultar" : "Mostrar"}
               </Button>
-            )}
-
-            {/* Statistics Button */}
-            <Button
-              onClick={() => setIsStatsModalOpen(true)}
-              variant="ghost"
-              size="sm"
-              className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
-              title="Ver Estadísticas"
-            >
-              <PieChartIcon className="w-4 h-4 mr-2" />
-              Estadísticas
-            </Button>
-            {can(PERMISSIONS.MANAGE_PROJECT) && (
-              <>
+              <Button
+                onClick={() => setViewMode(viewMode === 'kanban' ? 'gantt' : 'kanban')}
+                variant="ghost"
+                size="sm"
+                className={`${viewMode === 'gantt'
+                  ? 'bg-blue-500 text-white hover:bg-blue-600'
+                  : 'bg-white text-slate-700 hover:bg-slate-100'
+                  } border border-slate-200 shadow-sm transition-all`}
+              >
+                <BarChart3 className="w-4 h-4 mr-2" />
+                {viewMode === 'kanban' ? 'Ganttifícalo' : 'Kanban'}
+              </Button>
+              {viewMode === 'gantt' && (
                 <Button
-                  onClick={() => setIsSettingsOpen(true)}
+                  onClick={() => window.print()}
                   variant="ghost"
                   size="sm"
-                  className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm"
+                  className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+                  title="Imprimir Gantt a PDF"
                 >
-                  <Settings className="w-4 h-4 mr-2" />
-                  Settings
+                  <Printer className="w-4 h-4 mr-2" />
+                  Imprimir
                 </Button>
-                {/* Add Column Button - Only for Managers */}
-                {can(PERMISSIONS.MANAGE_PROJECT) && (
-                  <Button onClick={handleAddColumn} className="btn-primary">Add Column</Button>
-                )}
-              </>
+              )}
+              {viewMode === 'gantt' && (
+                <Button
+                  onClick={handleExportExcel}
+                  variant="ghost"
+                  size="sm"
+                  className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+                  title="Descargar Excel"
+                >
+                  <FileSpreadsheet className="w-4 h-4 mr-2" />
+                  Excel
+                </Button>
+              )}
+
+              {/* Statistics Button */}
+              <Button
+                onClick={() => setIsStatsModalOpen(true)}
+                variant="ghost"
+                size="sm"
+                className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+                title="Ver Estadísticas"
+              >
+                <PieChartIcon className="w-4 h-4 mr-2" />
+                Estadísticas
+              </Button>
+              {can(PERMISSIONS.MANAGE_PROJECT) && (
+                <>
+                  <div className="w-px h-6 bg-slate-200 mx-1" />
+                  <Button
+                    onClick={() => setIsSettingsOpen(true)}
+                    variant="ghost"
+                    size="icon"
+                    className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+                    title="Configuración del Proyecto"
+                  >
+                    <Settings className="w-4 h-4" />
+                  </Button>
+                </>
+              )}
+            </div>
+
+            {/* Mobile Controls (Hamburger Menu) */}
+            <div className="md:hidden">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="bg-white border border-slate-200 shadow-sm">
+                    <Menu className="h-5 w-5 text-slate-700" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>Opciones de Vista</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+
+                  <DropdownMenuItem onClick={() => setViewMode(viewMode === 'kanban' ? 'gantt' : 'kanban')}>
+                    <BarChart3 className="w-4 h-4 mr-2" />
+                    {viewMode === 'kanban' ? 'Ver Gantt' : 'Ver Kanban'}
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem onClick={() => setIsStatsModalOpen(true)}>
+                    <PieChartIcon className="w-4 h-4 mr-2" />
+                    Estadísticas
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+
+                  <DropdownMenuItem onClick={() => setShowArchivedTasks(!showArchivedTasks)}>
+                    <Archive className="w-4 h-4 mr-2" />
+                    {showArchivedTasks ? "Ver Activas" : "Ver Archivadas"}
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem onClick={() => setShowHiddenTasks(!showHiddenTasks)}>
+                    {showHiddenTasks ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
+                    {showHiddenTasks ? "Ocultar Escondidas" : "Mostrar Escondidas"}
+                  </DropdownMenuItem>
+
+                  {viewMode === 'gantt' && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => window.print()}>
+                        <Printer className="w-4 h-4 mr-2" />
+                        Imprimir PDF
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleExportExcel}>
+                        <FileSpreadsheet className="w-4 h-4 mr-2" />
+                        Exportar Excel
+                      </DropdownMenuItem>
+                    </>
+                  )}
+
+                  {can(PERMISSIONS.MANAGE_PROJECT) && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => setIsSettingsOpen(true)}>
+                        <Settings className="w-4 h-4 mr-2" />
+                        Configuración
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            {/* Add Column Button - Only for Managers */}
+            {can(PERMISSIONS.MANAGE_PROJECT) && (
+              <Button onClick={handleAddColumn} className="btn-primary">Add Column</Button>
             )}
           </div>
         </div>
@@ -1093,7 +1166,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                 onDragEnd={onDragEnd}
                 onDragOver={onDragOver}
               >
-                <div className="h-full overflow-x-auto overflow-y-hidden px-8 pt-8 pb-10 bg-neutral-50">
+                <div className="h-full overflow-x-auto overflow-y-hidden px-8 pt-8 pb-10 bg-neutral-50 snap-x snap-mandatory">
                   <SortableContext items={columnsId}>
                     <div className="flex gap-4 h-full">
                       {columns.map((col) => {
@@ -1103,25 +1176,26 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                           .sort((a, b) => (a.sortKey || "").localeCompare(b.sortKey || ""));
 
                         return (
-                          <Column
-                            key={col.id}
-                            id={col.id}
-                            title={col.name}
-                            color={col.color}
-                            cardColor={col.cardColor}
-                            tasks={columnTasks}
-                            onEditName={handleEditColumnName}
-                            onDelete={handleDeleteColumn}
-                            onCreateTask={handleCreateTask}
-                            onTaskClick={handleTaskClick}
-                            onColorChange={handleColorChange}
-                            onProgressChange={handleProgressChange} // Pass handler
-                            collapsedTasks={collapsedTasks}
-                            onToggleCollapse={toggleTaskCollapse}
-                            onToggleHide={toggleTaskHide}
-                            hiddenTasks={hiddenTasks}
-                            onToggleGanttVisibility={handleToggleGanttVisibility} // New prop
-                          />
+                          <div key={col.id} className="snap-center h-full">
+                            <Column
+                              id={col.id}
+                              title={col.name}
+                              color={col.color}
+                              cardColor={col.cardColor}
+                              tasks={columnTasks}
+                              onEditName={handleEditColumnName}
+                              onDelete={handleDeleteColumn}
+                              onCreateTask={handleCreateTask}
+                              onTaskClick={handleTaskClick}
+                              onColorChange={handleColorChange}
+                              onProgressChange={handleProgressChange} // Pass handler
+                              collapsedTasks={collapsedTasks}
+                              onToggleCollapse={toggleTaskCollapse}
+                              onToggleHide={toggleTaskHide}
+                              hiddenTasks={hiddenTasks}
+                              onToggleGanttVisibility={handleToggleGanttVisibility} // New prop
+                            />
+                          </div>
                         );
                       })}
                     </div>

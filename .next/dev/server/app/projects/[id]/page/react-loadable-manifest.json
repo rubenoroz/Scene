@@ -2,11 +2,11 @@
   "[project]/src/components/kanban/KanbanBoard.tsx [app-client] (ecmascript, next/dynamic entry)": {
     "id": "[project]/src/components/kanban/KanbanBoard.tsx [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/src_ebacb8f1._.js",
+      "static/chunks/src_8f98d6bb._.js",
       "static/chunks/src_db4dea62._.js",
       "static/chunks/node_modules_@dnd-kit_core_dist_core_esm_3ed85ea0.js",
       "static/chunks/node_modules_tailwind-merge_dist_bundle-mjs_mjs_56b6fd65._.js",
-      "static/chunks/node_modules_7047ea1c._.js",
+      "static/chunks/node_modules_7a452730._.js",
       "static/chunks/src_components_kanban_KanbanBoard_tsx_3a5d2cff._.js",
       "static/chunks/node_modules_recharts_es6_util_4563f499._.js",
       "static/chunks/node_modules_recharts_es6_state_426d5d8d._.js",
@@ -15,11 +15,11 @@
       "static/chunks/node_modules_recharts_es6_5ed54b90._.js",
       "static/chunks/node_modules_92e9224b._.js",
       "static/chunks/src_components_kanban_ProjectStatisticsModal_tsx_7c9f1b1d._.js",
-      "static/chunks/src_components_kanban_ProjectStatisticsModal_tsx_150790e6._.js",
+      "static/chunks/src_components_kanban_ProjectStatisticsModal_tsx_8e3c586f._.js",
       "static/chunks/node_modules_exceljs_dist_exceljs_min_d665e1fe.js",
       "static/chunks/node_modules_file-saver_dist_FileSaver_min_577b4807.js",
       "static/chunks/src_lib_excel_ts_1a604cb8._.js",
-      "static/chunks/src_lib_excel_ts_6da2f9d2._.js"
+      "static/chunks/src_lib_excel_ts_089a1e27._.js"
     ]
   }
 }
