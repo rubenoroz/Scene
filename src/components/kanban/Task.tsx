@@ -221,26 +221,20 @@ export function Task({
             <span>Progreso</span>
             <span>{progress || 0}%</span>
           </div>
-          <div
-            className="w-full bg-gray-200 rounded-full h-1.5 cursor-pointer relative group transition-all duration-200 hover:h-2"
-            onClick={(e) => {
-              e.stopPropagation();
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const width = rect.width;
-              const newProgress = Math.round((x / width) * 100);
-              // Clamp between 0 and 100
-              const clampedProgress = Math.min(100, Math.max(0, newProgress));
-              if (onProgressChange) onProgressChange(id, clampedProgress);
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="5"
+            value={progress || 0}
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()} // Prevent drag conflict with dnd-kit
+            onChange={(e) => {
+              const newProgress = parseInt(e.target.value, 10);
+              if (onProgressChange) onProgressChange(id, newProgress);
             }}
-          >
-            <div
-              className="bg-blue-500 h-1.5 rounded-full transition-all duration-500 ease-out group-hover:h-2"
-              style={{ width: `${progress || 0}%` }}
-            ></div>
-            {/* Hover effect to show potential progress */}
-            <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-10 rounded-full transition-all duration-300"></div>
-          </div>
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-all"
+          />
         </div>
         <button
           onClick={(e) => {

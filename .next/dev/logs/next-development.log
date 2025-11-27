@@ -1975,3 +1975,17 @@ Import trace:
     ./src/app/projects/[id]/page.tsx [Client Component Browser]
     ./src/app/projects/[id]/page.tsx [Server Component]
 [04:24:25.735] Server  LOG      ✓ Compiled in 603ms
+[04:34:32.323] Server  LOG     JWT Callback - Token: {}
+[04:34:32.326] Server  LOG     JWT Callback - User: undefined
+[04:34:32.330] Server  LOG     Session Callback - Session: {}
+[04:34:32.387] Server  LOG     Session Callback - Token: {}
+[04:34:36.104] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:34:36.737] Server  LOG     JWT Callback - Token: {}
+[04:34:36.738] Server  LOG     JWT Callback - User: undefined
+[04:34:36.738] Server  LOG     Session Callback - Session: {}
+[04:34:36.739] Server  LOG     Session Callback - Token: {}
+[04:34:37.282] Server  LOG     JWT Callback - Token: {}
+[04:34:37.282] Server  LOG     JWT Callback - User: undefined
+[04:34:37.282] Server  LOG     Session Callback - Session: {}
+[04:34:37.283] Server  LOG     Session Callback - Token: {}
+[04:34:50.310] Server  LOG      ✓ Compiled in 893ms

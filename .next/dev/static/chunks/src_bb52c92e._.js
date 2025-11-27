@@ -313,38 +313,20 @@ function Task({ id, title, onClick, subtasksCount = 0, level = 0, priority, assi
                                 lineNumber: 220,
                                 columnNumber: 11
                             }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "w-full bg-gray-200 rounded-full h-1.5 cursor-pointer relative group transition-all duration-200 hover:h-2",
-                                onClick: (e)=>{
-                                    e.stopPropagation();
-                                    const rect = e.currentTarget.getBoundingClientRect();
-                                    const x = e.clientX - rect.left;
-                                    const width = rect.width;
-                                    const newProgress = Math.round(x / width * 100);
-                                    // Clamp between 0 and 100
-                                    const clampedProgress = Math.min(100, Math.max(0, newProgress));
-                                    if (onProgressChange) onProgressChange(id, clampedProgress);
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                type: "range",
+                                min: "0",
+                                max: "100",
+                                step: "5",
+                                value: progress || 0,
+                                onClick: (e)=>e.stopPropagation(),
+                                onPointerDown: (e)=>e.stopPropagation(),
+                                onChange: (e)=>{
+                                    const newProgress = parseInt(e.target.value, 10);
+                                    if (onProgressChange) onProgressChange(id, newProgress);
                                 },
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "bg-blue-500 h-1.5 rounded-full transition-all duration-500 ease-out group-hover:h-2",
-                                        style: {
-                                            width: `${progress || 0}%`
-                                        }
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/kanban/Task.tsx",
-                                        lineNumber: 237,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-10 rounded-full transition-all duration-300"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/kanban/Task.tsx",
-                                        lineNumber: 242,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
+                                className: "w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-all"
+                            }, void 0, false, {
                                 fileName: "[project]/src/components/kanban/Task.tsx",
                                 lineNumber: 224,
                                 columnNumber: 11
@@ -367,12 +349,12 @@ function Task({ id, title, onClick, subtasksCount = 0, level = 0, priority, assi
                             className: "transition-transform duration-200"
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/Task.tsx",
-                            lineNumber: 256,
+                            lineNumber: 250,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/kanban/Task.tsx",
-                        lineNumber: 245,
+                        lineNumber: 239,
                         columnNumber: 9
                     }, this)
                 ]
