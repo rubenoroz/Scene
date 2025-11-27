@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -41,8 +42,16 @@ export default function LoginPage() {
             <div className="w-full max-w-md">
                 <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
                     {/* Logo/Header */}
-                    <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-neutral-900 mb-2">Scena</h1>
+                    <div className="text-center mb-8 flex flex-col items-center">
+                        <div className="relative w-48 h-16 mb-4">
+                            <Image
+                                src="/Scena_c.svg"
+                                alt="Scena Logo"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
                         <p className="text-neutral-500">Iniciar Sesión</p>
                     </div>
 

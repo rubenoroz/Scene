@@ -4007,3 +4007,44 @@ Import trace:
     ./src/app/projects/[id]/page.tsx [Client Component Browser]
     ./src/app/projects/[id]/page.tsx [Server Component]
 [05:33:05.710] Server  LOG      ✓ Compiled in 686ms
+[06:47:48.672] Server  LOG     prisma:error "Error in PostgreSQL connection: Error { kind: Closed, cause: None }"
+[07:09:00.616] Server  LOG      ✓ Compiled in 439ms
+[07:09:11.115] Server  LOG      ✓ Compiled in 426ms
+[07:09:12.206] Browser ERROR   uncaughtError: ReferenceError: UserMenu is not defined
+[07:09:27.579] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[07:09:27.585] Server  LOG      ✓ Compiled in 161ms
+[07:09:28.637] Server  WARN    [next-auth][warn][DEBUG_ENABLED] "\nhttps://next-auth.js.org/warnings#debug_enabled"
+[07:09:28.721] Server  LOG     JWT Callback - Token: {}
+[07:09:28.723] Server  LOG     JWT Callback - User: undefined
+[07:09:28.727] Server  LOG     Session Callback - Session: {}
+[07:09:28.728] Server  LOG     Session Callback - Token: {}
+[07:09:33.968] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[07:09:35.902] Server  LOG     JWT Callback - Token: {}
+[07:09:35.904] Server  LOG     JWT Callback - User: undefined
+[07:09:35.905] Server  LOG     Session Callback - Session: {}
+[07:09:35.906] Server  LOG     Session Callback - Token: {}
+[07:09:36.132] Server  LOG     JWT Callback - Token: {}
+[07:09:36.132] Server  LOG     JWT Callback - User: undefined
+[07:09:36.135] Server  LOG     Session Callback - Session: {}
+[07:09:36.136] Server  LOG     Session Callback - Token: {}
+[07:09:38.136] Browser ERROR   uncaughtError: ReferenceError: UserMenu is not defined
+[07:09:42.833] Server  LOG      ✓ Compiled in 1614ms
+[07:09:42.918] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[07:09:47.031] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[07:09:47.252] Server  LOG     JWT Callback - Token: {}
+[07:09:47.252] Server  LOG     JWT Callback - User: undefined
+[07:09:47.253] Server  LOG     Session Callback - Session: {}
+[07:09:47.253] Server  LOG     Session Callback - Token: {}
+[07:09:47.283] Server  LOG     JWT Callback - Token: {}
+[07:09:47.283] Server  LOG     JWT Callback - User: undefined
+[07:09:47.284] Server  LOG     Session Callback - Session: {}
+[07:09:47.284] Server  LOG     Session Callback - Token: {}
+[07:12:56.824] Server  LOG      ✓ Compiled in 336ms
+[07:12:59.512] Server  LOG      ✓ Compiled in 166ms
+[07:13:08.765] Server  LOG      ✓ Compiled in 412ms
+[07:13:35.772] Server  LOG      ✓ Compiled in 237ms
+[07:14:25.772] Server  LOG     JWT Callback - Token: {}
+[07:14:25.773] Server  LOG     JWT Callback - User: undefined
+[07:14:25.774] Server  LOG     Session Callback - Session: {}
+[07:14:25.776] Server  LOG     Session Callback - Token: {}
+[07:16:05.931] Server  LOG      ✓ Compiled in 250ms

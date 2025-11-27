@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Archive, Trash2, Copy, Undo2, MoreVertical } from "lucide-react";
 import {
@@ -12,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { UserMenu } from "@/components/user/UserMenu";
 
 interface Project {
   id: string;
@@ -121,17 +123,31 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-neutral-50">
       <div className="px-8 pt-12 pb-10 text-neutral-800 font-sans">
+
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl font-bold tracking-tight text-neutral-900">Mis Proyectos</h1>
-            <p className="text-neutral-500 mt-1">Gestiona y organiza todos tus proyectos</p>
+          <div className="flex items-center gap-4">
+            <div className="relative w-20 h-20">
+              <Image
+                src="/Scena_i.svg"
+                alt="Scena Icon"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight text-neutral-900">Mis Proyectos</h1>
+              <p className="text-neutral-500 mt-1">Gestiona y organiza todos tus proyectos</p>
+            </div>
           </div>
-          <Link href="/projects/new">
-            <button className="px-4 py-2 rounded-lg bg-blue-200 text-neutral-900 font-medium hover:bg-blue-300 transition-all text-sm">
-              Nuevo proyecto
-            </button>
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/projects/new">
+              <button className="px-4 py-2 rounded-lg bg-blue-200 text-neutral-900 font-medium hover:bg-blue-300 transition-all text-sm">
+                Nuevo proyecto
+              </button>
+            </Link>
+            <UserMenu />
+          </div>
         </div>
 
         {/* View Toggle */}

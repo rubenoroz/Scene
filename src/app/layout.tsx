@@ -5,6 +5,9 @@ import Providers from "./providers";
 export const metadata: Metadata = {
   title: "Scena - The Visual Tracker",
   description: "Visual and collaborative project management.",
+  icons: {
+    icon: "/Scena_i.svg",
+  },
 };
 
 export default function RootLayout({
