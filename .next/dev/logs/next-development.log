@@ -1992,3 +1992,520 @@ Import trace:
 [04:41:46.801] Server  LOG      ✓ Compiled in 358ms
 [04:45:23.669] Server  LOG      ✓ Compiled in 2.1s
 [04:45:49.366] Server  LOG      ✓ Compiled in 395ms
+[05:13:48.784] Browser ERROR   ./src/components/kanban/ProjectStatisticsModal.tsx:98:27
+Parsing ecmascript source code failed
+   96 |             <button
+   97 |               onClick={() => setViewMode('status')}
+>  98 |               className={`px - 3 py - 1.5 rounded - md text - xs sm: text - sm font - medium transition - all flex items - center gap - 2 whitespace - nowrap ${
+      |                           ^^
+   99 |     viewMode === 'status'
+  100 |         ? 'bg-white text-blue-600 shadow-sm'
+  101 |         : 'text-gray-500 hover:text-gray-700'
+
+Expected ';', '}' or <eof>
+
+Import trace:
+  Client Component Browser:
+    ./src/components/kanban/ProjectStatisticsModal.tsx [Client Component Browser]
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+[05:14:29.022] Server  LOG      ✓ Compiled in 1796ms
+[05:20:31.764] Browser ERROR   ./src/components/kanban/KanbanBoard.tsx:967:1
+Parsing ecmascript source code failed
+   965 |   : null;
+   966 |
+>  967 | return (
+       | ^^^^^^^^
+>  968 |   <div>
+       | ^^^^^^^
+>  969 |     <div className="flex flex-col h-screen">
+       | ^^^^^^^
+>  970 |       {/* Header - Always visible */}
+       | ^^^^^^^
+>  971 |       <div className="header">
+       | ^^^^^^^
+>  972 |         <Link href="/dashboard" className="header-title hover:text-gray-300 transition-colors">
+       | ^^^^^^^
+>  973 |           {"< Project"}
+       | ^^^^^^^
+>  974 |         </Link>
+       | ^^^^^^^
+>  975 |         <div className="flex items-center gap-2">
+       | ^^^^^^^
+>  976 |           {/* Filter Bar integrated into header */}
+       | ^^^^^^^
+>  977 |           <div className="mr-4">
+       | ^^^^^^^
+>  978 |             <FilterBar
+       | ^^^^^^^
+>  979 |               projectId={projectId}
+       | ^^^^^^^
+>  980 |               currentUserId={session?.user?.id || ""}
+       | ^^^^^^^
+>  981 |               activeFilter={activeFilter}
+       | ^^^^^^^
+>  982 |               onFilterChange={(filter, criteria) => {
+       | ^^^^^^^
+>  983 |                 setActiveFilter(filter);
+       | ^^^^^^^
+>  984 |                 setCustomFilterCriteria(criteria || null);
+       | ^^^^^^^
+>  985 |               }}
+       | ^^^^^^^
+>  986 |               availableUsers={projectUsers}
+       | ^^^^^^^
+>  987 |               availableColumns={columns.map(col => ({ id: col.id, name: col.name }))}
+       | ^^^^^^^
+>  988 |             />
+       | ^^^^^^^
+>  989 |           </div>
+       | ^^^^^^^
+>  990 |           {/* Show Archived Tasks Toggle */}
+       | ^^^^^^^
+>  991 |           <Button
+       | ^^^^^^^
+>  992 |             onClick={() => setShowArchivedTasks(!showArchivedTasks)}
+       | ^^^^^^^
+>  993 |             variant="ghost"
+       | ^^^^^^^
+>  994 |             size="sm"
+       | ^^^^^^^
+>  995 |             className={`bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showArchivedTasks ? 'bg-amber-50 text-amber-600 border-amber-200' : ''}`}
+       | ^^^^^^^
+>  996 |             title={showArchivedTasks ? "Volver a tareas activas" : "Ver tareas archivadas"}
+       | ^^^^^^^
+>  997 |           >
+       | ^^^^^^^
+>  998 |             <Archive className="w-4 h-4 mr-2" />
+       | ^^^^^^^
+>  999 |             {showArchivedTasks ? "Activas" : "Archivadas"}
+       | ^^^^^^^
+> 1000 |           </Button>
+       | ^^^^^^^
+> 1001 |           {/* Show Hidden Tasks Toggle */}
+       | ^^^^^^^
+> 1002 |           <Button
+       | ^^^^^^^
+> 1003 |             onClick={() => setShowHiddenTasks(!showHiddenTasks)}
+       | ^^^^^^^
+> 1004 |             variant="ghost"
+       | ^^^^^^^
+> 1005 |             size="sm"
+       | ^^^^^^^
+> 1006 |             className={`bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showHiddenTasks ? 'bg-blue-50 text-blue-600 border-blue-200' : ''}`}
+       | ^^^^^^^
+> 1007 |             title={showHiddenTasks ? "Ocultar tareas escondidas" : "Mostrar tareas escondidas"}
+       | ^^^^^^^
+> 1008 |           >
+       | ^^^^^^^
+> 1009 |             {showHiddenTasks ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
+       | ^^^^^^^
+> 1010 |             {showHiddenTasks ? "Ocultar" : "Mostrar"}
+       | ^^^^^^^
+> 1011 |           </Button>
+       | ^^^^^^^
+> 1012 |           <Button
+       | ^^^^^^^
+> 1013 |             onClick={() => setViewMode(viewMode === 'kanban' ? 'gantt' : 'kanban')}
+       | ^^^^^^^
+> 1014 |             variant="ghost"
+       | ^^^^^^^
+> 1015 |             size="sm"
+       | ^^^^^^^
+> 1016 |             className={`${viewMode === 'gantt'
+       | ^^^^^^^
+> 1017 |               ? 'bg-blue-500 text-white hover:bg-blue-600'
+       | ^^^^^^^
+> 1018 |               : 'bg-white text-slate-700 hover:bg-slate-100'
+       | ^^^^^^^
+> 1019 |               } border border-slate-200 shadow-sm transition-all`}
+       | ^^^^^^^
+> 1020 |           >
+       | ^^^^^^^
+> 1021 |             <BarChart3 className="w-4 h-4 mr-2" />
+       | ^^^^^^^
+> 1022 |             {viewMode === 'kanban' ? 'Ganttifícalo' : 'Kanban'}
+       | ^^^^^^^
+> 1023 |           </Button>
+       | ^^^^^^^
+> 1024 |           {viewMode === 'gantt' && (
+       | ^^^^^^^
+> 1025 |             <Button
+       | ^^^^^^^
+> 1026 |               onClick={() => window.print()}
+       | ^^^^^^^
+> 1027 |               variant="ghost"
+       | ^^^^^^^
+> 1028 |               size="sm"
+       | ^^^^^^^
+> 1029 |               className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+       | ^^^^^^^
+> 1030 |               title="Imprimir Gantt a PDF"
+       | ^^^^^^^
+> 1031 |             >
+       | ^^^^^^^
+> 1032 |               <Printer className="w-4 h-4 mr-2" />
+       | ^^^^^^^
+> 1033 |               Imprimir
+       | ^^^^^^^
+> 1034 |             </Button>
+       | ^^^^^^^
+> 1035 |           )}
+       | ^^^^^^^
+> 1036 |           {viewMode === 'gantt' && (
+       | ^^^^^^^
+> 1037 |             <Button
+       | ^^^^^^^
+> 1038 |               onClick={handleExportExcel}
+       | ^^^^^^^
+> 1039 |               variant="ghost"
+       | ^^^^^^^
+> 1040 |               size="sm"
+       | ^^^^^^^
+> 1041 |               className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+       | ^^^^^^^
+> 1042 |               title="Descargar Excel"
+       | ^^^^^^^
+> 1043 |             >
+       | ^^^^^^^
+> 1044 |               <FileSpreadsheet className="w-4 h-4 mr-2" />
+       | ^^^^^^^
+> 1045 |               Excel
+       | ^^^^^^^
+> 1046 |             </Button>
+       | ^^^^^^^
+> 1047 |           )}
+       | ^^^^^^^
+> 1048 |
+       | ^^^^^^^
+> 1049 |           {/* Statistics Button */}
+       | ^^^^^^^
+> 1050 |           <Button
+       | ^^^^^^^
+> 1051 |             onClick={() => setIsStatsModalOpen(true)}
+       | ^^^^^^^
+> 1052 |             variant="ghost"
+       | ^^^^^^^
+> 1053 |             size="sm"
+       | ^^^^^^^
+> 1054 |             className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+       | ^^^^^^^
+> 1055 |             title="Ver Estadísticas"
+       | ^^^^^^^
+> 1056 |           >
+       | ^^^^^^^
+> 1057 |             <PieChartIcon className="w-4 h-4 mr-2" />
+       | ^^^^^^^
+> 1058 |             Estadísticas
+       | ^^^^^^^
+> 1059 |           </Button>
+       | ^^^^^^^
+> 1060 |           {can(PERMISSIONS.MANAGE_PROJECT) && (
+       | ^^^^^^^
+> 1061 |             <>
+       | ^^^^^^^
+> 1062 |               <Button
+       | ^^^^^^^
+> 1063 |                 onClick={() => setIsSettingsOpen(true)}
+       | ^^^^^^^
+> 1064 |                 variant="ghost"
+       | ^^^^^^^
+> 1065 |                 size="sm"
+       | ^^^^^^^
+> 1066 |                 className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm"
+       | ^^^^^^^
+> 1067 |               >
+       | ^^^^^^^
+> 1068 |                 <Settings className="w-4 h-4 mr-2" />
+       | ^^^^^^^
+> 1069 |                 Settings
+       | ^^^^^^^
+> 1070 |               </Button>
+       | ^^^^^^^
+> 1071 |               {/* Add Column Button - Only for Managers */}
+       | ^^^^^^^
+> 1072 |               {can(PERMISSIONS.MANAGE_PROJECT) && (
+       | ^^^^^^^
+> 1073 |                 <Button onClick={handleAddColumn} className="btn-primary">Add Column</Button>
+       | ^^^^^^^
+> 1074 |               )}
+       | ^^^^^^^
+> 1075 |             </>
+       | ^^^^^^^
+> 1076 |           )}
+       | ^^^^^^^
+> 1077 |         </div>
+       | ^^^^^^^
+> 1078 |       </div>
+       | ^^^^^^^
+> 1079 |
+       | ^^^^^^^
+> 1080 |       {/* Content Area - Show loading only if initial load */}
+       | ^^^^^^^
+> 1081 |       {!fetchedColumns && columns.length === 0 ? (
+       | ^^^^^^^
+> 1082 |         <div className="flex-1 flex items-center justify-center">
+       | ^^^^^^^
+> 1083 |           <div>Loading...</div>
+       | ^^^^^^^
+> 1084 |         </div>
+       | ^^^^^^^
+> 1085 |       ) : (
+       | ^^^^^^^
+> 1086 |         <div className="flex-1 overflow-hidden">
+       | ^^^^^^^
+> 1087 |
+       | ^^^^^^^
+> 1088 |           {/* Conditional View: Kanban or Gantt */}
+       | ^^^^^^^
+> 1089 |           {viewMode === 'kanban' ? (
+       | ^^^^^^^
+> 1090 |             <DndContext
+       | ^^^^^^^
+> 1091 |               sensors={sensors}
+       | ^^^^^^^
+> 1092 |               collisionDetection={pointerWithin}
+       | ^^^^^^^
+> 1093 |               onDragStart={onDragStart}
+       | ^^^^^^^
+> 1094 |               onDragEnd={onDragEnd}
+       | ^^^^^^^
+> 1095 |               onDragOver={onDragOver}
+       | ^^^^^^^
+> 1096 |             >
+       | ^^^^^^^
+> 1097 |               <div className="h-full overflow-x-auto overflow-y-hidden px-8 pt-8 pb-10 bg-neutral-50">
+       | ^^^^^^^
+> 1098 |                 <SortableContext items={columnsId}>
+       | ^^^^^^^
+> 1099 |                   <div className="flex gap-4 h-full">
+       | ^^^^^^^
+> 1100 |                     {columns.map((col) => {
+       | ^^^^^^^
+> 1101 |                       // Filter tasks for this column
+       | ^^^^^^^
+> 1102 |                       const columnTasks = visibleTasks
+       | ^^^^^^^
+> 1103 |                         .filter(task => task.columnId === col.id && filteredTaskIds.has(task.id))
+       | ^^^^^^^
+> 1104 |                         .sort((a, b) => (a.sortKey || "").localeCompare(b.sortKey || ""));
+       | ^^^^^^^
+> 1105 |
+       | ^^^^^^^
+> 1106 |                       return (
+       | ^^^^^^^
+> 1107 |                         <Column
+       | ^^^^^^^
+> 1108 |                           key={col.id}
+       | ^^^^^^^
+> 1109 |                           id={col.id}
+       | ^^^^^^^
+> 1110 |                           title={col.name}
+       | ^^^^^^^
+> 1111 |                           color={col.color}
+       | ^^^^^^^
+> 1112 |                           cardColor={col.cardColor}
+       | ^^^^^^^
+> 1113 |                           tasks={columnTasks}
+       | ^^^^^^^
+> 1114 |                           onEditName={handleEditColumnName}
+       | ^^^^^^^
+> 1115 |                           onDelete={handleDeleteColumn}
+       | ^^^^^^^
+> 1116 |                           onCreateTask={handleCreateTask}
+       | ^^^^^^^
+> 1117 |                           onTaskClick={handleTaskClick}
+       | ^^^^^^^
+> 1118 |                           onColorChange={handleColorChange}
+       | ^^^^^^^
+> 1119 |                           onProgressChange={handleProgressChange} // Pass handler
+       | ^^^^^^^
+> 1120 |                           collapsedTasks={collapsedTasks}
+       | ^^^^^^^
+> 1121 |                           onToggleCollapse={toggleTaskCollapse}
+       | ^^^^^^^
+> 1122 |                           onToggleHide={toggleTaskHide}
+       | ^^^^^^^
+> 1123 |                           hiddenTasks={hiddenTasks}
+       | ^^^^^^^
+> 1124 |                           onToggleGanttVisibility={handleToggleGanttVisibility} // New prop
+       | ^^^^^^^
+> 1125 |                         />
+       | ^^^^^^^
+> 1126 |                       );
+       | ^^^^^^^
+> 1127 |                     })}
+       | ^^^^^^^
+> 1128 |                   </div>
+       | ^^^^^^^
+> 1129 |                 </SortableContext>
+       | ^^^^^^^
+> 1130 |               </div>
+       | ^^^^^^^
+> 1131 |               {createPortal(
+       | ^^^^^^^
+> 1132 |                 <DragOverlay>
+       | ^^^^^^^
+> 1133 |                   {activeItem && activeItem.data.current?.type === "Task" && activeTaskContent ? (
+       | ^^^^^^^
+> 1134 |                     <Task
+       | ^^^^^^^
+> 1135 |                       id={activeTaskContent.id}
+       | ^^^^^^^
+> 1136 |                       title={activeTaskContent.title} // Pass title here
+       | ^^^^^^^
+> 1137 |                       subtasksCount={activeTaskContent.children?.length || 0}
+       | ^^^^^^^
+> 1138 |                     />
+       | ^^^^^^^
+> 1139 |                   ) : null}
+       | ^^^^^^^
+> 1140 |                   {activeItem && activeItem.data.current?.type === "Column" ? (
+       | ^^^^^^^
+> 1141 |                     <div className="column dragging">
+       | ^^^^^^^
+> 1142 |                       <h2 className="column-title">{findColumn(activeItem.id.toString())?.name}</h2>
+       | ^^^^^^^
+> 1143 |                       {/* Optionally render tasks in the dragged column */}
+       | ^^^^^^^
+> 1144 |                     </div>
+       | ^^^^^^^
+> 1145 |                   ) : null}
+       | ^^^^^^^
+> 1146 |                 </DragOverlay>,
+       | ^^^^^^^
+> 1147 |                 document.body
+       | ^^^^^^^
+> 1148 |               )}
+       | ^^^^^^^
+> 1149 |             </DndContext>
+       | ^^^^^^^
+> 1150 |           ) : (
+       | ^^^^^^^
+> 1151 |             <div className="h-full px-8 pt-8 pb-10 gantt-print-container">
+       | ^^^^^^^
+> 1152 |               <GanttChart
+       | ^^^^^^^
+> 1153 |                 tasks={tasks}
+       | ^^^^^^^
+> 1154 |                 columns={columns}
+       | ^^^^^^^
+> 1155 |                 onTaskClick={handleTaskClick}
+       | ^^^^^^^
+> 1156 |                 visibleTasks={visibleTasks} // Pass visible tasks to Gantt
+       | ^^^^^^^
+> 1157 |               />
+       | ^^^^^^^
+> 1158 |             </div>
+       | ^^^^^^^
+> 1159 |           )}
+       | ^^^^^^^
+> 1160 |         </div>
+       | ^^^^^^^
+> 1161 |       )}
+       | ^^^^^^^
+> 1162 |     </div>
+       | ^^^^^^^
+> 1163 |
+       | ^^^^^^^
+> 1164 |     {/* Modals */}
+       | ^^^^^^^
+> 1165 |     <ProjectStatisticsModal
+       | ^^^^^^^
+> 1166 |       isOpen={isStatsModalOpen}
+       | ^^^^^^^
+> 1167 |       onClose={() => setIsStatsModalOpen(false)}
+       | ^^^^^^^
+> 1168 |       tasks={tasks}
+       | ^^^^^^^
+> 1169 |     />
+       | ^^^^^^^
+> 1170 |
+       | ^^^^^^^
+> 1171 |     {selectedTask && isModalOpen && (
+       | ^^^^^^^
+> 1172 |       <TaskDetailModal
+       | ^^^^^^^
+> 1173 |         key={selectedTask.id}
+       | ^^^^^^^
+> 1174 |         task={selectedTask}
+       | ^^^^^^^
+> 1175 |         onClose={handleCloseModal}
+       | ^^^^^^^
+> 1176 |         onTaskUpdate={handleTaskUpdate}
+       | ^^^^^^^
+> 1177 |         availableUsers={projectUsers}
+       | ^^^^^^^
+> 1178 |       />
+       | ^^^^^^^
+> 1179 |     )}
+       | ^^^^^^^
+> 1180 |
+       | ^^^^^^^
+> 1181 |     {isSettingsOpen && createPortal(
+       | ^^^^^^^
+> 1182 |       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+       | ^^^^^^^
+> 1183 |         <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative">
+       | ^^^^^^^
+> 1184 |           <button
+       | ^^^^^^^
+> 1185 |             onClick={() => setIsSettingsOpen(false)}
+       | ^^^^^^^
+> 1186 |             className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+       | ^^^^^^^
+> 1187 |           >
+       | ^^^^^^^
+> 1188 |             <X size={24} />
+       | ^^^^^^^
+> 1189 |           </button>
+       | ^^^^^^^
+> 1190 |           <div className="p-6">
+       | ^^^^^^^
+> 1191 |             <ProjectSettings projectId={projectId} />
+       | ^^^^^^^
+> 1192 |           </div>
+       | ^^^^^^^
+> 1193 |         </div>
+       | ^^^^^^^
+> 1194 |       </div>,
+       | ^^^^^^^
+> 1195 |       document.body
+       | ^^^^^^^
+> 1196 |     )}
+       | ^^^^^^^
+> 1197 |
+       | ^^^^^^^
+> 1198 |     {selectedTask && isModalOpen && (
+       | ^^^^^^^
+> 1199 |       <TaskDetailModal
+       | ^^^^^^^
+> 1200 |         key={selectedTask.id}
+       | ^^^^^^^
+> 1201 |         task={selectedTask}
+       | ^^^^^^^
+> 1202 |         onClose={handleCloseModal}
+       | ^^^^^^^
+> 1203 |         onTaskUpdate={handleTaskUpdate}
+       | ^^^^^^^
+> 1204 |         availableUsers={projectUsers}
+       | ^^^^^^^
+> 1205 |       />
+       | ^^^^^^^
+> 1206 |     )}
+       | ^^^^^^^
+> 1207 |   </div>
+       | ^^^^^^^
+> 1208 | );
+       | ^^^
+  1209 | }
+
+Return statement is not allowed here
+
+Import trace:
+  Client Component Browser:
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+[05:21:21.878] Server  LOG      ✓ Compiled in 2.4s

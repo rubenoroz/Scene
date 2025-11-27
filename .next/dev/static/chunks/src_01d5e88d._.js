@@ -6386,12 +6386,24 @@ __turbopack_context__.s([
     ()=>ProjectStatisticsModal
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$PieChart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/chart/PieChart.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$polar$2f$Pie$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/polar/Pie.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Cell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/component/Cell.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/component/ResponsiveContainer.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/component/Tooltip.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Legend$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/component/Legend.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$BarChart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/chart/BarChart.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Bar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/Bar.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/XAxis.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/YAxis.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$CartesianGrid$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/recharts/es6/cartesian/CartesianGrid.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/x.js [app-client] (ecmascript) <export default as X>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$list$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__List$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/list.js [app-client] (ecmascript) <export default as List>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check.js [app-client] (ecmascript) <export default as CheckCircle2>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chart-column.js [app-client] (ecmascript) <export default as BarChart3>");
+;
+var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
@@ -6400,7 +6412,9 @@ const COLORS = {
     inProgress: '#3b82f6',
     notStarted: '#94a3b8'
 };
-function ProjectStatisticsModal({ isOpen, onClose, tasks }) {
+function ProjectStatisticsModal({ isOpen, onClose, tasks, columns = [] }) {
+    _s();
+    const [viewMode, setViewMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('status');
     if (!isOpen) return null;
     // Filter for subtasks (tasks that have a parentId)
     const subtasks = tasks.filter((task)=>task.parentId);
@@ -6408,8 +6422,10 @@ function ProjectStatisticsModal({ isOpen, onClose, tasks }) {
     if (totalSubtasks === 0) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm",
+            onClick: onClose,
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative animate-in fade-in zoom-in duration-200",
+                onClick: (e)=>e.stopPropagation(),
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: onClose,
@@ -6418,12 +6434,12 @@ function ProjectStatisticsModal({ isOpen, onClose, tasks }) {
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                            lineNumber: 32,
+                            lineNumber: 35,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                        lineNumber: 28,
+                        lineNumber: 31,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -6431,7 +6447,7 @@ function ProjectStatisticsModal({ isOpen, onClose, tasks }) {
                         children: "Estadísticas del Proyecto"
                     }, void 0, false, {
                         fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                        lineNumber: 34,
+                        lineNumber: 37,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6439,26 +6455,27 @@ function ProjectStatisticsModal({ isOpen, onClose, tasks }) {
                         children: "No hay subtareas para analizar aún."
                     }, void 0, false, {
                         fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                        lineNumber: 35,
+                        lineNumber: 38,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                lineNumber: 27,
+                lineNumber: 30,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-            lineNumber: 26,
+            lineNumber: 29,
             columnNumber: 13
         }, this);
     }
-    // Calculate stats
+    // --- Data Preparation ---
+    // 1. By Status
     const completed = subtasks.filter((t)=>(t.progress || 0) === 100).length;
     const notStarted = subtasks.filter((t)=>(t.progress || 0) === 0).length;
     const inProgress = totalSubtasks - completed - notStarted;
-    const data = [
+    const dataByStatus = [
         {
             name: 'Completadas',
             value: completed,
@@ -6475,11 +6492,27 @@ function ProjectStatisticsModal({ isOpen, onClose, tasks }) {
             color: COLORS.notStarted
         }
     ].filter((item)=>item.value > 0);
+    // 2. By List (Column) - Distribution & Performance
+    const dataByList = columns.map((col)=>{
+        const tasksInCol = subtasks.filter((t)=>t.columnId === col.id);
+        const count = tasksInCol.length;
+        // Calculate average progress
+        const totalProgress = tasksInCol.reduce((sum, t)=>sum + (t.progress || 0), 0);
+        const avgProgress = count > 0 ? Math.round(totalProgress / count) : 0;
+        return {
+            name: col.name,
+            value: count,
+            avgProgress: avgProgress,
+            color: col.color || '#cbd5e1',
+            taskCount: count
+        };
+    }).filter((item)=>viewMode === 'list_performance' ? true : item.value > 0); // Keep all columns for bar chart, filter empty for pie
+    const activeData = viewMode === 'status' ? dataByStatus : dataByList;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm",
         onClick: onClose,
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "bg-white rounded-xl shadow-xl w-full max-w-2xl p-6 relative animate-in fade-in zoom-in duration-200",
+            className: "bg-white rounded-xl shadow-xl w-full max-w-3xl p-6 relative animate-in fade-in zoom-in duration-200",
             onClick: (e)=>e.stopPropagation(),
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -6489,180 +6522,80 @@ function ProjectStatisticsModal({ isOpen, onClose, tasks }) {
                         size: 20
                     }, void 0, false, {
                         fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                        lineNumber: 62,
+                        lineNumber: 87,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                    lineNumber: 58,
-                    columnNumber: 17
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                    className: "text-xl font-bold text-gray-800 mb-6",
-                    children: "Progreso de Subtareas"
-                }, void 0, false, {
-                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                    lineNumber: 65,
+                    lineNumber: 83,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex flex-col md:flex-row items-center gap-8",
+                    className: "flex flex-col md:flex-row items-start md:items-center justify-between mb-6 pr-8 gap-4",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "w-full md:w-1/2 h-64",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
-                                width: "100%",
-                                height: "100%",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$PieChart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PieChart"], {
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$polar$2f$Pie$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Pie"], {
-                                            data: data,
-                                            cx: "50%",
-                                            cy: "50%",
-                                            innerRadius: 60,
-                                            outerRadius: 80,
-                                            paddingAngle: 5,
-                                            dataKey: "value",
-                                            children: data.map((entry, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Cell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Cell"], {
-                                                    fill: entry.color
-                                                }, `cell-${index}`, false, {
-                                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                                    lineNumber: 82,
-                                                    columnNumber: 41
-                                                }, this))
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                            lineNumber: 72,
-                                            columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Tooltip"], {
-                                            formatter: (value)=>[
-                                                    `${value} tareas`,
-                                                    'Cantidad'
-                                                ],
-                                            contentStyle: {
-                                                borderRadius: '8px',
-                                                border: 'none',
-                                                boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
-                                            }
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                            lineNumber: 85,
-                                            columnNumber: 33
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                    lineNumber: 71,
-                                    columnNumber: 29
-                                }, this)
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                lineNumber: 70,
-                                columnNumber: 25
-                            }, this)
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                            className: "text-xl font-bold text-gray-800",
+                            children: "Progreso de Subtareas"
                         }, void 0, false, {
                             fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                            lineNumber: 69,
+                            lineNumber: 91,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "w-full md:w-1/2 space-y-4",
+                            className: "flex bg-gray-100 p-1 rounded-lg overflow-x-auto max-w-full",
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-slate-50 p-4 rounded-lg",
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: ()=>setViewMode('status'),
+                                    className: `px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap ${viewMode === 'status' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`,
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-sm text-gray-500 mb-1",
-                                            children: "Total de Subtareas"
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
+                                            size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                            lineNumber: 96,
+                                            lineNumber: 102,
                                             columnNumber: 29
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-3xl font-bold text-gray-800",
-                                            children: totalSubtasks
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                            lineNumber: 97,
-                                            columnNumber: 29
-                                        }, this)
+                                        "Por Estado"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
                                     lineNumber: 95,
                                     columnNumber: 25
                                 }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "space-y-3",
-                                    children: data.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex items-center justify-between",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "flex items-center gap-2",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "w-3 h-3 rounded-full",
-                                                            style: {
-                                                                backgroundColor: item.color
-                                                            }
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                                            lineNumber: 104,
-                                                            columnNumber: 41
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-sm font-medium text-gray-700",
-                                                            children: item.name
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                                            lineNumber: 105,
-                                                            columnNumber: 41
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                                    lineNumber: 103,
-                                                    columnNumber: 37
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "flex items-center gap-3",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-sm font-bold text-gray-800",
-                                                            children: item.value
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                                            lineNumber: 108,
-                                                            columnNumber: 41
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-xs text-gray-500 w-12 text-right",
-                                                            children: [
-                                                                Math.round(item.value / totalSubtasks * 100),
-                                                                "%"
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                                            lineNumber: 109,
-                                                            columnNumber: 41
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                                    lineNumber: 107,
-                                                    columnNumber: 37
-                                                }, this)
-                                            ]
-                                        }, item.name, true, {
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: ()=>setViewMode('list_distribution'),
+                                    className: `px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap ${viewMode === 'list_distribution' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`,
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$list$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__List$3e$__["List"], {
+                                            size: 16
+                                        }, void 0, false, {
                                             fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                            lineNumber: 102,
-                                            columnNumber: 33
-                                        }, this))
-                                }, void 0, false, {
+                                            lineNumber: 112,
+                                            columnNumber: 29
+                                        }, this),
+                                        "Por Lista"
+                                    ]
+                                }, void 0, true, {
                                     fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                                    lineNumber: 100,
+                                    lineNumber: 105,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    onClick: ()=>setViewMode('list_performance'),
+                                    className: `px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all flex items-center gap-2 whitespace-nowrap ${viewMode === 'list_performance' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`,
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__["BarChart3"], {
+                                            size: 16
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 122,
+                                            columnNumber: 29
+                                        }, this),
+                                        "Rendimiento"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                    lineNumber: 115,
                                     columnNumber: 25
                                 }, this)
                             ]
@@ -6674,21 +6607,325 @@ function ProjectStatisticsModal({ isOpen, onClose, tasks }) {
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-                    lineNumber: 67,
+                    lineNumber: 90,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex flex-col md:flex-row items-center gap-8",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "w-full md:w-3/5 h-72",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
+                                width: "100%",
+                                height: "100%",
+                                children: viewMode === 'list_performance' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$BarChart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BarChart"], {
+                                    data: activeData,
+                                    layout: "vertical",
+                                    margin: {
+                                        left: 20,
+                                        right: 20
+                                    },
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$CartesianGrid$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CartesianGrid"], {
+                                            strokeDasharray: "3 3",
+                                            horizontal: false
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 134,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["XAxis"], {
+                                            type: "number",
+                                            domain: [
+                                                0,
+                                                100
+                                            ],
+                                            unit: "%"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 135,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["YAxis"], {
+                                            dataKey: "name",
+                                            type: "category",
+                                            width: 100,
+                                            tick: {
+                                                fontSize: 12
+                                            }
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 136,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Tooltip"], {
+                                            formatter: (value)=>[
+                                                    `${value}%`,
+                                                    'Avance Promedio'
+                                                ],
+                                            contentStyle: {
+                                                borderRadius: '8px',
+                                                border: 'none',
+                                                boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                                            }
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 137,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Bar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Bar"], {
+                                            dataKey: "avgProgress",
+                                            radius: [
+                                                0,
+                                                4,
+                                                4,
+                                                0
+                                            ],
+                                            children: activeData.map((entry, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Cell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Cell"], {
+                                                    fill: entry.color
+                                                }, `cell-${index}`, false, {
+                                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                    lineNumber: 143,
+                                                    columnNumber: 45
+                                                }, this))
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 141,
+                                            columnNumber: 37
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                    lineNumber: 133,
+                                    columnNumber: 33
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$PieChart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PieChart"], {
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$polar$2f$Pie$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Pie"], {
+                                            data: activeData,
+                                            cx: "50%",
+                                            cy: "50%",
+                                            innerRadius: 70,
+                                            outerRadius: 90,
+                                            paddingAngle: 5,
+                                            dataKey: "value",
+                                            children: activeData.map((entry, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Cell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Cell"], {
+                                                    fill: entry.color
+                                                }, `cell-${index}`, false, {
+                                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                    lineNumber: 159,
+                                                    columnNumber: 45
+                                                }, this))
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 149,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Tooltip"], {
+                                            formatter: (value, name, props)=>{
+                                                if (viewMode === 'list_distribution') {
+                                                    return [
+                                                        `${value} tareas`,
+                                                        name
+                                                    ];
+                                                }
+                                                return [
+                                                    `${value} tareas`,
+                                                    name
+                                                ];
+                                            },
+                                            contentStyle: {
+                                                borderRadius: '8px',
+                                                border: 'none',
+                                                boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                                            }
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 162,
+                                            columnNumber: 37
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Legend$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Legend"], {
+                                            verticalAlign: "bottom",
+                                            height: 36,
+                                            iconType: "circle"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 174,
+                                            columnNumber: 37
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                    lineNumber: 148,
+                                    columnNumber: 33
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                lineNumber: 131,
+                                columnNumber: 25
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                            lineNumber: 130,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "w-full md:w-2/5 space-y-4 max-h-72 overflow-y-auto pr-2",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "bg-slate-50 p-4 rounded-lg",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-sm text-gray-500 mb-1",
+                                            children: "Total de Subtareas"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 183,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-3xl font-bold text-gray-800",
+                                            children: totalSubtasks
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 184,
+                                            columnNumber: 29
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                    lineNumber: 182,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "space-y-3",
+                                    children: activeData.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "flex items-center justify-between p-2 hover:bg-slate-50 rounded-md transition-colors",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center gap-2 overflow-hidden",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "w-3 h-3 rounded-full flex-shrink-0",
+                                                            style: {
+                                                                backgroundColor: item.color
+                                                            }
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                            lineNumber: 191,
+                                                            columnNumber: 41
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-sm font-medium text-gray-700 truncate",
+                                                            title: item.name,
+                                                            children: item.name
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                            lineNumber: 192,
+                                                            columnNumber: 41
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                    lineNumber: 190,
+                                                    columnNumber: 37
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex flex-col items-end flex-shrink-0 ml-2",
+                                                    children: viewMode === 'list_performance' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-sm font-bold text-gray-800",
+                                                        children: [
+                                                            item.avgProgress,
+                                                            "%"
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                        lineNumber: 197,
+                                                        columnNumber: 45
+                                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "flex items-center gap-2",
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: "text-sm font-bold text-gray-800",
+                                                                        children: item.value
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                                        lineNumber: 201,
+                                                                        columnNumber: 53
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: "text-xs text-gray-500 w-10 text-right",
+                                                                        children: [
+                                                                            Math.round(item.value / totalSubtasks * 100),
+                                                                            "%"
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                                        lineNumber: 202,
+                                                                        columnNumber: 53
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                                lineNumber: 200,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            viewMode === 'list_distribution' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-[10px] text-gray-400",
+                                                                children: [
+                                                                    "Avg: ",
+                                                                    item.avgProgress,
+                                                                    "%"
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                                lineNumber: 207,
+                                                                columnNumber: 53
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                                    lineNumber: 195,
+                                                    columnNumber: 37
+                                                }, this)
+                                            ]
+                                        }, item.name, true, {
+                                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                            lineNumber: 189,
+                                            columnNumber: 33
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                                    lineNumber: 187,
+                                    columnNumber: 25
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                            lineNumber: 181,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
+                    lineNumber: 128,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-            lineNumber: 54,
+            lineNumber: 79,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/kanban/ProjectStatisticsModal.tsx",
-        lineNumber: 53,
+        lineNumber: 78,
         columnNumber: 9
     }, this);
 }
+_s(ProjectStatisticsModal, "7fKiylNaKZVOsmxjOjhmCGEyLh4=");
 _c = ProjectStatisticsModal;
 var _c;
 __turbopack_context__.k.register(_c, "ProjectStatisticsModal");
@@ -6864,1551 +7101,11 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }
 }),
-"[project]/src/components/kanban/KanbanBoard.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
-"use strict";
+"[project]/src/components/kanban/KanbanBoard.tsx [app-client] (ecmascript)", ((__turbopack_context__, module, exports) => {
 
-__turbopack_context__.s([
-    "KanbanBoard",
-    ()=>KanbanBoard
-]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@dnd-kit/core/dist/core.esm.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$sortable$2f$dist$2f$sortable$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@dnd-kit/sortable/dist/sortable.esm.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react-dom/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/swr/dist/index/index.mjs [app-client] (ecmascript) <locals>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-auth/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$Column$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/kanban/Column.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$Task$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/kanban/Task.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$TaskDetailModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/kanban/TaskDetailModal.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$FilterBar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/kanban/FilterBar.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$usePermissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/hooks/usePermissions.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/permissions.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$project$2f$ProjectSettings$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/project/ProjectSettings.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$gantt$2f$GanttChart$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/gantt/GanttChart.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$ProjectStatisticsModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/kanban/ProjectStatisticsModal.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$settings$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Settings$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/settings.js [app-client] (ecmascript) <export default as Settings>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/x.js [app-client] (ecmascript) <export default as X>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chart-column.js [app-client] (ecmascript) <export default as BarChart3>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/eye.js [app-client] (ecmascript) <export default as Eye>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/eye-off.js [app-client] (ecmascript) <export default as EyeOff>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$archive$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Archive$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/archive.js [app-client] (ecmascript) <export default as Archive>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$printer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Printer$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/printer.js [app-client] (ecmascript) <export default as Printer>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$spreadsheet$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileSpreadsheet$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/file-spreadsheet.js [app-client] (ecmascript) <export default as FileSpreadsheet>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$pie$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__PieChart$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chart-pie.js [app-client] (ecmascript) <export default as PieChart>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$excel$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/excel.ts [app-client] (ecmascript)");
-;
-var _s = __turbopack_context__.k.signature();
-"use client";
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-;
-const fetcher = async (url)=>{
-    const res = await fetch(url);
-    if (!res.ok) {
-        const error = new Error('An error occurred while fetching the data.');
-        throw error;
-    }
-    return res.json();
-};
-function KanbanBoard({ projectId }) {
-    _s();
-    const { data: session } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"])();
-    const { can } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$usePermissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePermissions"])(projectId);
-    const { data: fetchedColumns, error: columnsError, mutate: mutateColumns } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"])(`/api/projects/${projectId}/columns`, fetcher, {
-        revalidateOnFocus: true,
-        revalidateOnReconnect: true,
-        refreshInterval: 10000
-    });
-    const { data: fetchedTasks, error: tasksError, mutate: mutateTasks } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"])(`/api/projects/${projectId}/tasks`, fetcher, {
-        revalidateOnFocus: true,
-        revalidateOnReconnect: true,
-        refreshInterval: 10000
-    });
-    // Combined mutate function
-    const mutate = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "KanbanBoard.useCallback[mutate]": async ()=>{
-            await Promise.all([
-                mutateColumns(),
-                mutateTasks()
-            ]);
-        }
-    }["KanbanBoard.useCallback[mutate]"], [
-        mutateColumns,
-        mutateTasks
-    ]);
-    const [columns, setColumns] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [tasks, setTasks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [activeItem, setActiveItem] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [selectedTaskId, setSelectedTaskId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [isModalOpen, setIsModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [activeFilter, setActiveFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("all");
-    const [customFilterCriteria, setCustomFilterCriteria] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [isSettingsOpen, setIsSettingsOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [isStatsModalOpen, setIsStatsModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false); // New state
-    // Collapsed tasks state - persisted in localStorage
-    const [collapsedTasks, setCollapsedTasks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
-        "KanbanBoard.useState": ()=>{
-            if ("TURBOPACK compile-time truthy", 1) {
-                const saved = localStorage.getItem(`collapsed-tasks-${projectId}`);
-                return saved ? new Set(JSON.parse(saved)) : new Set();
-            }
-            //TURBOPACK unreachable
-            ;
-        }
-    }["KanbanBoard.useState"]);
-    // Reconstruct hierarchy from flat tasks
-    const processedData = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "KanbanBoard.useMemo[processedData]": ()=>{
-            if (!fetchedColumns || !fetchedTasks || !Array.isArray(fetchedColumns) || !Array.isArray(fetchedTasks)) {
-                return {
-                    columns: [],
-                    tasks: []
-                };
-            }
-            // 1. Create a map of tasks by ID for easy lookup
-            const taskMap = new Map();
-            fetchedTasks.forEach({
-                "KanbanBoard.useMemo[processedData]": (t)=>{
-                    taskMap.set(t.id, {
-                        ...t,
-                        children: []
-                    }); // Initialize children array
-                }
-            }["KanbanBoard.useMemo[processedData]"]);
-            // 2. Build the tree structure
-            const rootTasks = [];
-            // Sort tasks by order first to ensure children are added in correct order if that matters,
-            // though we usually sort children later.
-            const sortedTasks = [
-                ...fetchedTasks
-            ].sort({
-                "KanbanBoard.useMemo[processedData].sortedTasks": (a, b)=>a.order - b.order
-            }["KanbanBoard.useMemo[processedData].sortedTasks"]);
-            sortedTasks.forEach({
-                "KanbanBoard.useMemo[processedData]": (t)=>{
-                    const task = taskMap.get(t.id);
-                    if (!task) return; // Safety check
-                    if (t.parentId && taskMap.has(t.parentId)) {
-                        const parent = taskMap.get(t.parentId);
-                        parent.children = parent.children || [];
-                        parent.children.push(task);
-                    } else {
-                        rootTasks.push(task);
-                    }
-                }
-            }["KanbanBoard.useMemo[processedData]"]);
-            // 3. Generate sortKey for every task (DFS)
-            const generateSortKey = {
-                "KanbanBoard.useMemo[processedData].generateSortKey": (task, prefix)=>{
-                    // Pad order with leading zeros for string comparison (e.g. 0001, 0002)
-                    // Assuming max order 999999
-                    const orderStr = (task.order || 0).toString().padStart(6, '0');
-                    const currentKey = prefix ? `${prefix}.${orderStr}` : orderStr;
-                    task.sortKey = currentKey;
-                    if (task.children) {
-                        // Sort children by order before processing to ensure correct sequence
-                        task.children.sort({
-                            "KanbanBoard.useMemo[processedData].generateSortKey": (a, b)=>a.order - b.order
-                        }["KanbanBoard.useMemo[processedData].generateSortKey"]);
-                        task.children.forEach({
-                            "KanbanBoard.useMemo[processedData].generateSortKey": (child)=>generateSortKey(child, currentKey)
-                        }["KanbanBoard.useMemo[processedData].generateSortKey"]);
-                    }
-                }
-            }["KanbanBoard.useMemo[processedData].generateSortKey"];
-            // Sort roots by order first
-            rootTasks.sort({
-                "KanbanBoard.useMemo[processedData]": (a, b)=>a.order - b.order
-            }["KanbanBoard.useMemo[processedData]"]);
-            rootTasks.forEach({
-                "KanbanBoard.useMemo[processedData]": (root)=>generateSortKey(root, "")
-            }["KanbanBoard.useMemo[processedData]"]);
-            // 3. Assign root tasks to columns (for initial column state if needed, though we use visibleTasks mostly)
-            const columnsWithTasks = fetchedColumns.map({
-                "KanbanBoard.useMemo[processedData].columnsWithTasks": (col)=>({
-                        ...col,
-                        tasks: rootTasks.filter({
-                            "KanbanBoard.useMemo[processedData].columnsWithTasks": (t)=>t.columnId === col.id
-                        }["KanbanBoard.useMemo[processedData].columnsWithTasks"]) // sortKey handles order now
-                    })
-            }["KanbanBoard.useMemo[processedData].columnsWithTasks"]);
-            return {
-                columns: columnsWithTasks,
-                tasks: Array.from(taskMap.values())
-            };
-        }
-    }["KanbanBoard.useMemo[processedData]"], [
-        fetchedColumns,
-        fetchedTasks
-    ]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "KanbanBoard.useEffect": ()=>{
-            if (processedData.columns.length > 0) {
-                setColumns(processedData.columns);
-                setTasks(processedData.tasks);
-            }
-        }
-    }["KanbanBoard.useEffect"], [
-        processedData
-    ]);
-    // Hidden tasks state - persisted in localStorage
-    const [hiddenTasks, setHiddenTasks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
-        "KanbanBoard.useState": ()=>{
-            if ("TURBOPACK compile-time truthy", 1) {
-                const saved = localStorage.getItem(`hidden-tasks-${projectId}`);
-                return saved ? new Set(JSON.parse(saved)) : new Set();
-            }
-            //TURBOPACK unreachable
-            ;
-        }
-    }["KanbanBoard.useState"]);
-    const [showHiddenTasks, setShowHiddenTasks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [showArchivedTasks, setShowArchivedTasks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false); // New state for archived tasks
-    const [projectUsers, setProjectUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [viewMode, setViewMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('kanban');
-    // Fetch project users for assignment
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "KanbanBoard.useEffect": ()=>{
-            const fetchProjectUsers = {
-                "KanbanBoard.useEffect.fetchProjectUsers": async ()=>{
-                    try {
-                        const response = await fetch(`/api/projects/${projectId}/users`);
-                        if (response.ok) {
-                            const users = await response.json();
-                            // Extract user objects from the response
-                            setProjectUsers(users.map({
-                                "KanbanBoard.useEffect.fetchProjectUsers": (u)=>u.user
-                            }["KanbanBoard.useEffect.fetchProjectUsers"]));
-                        }
-                    } catch (error) {
-                        console.error("Error fetching project users:", error);
-                    }
-                }
-            }["KanbanBoard.useEffect.fetchProjectUsers"];
-            fetchProjectUsers();
-        }
-    }["KanbanBoard.useEffect"], [
-        projectId
-    ]);
-    const selectedTask = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "KanbanBoard.useMemo[selectedTask]": ()=>tasks.find({
-                "KanbanBoard.useMemo[selectedTask]": (task)=>task.id === selectedTaskId
-            }["KanbanBoard.useMemo[selectedTask]"]) || null
-    }["KanbanBoard.useMemo[selectedTask]"], [
-        tasks,
-        selectedTaskId
-    ]);
-    // Filter tasks based on active filter
-    const filteredTasks = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "KanbanBoard.useMemo[filteredTasks]": ()=>{
-            const currentUserId = session?.user?.id;
-            // Handle custom filters
-            if (customFilterCriteria && activeFilter !== "all" && activeFilter !== "my-tasks" && activeFilter !== "unassigned" && activeFilter !== "overdue" && activeFilter !== "this-week") {
-                return tasks.filter({
-                    "KanbanBoard.useMemo[filteredTasks]": (task)=>{
-                        const { conditions, operator } = customFilterCriteria;
-                        const results = conditions.map({
-                            "KanbanBoard.useMemo[filteredTasks].results": (condition)=>{
-                                switch(condition.field){
-                                    case "assignee":
-                                        if (condition.operator === "equals") {
-                                            return task.assignees?.some({
-                                                "KanbanBoard.useMemo[filteredTasks].results": (a)=>a.id === condition.value
-                                            }["KanbanBoard.useMemo[filteredTasks].results"]);
-                                        }
-                                        if (condition.operator === "isEmpty") {
-                                            return !task.assignees || task.assignees.length === 0;
-                                        }
-                                        if (condition.operator === "isNotEmpty") {
-                                            return task.assignees && task.assignees.length > 0;
-                                        }
-                                        return false;
-                                    case "priority":
-                                        if (condition.operator === "equals") {
-                                            return task.priority === condition.value;
-                                        }
-                                        return false;
-                                    case "tags":
-                                        if (condition.operator === "contains") {
-                                            const tags = task.tags ? JSON.parse(task.tags) : [];
-                                            return tags.some({
-                                                "KanbanBoard.useMemo[filteredTasks].results": (tag)=>tag.name === condition.value
-                                            }["KanbanBoard.useMemo[filteredTasks].results"]);
-                                        }
-                                        return false;
-                                    case "column":
-                                        if (condition.operator === "equals") {
-                                            return task.columnId === condition.value;
-                                        }
-                                        return false;
-                                    case "dueDate":
-                                        if (!task.endDate) return condition.operator === "isEmpty";
-                                        const dueDate = new Date(task.endDate);
-                                        const compareDate = new Date(condition.value);
-                                        if (condition.operator === "before") {
-                                            return dueDate < compareDate;
-                                        }
-                                        if (condition.operator === "after") {
-                                            return dueDate > compareDate;
-                                        }
-                                        if (condition.operator === "isNotEmpty") {
-                                            return !!task.endDate;
-                                        }
-                                        return false;
-                                    case "hasAttachments":
-                                        const hasAttachments = task.attachments && JSON.parse(task.attachments).length > 0;
-                                        return condition.value ? hasAttachments : !hasAttachments;
-                                    case "checklistStatus":
-                                        if (!task.checklist) return false;
-                                        const checklist = JSON.parse(task.checklist);
-                                        const allCompleted = checklist.every({
-                                            "KanbanBoard.useMemo[filteredTasks].results.allCompleted": (item)=>item.completed
-                                        }["KanbanBoard.useMemo[filteredTasks].results.allCompleted"]);
-                                        return condition.value ? allCompleted : !allCompleted;
-                                    default:
-                                        return false;
-                                }
-                            }
-                        }["KanbanBoard.useMemo[filteredTasks].results"]);
-                        return operator === "AND" ? results.every({
-                            "KanbanBoard.useMemo[filteredTasks]": (r)=>r
-                        }["KanbanBoard.useMemo[filteredTasks]"]) : results.some({
-                            "KanbanBoard.useMemo[filteredTasks]": (r)=>r
-                        }["KanbanBoard.useMemo[filteredTasks]"]);
-                    }
-                }["KanbanBoard.useMemo[filteredTasks]"]);
-            }
-            // Handle predefined filters
-            switch(activeFilter){
-                case "my-tasks":
-                    return tasks.filter({
-                        "KanbanBoard.useMemo[filteredTasks]": (task)=>task.assignees?.some({
-                                "KanbanBoard.useMemo[filteredTasks]": (assignee)=>assignee.id === currentUserId
-                            }["KanbanBoard.useMemo[filteredTasks]"])
-                    }["KanbanBoard.useMemo[filteredTasks]"]);
-                case "unassigned":
-                    return tasks.filter({
-                        "KanbanBoard.useMemo[filteredTasks]": (task)=>!task.assignees || task.assignees.length === 0
-                    }["KanbanBoard.useMemo[filteredTasks]"]);
-                case "overdue":
-                    return tasks.filter({
-                        "KanbanBoard.useMemo[filteredTasks]": (task)=>{
-                            if (!task.endDate) return false;
-                            const dueDate = new Date(task.endDate);
-                            return dueDate < new Date();
-                        }
-                    }["KanbanBoard.useMemo[filteredTasks]"]);
-                case "this-week":
-                    return tasks.filter({
-                        "KanbanBoard.useMemo[filteredTasks]": (task)=>{
-                            if (!task.endDate) return false;
-                            const dueDate = new Date(task.endDate);
-                            const weekFromNow = new Date();
-                            weekFromNow.setDate(weekFromNow.getDate() + 7);
-                            return dueDate >= new Date() && dueDate <= weekFromNow;
-                        }
-                    }["KanbanBoard.useMemo[filteredTasks]"]);
-                case "all":
-                default:
-                    return tasks;
-            }
-        }
-    }["KanbanBoard.useMemo[filteredTasks]"], [
-        tasks,
-        activeFilter,
-        customFilterCriteria,
-        session?.user?.id
-    ]);
-    // Effect to sync columns when fetchedColumns changes
-    // Removed: Handled by processedData useMemo and useEffect above
-    // Save collapsed state to localStorage whenever it changes
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "KanbanBoard.useEffect": ()=>{
-            if ("TURBOPACK compile-time truthy", 1) {
-                localStorage.setItem(`collapsed-tasks-${projectId}`, JSON.stringify(Array.from(collapsedTasks)));
-            }
-        }
-    }["KanbanBoard.useEffect"], [
-        collapsedTasks,
-        projectId
-    ]);
-    // Toggle collapse state for a task
-    const toggleTaskCollapse = (taskId)=>{
-        setCollapsedTasks((prev)=>{
-            const newSet = new Set(prev);
-            if (newSet.has(taskId)) {
-                newSet.delete(taskId);
-            } else {
-                newSet.add(taskId);
-            }
-            return newSet;
-        });
-    };
-    // Save hidden state to localStorage whenever it changes
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "KanbanBoard.useEffect": ()=>{
-            if ("TURBOPACK compile-time truthy", 1) {
-                localStorage.setItem(`hidden-tasks-${projectId}`, JSON.stringify(Array.from(hiddenTasks)));
-            }
-        }
-    }["KanbanBoard.useEffect"], [
-        hiddenTasks,
-        projectId
-    ]);
-    // Toggle hidden state for a task
-    const toggleTaskHide = (taskId)=>{
-        setHiddenTasks((prev)=>{
-            const newSet = new Set(prev);
-            if (newSet.has(taskId)) {
-                newSet.delete(taskId);
-            } else {
-                newSet.add(taskId);
-            }
-            return newSet;
-        });
-    };
-    // Memoize task map for O(1) lookup
-    const taskMap = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "KanbanBoard.useMemo[taskMap]": ()=>new Map(tasks.map({
-                "KanbanBoard.useMemo[taskMap]": (t)=>[
-                        t.id,
-                        t
-                    ]
-            }["KanbanBoard.useMemo[taskMap]"]))
-    }["KanbanBoard.useMemo[taskMap]"], [
-        tasks
-    ]);
-    // Filter out subtasks of collapsed parent tasks (only if in same column) AND archived tasks AND hidden tasks
-    const visibleTasks = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "KanbanBoard.useMemo[visibleTasks]": ()=>{
-            return tasks.filter({
-                "KanbanBoard.useMemo[visibleTasks]": (task)=>{
-                    // Handle archived tasks
-                    if (task.isArchived) {
-                        return showArchivedTasks; // Only show if toggle is on
-                    }
-                    // If showing archived tasks, hide non-archived ones
-                    if (showArchivedTasks) return false;
-                    // Hide temporarily hidden tasks (unless showHiddenTasks is true)
-                    if (!showHiddenTasks && hiddenTasks.has(task.id)) return false;
-                    // If task has no parent, it's always visible (unless archived/hidden)
-                    if (!task.parentId) return true;
-                    // Check if any ancestor is collapsed AND in the same column
-                    let currentParentId = task.parentId;
-                    while(currentParentId){
-                        const parent = taskMap.get(currentParentId);
-                        if (!parent) break;
-                        // Only hide if parent is collapsed AND task is in same column as parent
-                        if (collapsedTasks.has(currentParentId) && task.columnId === parent.columnId) {
-                            return false; // Hide if parent is collapsed and in same column
-                        }
-                        currentParentId = parent.parentId || null;
-                    }
-                    return true;
-                }
-            }["KanbanBoard.useMemo[visibleTasks]"]);
-        }
-    }["KanbanBoard.useMemo[visibleTasks]"], [
-        tasks,
-        taskMap,
-        collapsedTasks,
-        hiddenTasks,
-        showHiddenTasks,
-        showArchivedTasks
-    ]);
-    const filteredTaskIds = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "KanbanBoard.useMemo[filteredTaskIds]": ()=>new Set(filteredTasks.map({
-                "KanbanBoard.useMemo[filteredTaskIds]": (t)=>t.id
-            }["KanbanBoard.useMemo[filteredTaskIds]"]))
-    }["KanbanBoard.useMemo[filteredTaskIds]"], [
-        filteredTasks
-    ]);
-    const sensors = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSensors"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSensor"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PointerSensor"], {
-        activationConstraint: {
-            distance: 3
-        }
-    }));
-    const columnsId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "KanbanBoard.useMemo[columnsId]": ()=>{
-            const ids = columns.map({
-                "KanbanBoard.useMemo[columnsId].ids": (col)=>col.id
-            }["KanbanBoard.useMemo[columnsId].ids"]);
-            console.log("useMemo: columnsId updated", ids);
-            return ids;
-        }
-    }["KanbanBoard.useMemo[columnsId]"], [
-        columns
-    ]);
-    const findColumn = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "KanbanBoard.useCallback[findColumn]": (id)=>{
-            return columns.find({
-                "KanbanBoard.useCallback[findColumn]": (col)=>col.id === id
-            }["KanbanBoard.useCallback[findColumn]"]);
-        }
-    }["KanbanBoard.useCallback[findColumn]"], [
-        columns
-    ]);
-    const findTask = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "KanbanBoard.useCallback[findTask]": (id)=>{
-            return tasks.find({
-                "KanbanBoard.useCallback[findTask]": (task)=>task.id === id
-            }["KanbanBoard.useCallback[findTask]"]);
-        }
-    }["KanbanBoard.useCallback[findTask]"], [
-        tasks
-    ]);
-    const onDragStart = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "KanbanBoard.useCallback[onDragStart]": (event)=>{
-            console.log("onDragStart: active", event.active.id, "type", event.active.data.current?.type);
-            setActiveItem(event.active);
-        }
-    }["KanbanBoard.useCallback[onDragStart]"], []);
-    const onDragOver = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "KanbanBoard.useCallback[onDragOver]": (event)=>{
-        // Empty onDragOver to prevent state updates during drag
-        }
-    }["KanbanBoard.useCallback[onDragOver]"], []);
-    const onDragEnd = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "KanbanBoard.useCallback[onDragEnd]": async (event)=>{
-            const { active, over } = event;
-            console.log("onDragEnd: active", active.id, "over", over?.id);
-            setActiveItem(null);
-            if (!over) {
-                console.log("onDragEnd: Dropped outside, calling mutate()");
-                mutate(); // If dropped outside, re-mutate to revert
-                return;
-            }
-            const activeId = active.id.toString();
-            const overId = over.id.toString();
-            if (activeId === overId) return;
-            const isActiveATask = active.data.current?.type === "Task";
-            const isOverATask = over.data.current?.type === "Task";
-            const isActiveAColumn = active.data.current?.type === "Column";
-            const isOverAColumn = over.data.current?.type === "Column";
-            // Handle Column Reordering
-            if (isActiveAColumn && isOverAColumn) {
-                const activeColumnIndex = columns.findIndex({
-                    "KanbanBoard.useCallback[onDragEnd].activeColumnIndex": (col)=>col.id === activeId
-                }["KanbanBoard.useCallback[onDragEnd].activeColumnIndex"]);
-                const overColumnIndex = columns.findIndex({
-                    "KanbanBoard.useCallback[onDragEnd].overColumnIndex": (col)=>col.id === overId
-                }["KanbanBoard.useCallback[onDragEnd].overColumnIndex"]);
-                const newColumns = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$sortable$2f$dist$2f$sortable$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["arrayMove"])(columns, activeColumnIndex, overColumnIndex);
-                setColumns(newColumns);
-                // Update order in backend
-                await Promise.all(newColumns.map({
-                    "KanbanBoard.useCallback[onDragEnd]": async (col, index)=>{
-                        if (col.order !== index) {
-                            await fetch(`/api/projects/${projectId}/columns/${col.id}`, {
-                                method: "PUT",
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-                                body: JSON.stringify({
-                                    order: index
-                                })
-                            });
-                        }
-                    }
-                }["KanbanBoard.useCallback[onDragEnd]"]));
-                console.log("onDragEnd: Column reordered, calling mutate()");
-                mutate(); // Re-mutate to refetch and ensure state consistency
-                return;
-            }
-            // Handle Task Movement within or between Columns
-            if (isActiveATask) {
-                const activeTask = tasks.find({
-                    "KanbanBoard.useCallback[onDragEnd].activeTask": (task)=>task.id === activeId
-                }["KanbanBoard.useCallback[onDragEnd].activeTask"]);
-                if (!activeTask) return;
-                let newColumnId = activeTask.columnId;
-                let newOrder = activeTask.order;
-                // Determine the destination column ID
-                if (isOverATask) {
-                    const overTask = tasks.find({
-                        "KanbanBoard.useCallback[onDragEnd].overTask": (task)=>task.id === overId
-                    }["KanbanBoard.useCallback[onDragEnd].overTask"]);
-                    if (overTask) {
-                        newColumnId = overTask.columnId;
-                    }
-                } else if (isOverAColumn) {
-                    newColumnId = overId;
-                }
-                // Calculate new order for the task
-                const tasksInNewColumn = tasks.filter({
-                    "KanbanBoard.useCallback[onDragEnd].tasksInNewColumn": (t)=>t.columnId === newColumnId && t.id !== activeId
-                }["KanbanBoard.useCallback[onDragEnd].tasksInNewColumn"]);
-                // Special handling for subtasks: if the task has a parent and the parent is in the new column,
-                // position the subtask immediately after its parent
-                if (activeTask.parentId) {
-                    const parentTask = tasks.find({
-                        "KanbanBoard.useCallback[onDragEnd].parentTask": (t)=>t.id === activeTask.parentId
-                    }["KanbanBoard.useCallback[onDragEnd].parentTask"]);
-                    if (parentTask && parentTask.columnId === newColumnId) {
-                        // Find parent's position in the new column
-                        const parentIndex = tasksInNewColumn.findIndex({
-                            "KanbanBoard.useCallback[onDragEnd].parentIndex": (t)=>t.id === activeTask.parentId
-                        }["KanbanBoard.useCallback[onDragEnd].parentIndex"]);
-                        if (parentIndex !== -1) {
-                            // Position subtask right after parent
-                            newOrder = parentIndex + 1;
-                        } else {
-                            // Parent not found in filtered list, use normal logic
-                            if (isOverATask) {
-                                const overTaskIndex = tasksInNewColumn.findIndex({
-                                    "KanbanBoard.useCallback[onDragEnd].overTaskIndex": (t)=>t.id === overId
-                                }["KanbanBoard.useCallback[onDragEnd].overTaskIndex"]);
-                                newOrder = overTaskIndex === -1 ? tasksInNewColumn.length : overTaskIndex;
-                            } else {
-                                newOrder = tasksInNewColumn.length;
-                            }
-                        }
-                    } else {
-                        // Parent is not in the new column, use normal positioning logic
-                        if (isOverATask) {
-                            const overTaskIndex = tasksInNewColumn.findIndex({
-                                "KanbanBoard.useCallback[onDragEnd].overTaskIndex": (t)=>t.id === overId
-                            }["KanbanBoard.useCallback[onDragEnd].overTaskIndex"]);
-                            newOrder = overTaskIndex === -1 ? tasksInNewColumn.length : overTaskIndex;
-                        } else {
-                            newOrder = tasksInNewColumn.length;
-                        }
-                    }
-                } else {
-                    // Not a subtask, use normal positioning logic
-                    if (isOverATask) {
-                        const overTaskIndex = tasksInNewColumn.findIndex({
-                            "KanbanBoard.useCallback[onDragEnd].overTaskIndex": (t)=>t.id === overId
-                        }["KanbanBoard.useCallback[onDragEnd].overTaskIndex"]);
-                        newOrder = overTaskIndex === -1 ? tasksInNewColumn.length : overTaskIndex;
-                    } else {
-                        newOrder = tasksInNewColumn.length;
-                    }
-                }
-                // Optimistic update for tasks array
-                setTasks({
-                    "KanbanBoard.useCallback[onDragEnd]": (prevTasks)=>{
-                        // Find the active task before modifying prevTasks
-                        const activeTaskInPrev = prevTasks.find({
-                            "KanbanBoard.useCallback[onDragEnd].activeTaskInPrev": (task)=>task.id === activeId
-                        }["KanbanBoard.useCallback[onDragEnd].activeTaskInPrev"]);
-                        if (!activeTaskInPrev) return prevTasks; // Should not happen if activeTask is valid
-                        // Check if this task has children (is a parent task)
-                        const hasChildren = activeTaskInPrev.children && activeTaskInPrev.children.length > 0;
-                        const isColumnChanging = activeTaskInPrev.columnId !== newColumnId;
-                        // Create the moved task with its new properties
-                        const movedTask = {
-                            ...activeTaskInPrev,
-                            columnId: newColumnId,
-                            order: newOrder
-                        };
-                        // Filter out the active task from its current position
-                        let tasksWithoutActive = prevTasks.filter({
-                            "KanbanBoard.useCallback[onDragEnd].tasksWithoutActive": (t)=>t.id !== activeId
-                        }["KanbanBoard.useCallback[onDragEnd].tasksWithoutActive"]);
-                        // If moving to a different column and has children, also move ALL descendants recursively
-                        if (isColumnChanging && hasChildren) {
-                            // Recursive function to get all descendant IDs
-                            const getAllDescendantIds = {
-                                "KanbanBoard.useCallback[onDragEnd].getAllDescendantIds": (parentTaskId, allTasks)=>{
-                                    const children = allTasks.filter({
-                                        "KanbanBoard.useCallback[onDragEnd].getAllDescendantIds.children": (t)=>t.parentId === parentTaskId
-                                    }["KanbanBoard.useCallback[onDragEnd].getAllDescendantIds.children"]);
-                                    if (children.length === 0) return [];
-                                    const childIds = children.map({
-                                        "KanbanBoard.useCallback[onDragEnd].getAllDescendantIds.childIds": (c)=>c.id
-                                    }["KanbanBoard.useCallback[onDragEnd].getAllDescendantIds.childIds"]);
-                                    const grandchildIds = childIds.flatMap({
-                                        "KanbanBoard.useCallback[onDragEnd].getAllDescendantIds.grandchildIds": (id)=>getAllDescendantIds(id, allTasks)
-                                    }["KanbanBoard.useCallback[onDragEnd].getAllDescendantIds.grandchildIds"]);
-                                    return [
-                                        ...childIds,
-                                        ...grandchildIds
-                                    ];
-                                }
-                            }["KanbanBoard.useCallback[onDragEnd].getAllDescendantIds"];
-                            const descendantIds = getAllDescendantIds(activeId, prevTasks);
-                            // Update all descendants to the new column
-                            tasksWithoutActive = tasksWithoutActive.map({
-                                "KanbanBoard.useCallback[onDragEnd]": (t)=>{
-                                    if (descendantIds.includes(t.id)) {
-                                        return {
-                                            ...t,
-                                            columnId: newColumnId
-                                        };
-                                    }
-                                    return t;
-                                }
-                            }["KanbanBoard.useCallback[onDragEnd]"]);
-                        }
-                        if (activeTaskInPrev.columnId === newColumnId) {
-                            // Moving within the same column
-                            const columnTasks = tasksWithoutActive.filter({
-                                "KanbanBoard.useCallback[onDragEnd].columnTasks": (t)=>t.columnId === newColumnId
-                            }["KanbanBoard.useCallback[onDragEnd].columnTasks"]).concat(movedTask).sort({
-                                "KanbanBoard.useCallback[onDragEnd].columnTasks": (a, b)=>a.order - b.order
-                            }["KanbanBoard.useCallback[onDragEnd].columnTasks"]).map({
-                                "KanbanBoard.useCallback[onDragEnd].columnTasks": (t, index)=>({
-                                        ...t,
-                                        order: index
-                                    })
-                            }["KanbanBoard.useCallback[onDragEnd].columnTasks"]);
-                            const otherTasks = prevTasks.filter({
-                                "KanbanBoard.useCallback[onDragEnd].otherTasks": (t)=>t.columnId !== newColumnId
-                            }["KanbanBoard.useCallback[onDragEnd].otherTasks"]);
-                            return [
-                                ...otherTasks,
-                                ...columnTasks
-                            ];
-                        } else {
-                            // Moving between different columns
-                            const tasksInSourceColumn = tasksWithoutActive.filter({
-                                "KanbanBoard.useCallback[onDragEnd].tasksInSourceColumn": (t)=>t.columnId === activeTaskInPrev.columnId
-                            }["KanbanBoard.useCallback[onDragEnd].tasksInSourceColumn"]).sort({
-                                "KanbanBoard.useCallback[onDragEnd].tasksInSourceColumn": (a, b)=>a.order - b.order
-                            }["KanbanBoard.useCallback[onDragEnd].tasksInSourceColumn"]) // Ensure stable sort for re-indexing
-                            .map({
-                                "KanbanBoard.useCallback[onDragEnd].tasksInSourceColumn": (t, index)=>({
-                                        ...t,
-                                        order: index
-                                    })
-                            }["KanbanBoard.useCallback[onDragEnd].tasksInSourceColumn"]);
-                            const tasksInDestinationColumn = tasksWithoutActive.filter({
-                                "KanbanBoard.useCallback[onDragEnd].tasksInDestinationColumn": (t)=>t.columnId === newColumnId
-                            }["KanbanBoard.useCallback[onDragEnd].tasksInDestinationColumn"]).concat(movedTask) // Add the moved task to the destination column's tasks
-                            .sort({
-                                "KanbanBoard.useCallback[onDragEnd].tasksInDestinationColumn": (a, b)=>a.order - b.order
-                            }["KanbanBoard.useCallback[onDragEnd].tasksInDestinationColumn"]) // Ensure stable sort for re-indexing
-                            .map({
-                                "KanbanBoard.useCallback[onDragEnd].tasksInDestinationColumn": (t, index)=>({
-                                        ...t,
-                                        order: index
-                                    })
-                            }["KanbanBoard.useCallback[onDragEnd].tasksInDestinationColumn"]);
-                            // Tasks that were not in the source or destination column
-                            const otherTasksUnmodified = prevTasks.filter({
-                                "KanbanBoard.useCallback[onDragEnd].otherTasksUnmodified": (t)=>t.columnId !== activeTaskInPrev.columnId && t.columnId !== newColumnId
-                            }["KanbanBoard.useCallback[onDragEnd].otherTasksUnmodified"]);
-                            // Combine all tasks back into a single array
-                            return [
-                                ...otherTasksUnmodified,
-                                ...tasksInSourceColumn,
-                                ...tasksInDestinationColumn
-                            ];
-                        }
-                    }
-                }["KanbanBoard.useCallback[onDragEnd]"]);
-                // Update server in background
-                try {
-                    const response = await fetch(`/api/projects/${projectId}/tasks/${activeId}`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            columnId: newColumnId,
-                            order: newOrder
-                        })
-                    });
-                    if (!response.ok) {
-                        console.error("onDragEnd: Failed to move task on server");
-                        // Revert optimistic update on failure
-                        mutate();
-                        alert("Failed to move task. Please try again.");
-                        return;
-                    }
-                    console.log("onDragEnd: Task moved successfully on server");
-                    // Revalidate to ensure consistency with server
-                    mutate();
-                } catch (error) {
-                    console.error("onDragEnd: Error moving task", error);
-                    // Revert optimistic update on error
-                    mutate();
-                    alert("An error occurred while moving the task.");
-                }
-                return;
-            }
-            console.log("onDragEnd: No valid drag operation");
-        }
-    }["KanbanBoard.useCallback[onDragEnd]"], [
-        columns,
-        tasks,
-        projectId,
-        mutate
-    ]);
-    // Function to add a new column
-    const handleAddColumn = async ()=>{
-        if (!can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT)) return;
-        const newColumnName = prompt("Enter new column name:");
-        if (newColumnName) {
-            try {
-                const response = await fetch(`/api/projects/${projectId}/columns`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        name: newColumnName
-                    })
-                });
-                if (response.ok) {
-                    console.log("handleAddColumn: Column added successfully, calling mutate()");
-                    mutate(); // Re-fetch data to include the new column
-                } else {
-                    console.error("Failed to add column");
-                }
-            } catch (error) {
-                console.error("Error adding column:", error);
-            }
-        }
-    };
-    // Function to create a new task within a column
-    const handleCreateTask = async (columnId)=>{
-        if (!can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].CREATE_TASK)) return;
-        const newTaskTitle = prompt("Enter new task title:");
-        if (newTaskTitle) {
-            // Optimistic update
-            const tempId = `temp-${Date.now()}`;
-            const tempTask = {
-                id: tempId,
-                title: newTaskTitle,
-                columnId,
-                projectId,
-                order: tasks.filter((t)=>t.columnId === columnId).length,
-                assignees: []
-            };
-            const originalTasks = tasks;
-            setTasks([
-                ...tasks,
-                tempTask
-            ]);
-            try {
-                const response = await fetch(`/api/projects/${projectId}/tasks`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        title: newTaskTitle,
-                        columnId
-                    })
-                });
-                if (response.ok) {
-                    console.log("handleCreateTask: Task added successfully, calling mutate()");
-                    mutate(); // Re-fetch data to include the new task with real ID
-                } else {
-                    console.error("Failed to add task");
-                    setTasks(originalTasks); // Revert on failure
-                    alert("Failed to create task.");
-                }
-            } catch (error) {
-                console.error("Error adding task:", error);
-                setTasks(originalTasks); // Revert on error
-                alert("Error creating task.");
-            }
-        }
-    };
-    const handleEditColumnName = async (columnId, currentName)=>{
-        if (!can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT)) return;
-        const newName = prompt("Edit column name:", currentName);
-        if (newName && newName !== currentName) {
-            try {
-                const response = await fetch(`/api/projects/${projectId}/columns/${columnId}`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        name: newName
-                    })
-                });
-                if (response.ok) {
-                    console.log("handleEditColumnName: Column name edited successfully, calling mutate()");
-                    mutate();
-                } else {
-                    console.error("Failed to edit column name");
-                }
-            } catch (error) {
-                console.error("Error editing column name:", error);
-            }
-        }
-    };
-    const handleColorChange = async (columnId, newColumnColor, newCardColor)=>{
-        if (!can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT)) return;
-        // Optimistic update
-        const originalColumns = columns;
-        const newColumns = columns.map((col)=>col.id === columnId ? {
-                ...col,
-                color: newColumnColor,
-                cardColor: newCardColor
-            } : col);
-        setColumns(newColumns);
-        try {
-            const response = await fetch(`/api/projects/${projectId}/columns/${columnId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    color: newColumnColor,
-                    cardColor: newCardColor
-                })
-            });
-            if (!response.ok) {
-                // Revert on failure
-                setColumns(originalColumns);
-                alert("Failed to update column color.");
-            }
-        // No need to call mutate() on success as we already updated optimistically
-        } catch (error) {
-            // Revert on error
-            setColumns(originalColumns);
-            console.error("Error updating column color:", error);
-            alert("An error occurred while updating the color.");
-        }
-    };
-    const handleDeleteColumn = async (columnId)=>{
-        if (!can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT)) return;
-        if (confirm("Are you sure you want to delete this column and all its tasks?")) {
-            try {
-                const response = await fetch(`/api/projects/${projectId}/columns/${columnId}`, {
-                    method: "DELETE"
-                });
-                if (response.ok) {
-                    console.log("handleDeleteColumn: Column deleted successfully, calling mutate()");
-                    mutate();
-                } else {
-                    console.error("Failed to delete column");
-                }
-            } catch (error) {
-                console.error("Error deleting column:", error);
-            }
-        }
-    };
-    const handleTaskClick = (taskId)=>{
-        console.log("Task clicked:", taskId); // Debugging
-        setSelectedTaskId(taskId);
-        setIsModalOpen(true);
-        console.log("isModalOpen set to true"); // Debugging
-    };
-    const handleCloseModal = ()=>{
-        setIsModalOpen(false);
-        setSelectedTaskId(null);
-        console.log("Modal closed"); // Debugging
-    };
-    const handleProgressChange = async (taskId, newProgress)=>{
-        if (!can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].EDIT_ANY_TASK)) {
-            // Check if it's own task
-            const task = tasks.find((t)=>t.id === taskId);
-            const isOwnTask = task?.assignees?.some((a)=>a.id === session?.user?.id);
-            if (!isOwnTask && !can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].EDIT_OWN_TASK)) return;
-        }
-        // Optimistic update
-        const originalTasks = tasks;
-        const updatedTasks = tasks.map((t)=>t.id === taskId ? {
-                ...t,
-                progress: newProgress
-            } : t);
-        setTasks(updatedTasks);
-        try {
-            const response = await fetch(`/api/projects/${projectId}/tasks/${taskId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    progress: newProgress
-                })
-            });
-            if (response.ok) {
-                mutate(); // Re-fetch to ensure consistency (especially for cascade updates)
-            } else {
-                setTasks(originalTasks);
-                console.error("Failed to update progress");
-            }
-        } catch (error) {
-            setTasks(originalTasks);
-            console.error("Error updating progress:", error);
-        }
-    };
-    const handleToggleGanttVisibility = async (taskId)=>{
-        if (!can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].EDIT_ANY_TASK)) {
-            // Check if it's own task
-            const task = tasks.find((t)=>t.id === taskId);
-            const isOwnTask = task?.assignees?.some((a)=>a.id === session?.user?.id);
-            if (!isOwnTask && !can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].EDIT_OWN_TASK)) return;
-        }
-        const task = tasks.find((t)=>t.id === taskId);
-        if (!task) return;
-        const newIsHidden = !task.isHiddenInGantt;
-        // Optimistic update
-        const originalTasks = tasks;
-        const updatedTasks = tasks.map((t)=>t.id === taskId ? {
-                ...t,
-                isHiddenInGantt: newIsHidden
-            } : t);
-        setTasks(updatedTasks);
-        try {
-            const response = await fetch(`/api/projects/${projectId}/tasks/${taskId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    isHiddenInGantt: newIsHidden
-                })
-            });
-            if (!response.ok) {
-                setTasks(originalTasks);
-                console.error("Failed to update Gantt visibility");
-            }
-            // No need to mutate immediately if optimistic update works, but good for consistency
-            mutate();
-        } catch (error) {
-            setTasks(originalTasks);
-            console.error("Error updating Gantt visibility:", error);
-        }
-    };
-    const handleExportExcel = ()=>{
-        // Prepare data for export
-        // We need to flatten the tasks same way Gantt does to preserve order/hierarchy if possible
-        // Or just use the filteredTasks directly.
-        // Let's use filteredTasks but we need to calculate levels if we want indentation.
-        // Actually, let's reuse the flattening logic from GanttChart if we can, 
-        // but that's inside GanttChart. 
-        // For now, let's just export the flat list of filtered tasks.
-        // We can try to reconstruct hierarchy if needed, but flat list is often better for Excel.
-        // However, the utility supports 'level'.
-        // Let's do a simple hierarchy calculation here
-        const taskMap = new Map(filteredTasks.map((t)=>[
-                t.id,
-                t
-            ]));
-        const processedIds = new Set();
-        const exportData = [];
-        const processTask = (task, level)=>{
-            if (processedIds.has(task.id)) return;
-            processedIds.add(task.id);
-            exportData.push({
-                ...task,
-                level
-            });
-            if (task.children) {
-                task.children.forEach((child)=>{
-                    // The children in 'task.children' might not be the full objects if not eager loaded deep enough,
-                    // but filteredTasks should have them.
-                    // Actually, filteredTasks is a flat array.
-                    // We need to find the child in filteredTasks to get its full data.
-                    const fullChild = taskMap.get(child.id);
-                    if (fullChild) {
-                        processTask(fullChild, level + 1);
-                    }
-                });
-            }
-        };
-        // Find roots in the filtered set, excluding hidden tasks
-        const roots = filteredTasks.filter((t)=>(!t.parentId || !taskMap.has(t.parentId)) && !t.isHiddenInGantt);
-        roots.forEach((t)=>processTask(t, 0));
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$excel$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["exportToExcel"])(exportData, columns, "Proyecto");
-    };
-    // Global optimistic update handler for TaskDetailModal
-    const handleTaskUpdate = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "KanbanBoard.useCallback[handleTaskUpdate]": (updatedTaskData)=>{
-            if (updatedTaskData && selectedTaskId) {
-                setTasks({
-                    "KanbanBoard.useCallback[handleTaskUpdate]": (prevTasks)=>prevTasks.map({
-                            "KanbanBoard.useCallback[handleTaskUpdate]": (t)=>t.id === selectedTaskId ? {
-                                    ...t,
-                                    ...updatedTaskData
-                                } : t
-                        }["KanbanBoard.useCallback[handleTaskUpdate]"])
-                }["KanbanBoard.useCallback[handleTaskUpdate]"]);
-            }
-            // Always trigger a background revalidation
-            mutate();
-        }
-    }["KanbanBoard.useCallback[handleTaskUpdate]"], [
-        selectedTaskId,
-        mutate
-    ]);
-    if (columnsError || tasksError) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        children: "Failed to load kanban board."
-    }, void 0, false, {
-        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-        lineNumber: 965,
-        columnNumber: 42
-    }, this);
-    const activeTaskContent = activeItem?.data.current?.type === "Task" ? tasks.find((t)=>t.id === activeItem.id) : null;
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex flex-col h-screen",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "header",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                href: "/dashboard",
-                                className: "header-title hover:text-gray-300 transition-colors",
-                                children: "< Project"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 976,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex items-center gap-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "mr-4",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$FilterBar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FilterBar"], {
-                                            projectId: projectId,
-                                            currentUserId: session?.user?.id || "",
-                                            activeFilter: activeFilter,
-                                            onFilterChange: (filter, criteria)=>{
-                                                setActiveFilter(filter);
-                                                setCustomFilterCriteria(criteria || null);
-                                            },
-                                            availableUsers: projectUsers,
-                                            availableColumns: columns.map((col)=>({
-                                                    id: col.id,
-                                                    name: col.name
-                                                }))
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 982,
-                                            columnNumber: 15
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 981,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                        onClick: ()=>setShowArchivedTasks(!showArchivedTasks),
-                                        variant: "ghost",
-                                        size: "sm",
-                                        className: `bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showArchivedTasks ? 'bg-amber-50 text-amber-600 border-amber-200' : ''}`,
-                                        title: showArchivedTasks ? "Volver a tareas activas" : "Ver tareas archivadas",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$archive$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Archive$3e$__["Archive"], {
-                                                className: "w-4 h-4 mr-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1002,
-                                                columnNumber: 15
-                                            }, this),
-                                            showArchivedTasks ? "Activas" : "Archivadas"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 995,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                        onClick: ()=>setShowHiddenTasks(!showHiddenTasks),
-                                        variant: "ghost",
-                                        size: "sm",
-                                        className: `bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all ${showHiddenTasks ? 'bg-blue-50 text-blue-600 border-blue-200' : ''}`,
-                                        title: showHiddenTasks ? "Ocultar tareas escondidas" : "Mostrar tareas escondidas",
-                                        children: [
-                                            showHiddenTasks ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__["Eye"], {
-                                                className: "w-4 h-4 mr-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1013,
-                                                columnNumber: 34
-                                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__["EyeOff"], {
-                                                className: "w-4 h-4 mr-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1013,
-                                                columnNumber: 69
-                                            }, this),
-                                            showHiddenTasks ? "Ocultar" : "Mostrar"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 1006,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                        onClick: ()=>setViewMode(viewMode === 'kanban' ? 'gantt' : 'kanban'),
-                                        variant: "ghost",
-                                        size: "sm",
-                                        className: `${viewMode === 'gantt' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-white text-slate-700 hover:bg-slate-100'} border border-slate-200 shadow-sm transition-all`,
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__["BarChart3"], {
-                                                className: "w-4 h-4 mr-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1025,
-                                                columnNumber: 15
-                                            }, this),
-                                            viewMode === 'kanban' ? 'Ganttifícalo' : 'Kanban'
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 1016,
-                                        columnNumber: 13
-                                    }, this),
-                                    viewMode === 'gantt' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                        onClick: ()=>window.print(),
-                                        variant: "ghost",
-                                        size: "sm",
-                                        className: "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all",
-                                        title: "Imprimir Gantt a PDF",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$printer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Printer$3e$__["Printer"], {
-                                                className: "w-4 h-4 mr-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1036,
-                                                columnNumber: 17
-                                            }, this),
-                                            "Imprimir"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 1029,
-                                        columnNumber: 15
-                                    }, this),
-                                    viewMode === 'gantt' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                        onClick: handleExportExcel,
-                                        variant: "ghost",
-                                        size: "sm",
-                                        className: "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all",
-                                        title: "Descargar Excel",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$spreadsheet$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileSpreadsheet$3e$__["FileSpreadsheet"], {
-                                                className: "w-4 h-4 mr-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1048,
-                                                columnNumber: 17
-                                            }, this),
-                                            "Excel"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 1041,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                        onClick: ()=>setIsStatsModalOpen(true),
-                                        variant: "ghost",
-                                        size: "sm",
-                                        className: "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all",
-                                        title: "Ver Estadísticas",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$pie$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__PieChart$3e$__["PieChart"], {
-                                                className: "w-4 h-4 mr-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1061,
-                                                columnNumber: 15
-                                            }, this),
-                                            "Estadísticas"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 1054,
-                                        columnNumber: 13
-                                    }, this),
-                                    can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                onClick: ()=>setIsSettingsOpen(true),
-                                                variant: "ghost",
-                                                size: "sm",
-                                                className: "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$settings$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Settings$3e$__["Settings"], {
-                                                        className: "w-4 h-4 mr-2"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                        lineNumber: 1072,
-                                                        columnNumber: 19
-                                                    }, this),
-                                                    "Settings"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1066,
-                                                columnNumber: 17
-                                            }, this),
-                                            can(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$permissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PERMISSIONS"].MANAGE_PROJECT) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                onClick: handleAddColumn,
-                                                className: "btn-primary",
-                                                children: "Add Column"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1077,
-                                                columnNumber: 19
-                                            }, this)
-                                        ]
-                                    }, void 0, true)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 979,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                        lineNumber: 975,
-                        columnNumber: 9
-                    }, this),
-                    !fetchedColumns && columns.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex-1 flex items-center justify-center",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            children: "Loading..."
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1087,
-                            columnNumber: 13
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                        lineNumber: 1086,
-                        columnNumber: 11
-                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex-1 overflow-hidden",
-                        children: viewMode === 'kanban' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DndContext"], {
-                            sensors: sensors,
-                            collisionDetection: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["pointerWithin"],
-                            onDragStart: onDragStart,
-                            onDragEnd: onDragEnd,
-                            onDragOver: onDragOver,
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "h-full overflow-x-auto overflow-y-hidden px-8 pt-8 pb-10 bg-neutral-50",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$sortable$2f$dist$2f$sortable$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SortableContext"], {
-                                        items: columnsId,
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex gap-4 h-full",
-                                            children: columns.map((col)=>{
-                                                // Filter tasks for this column
-                                                const columnTasks = visibleTasks.filter((task)=>task.columnId === col.id && filteredTaskIds.has(task.id)).sort((a, b)=>(a.sortKey || "").localeCompare(b.sortKey || ""));
-                                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$Column$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Column"], {
-                                                    id: col.id,
-                                                    title: col.name,
-                                                    color: col.color,
-                                                    cardColor: col.cardColor,
-                                                    tasks: columnTasks,
-                                                    onEditName: handleEditColumnName,
-                                                    onDelete: handleDeleteColumn,
-                                                    onCreateTask: handleCreateTask,
-                                                    onTaskClick: handleTaskClick,
-                                                    onColorChange: handleColorChange,
-                                                    onProgressChange: handleProgressChange,
-                                                    collapsedTasks: collapsedTasks,
-                                                    onToggleCollapse: toggleTaskCollapse,
-                                                    onToggleHide: toggleTaskHide,
-                                                    hiddenTasks: hiddenTasks,
-                                                    onToggleGanttVisibility: handleToggleGanttVisibility
-                                                }, col.id, false, {
-                                                    fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                    lineNumber: 1111,
-                                                    columnNumber: 27
-                                                }, this);
-                                            })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 1103,
-                                            columnNumber: 21
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                        lineNumber: 1102,
-                                        columnNumber: 19
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                    lineNumber: 1101,
-                                    columnNumber: 17
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createPortal"])(/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DragOverlay"], {
-                                    children: [
-                                        activeItem && activeItem.data.current?.type === "Task" && activeTaskContent ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$Task$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Task"], {
-                                            id: activeTaskContent.id,
-                                            title: activeTaskContent.title,
-                                            subtasksCount: activeTaskContent.children?.length || 0
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 1138,
-                                            columnNumber: 23
-                                        }, this) : null,
-                                        activeItem && activeItem.data.current?.type === "Column" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "column dragging",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                                className: "column-title",
-                                                children: findColumn(activeItem.id.toString())?.name
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                                lineNumber: 1146,
-                                                columnNumber: 25
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                            lineNumber: 1145,
-                                            columnNumber: 23
-                                        }, this) : null
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                    lineNumber: 1136,
-                                    columnNumber: 19
-                                }, this), document.body)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1094,
-                            columnNumber: 15
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "h-full px-8 pt-8 pb-10 gantt-print-container",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$gantt$2f$GanttChart$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["GanttChart"], {
-                                tasks: tasks,
-                                columns: columns,
-                                onTaskClick: handleTaskClick,
-                                visibleTasks: visibleTasks
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 1156,
-                                columnNumber: 17
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1155,
-                            columnNumber: 15
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                        lineNumber: 1090,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 973,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$ProjectStatisticsModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ProjectStatisticsModal"], {
-                isOpen: isStatsModalOpen,
-                onClose: ()=>setIsStatsModalOpen(false),
-                tasks: tasks
-            }, void 0, false, {
-                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 1169,
-                columnNumber: 7
-            }, this),
-            selectedTask && isModalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$TaskDetailModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TaskDetailModal"], {
-                task: selectedTask,
-                onClose: handleCloseModal,
-                onTaskUpdate: handleTaskUpdate,
-                availableUsers: projectUsers
-            }, selectedTask.id, false, {
-                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 1176,
-                columnNumber: 9
-            }, this),
-            isSettingsOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createPortal"])(/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: ()=>setIsSettingsOpen(false),
-                            className: "absolute top-4 right-4 text-gray-500 hover:text-gray-700",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
-                                size: 24
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 1192,
-                                columnNumber: 15
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1188,
-                            columnNumber: 13
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "p-6",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$project$2f$ProjectSettings$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ProjectSettings"], {
-                                projectId: projectId
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                                lineNumber: 1195,
-                                columnNumber: 15
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                            lineNumber: 1194,
-                            columnNumber: 13
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                    lineNumber: 1187,
-                    columnNumber: 11
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 1186,
-                columnNumber: 9
-            }, this), document.body),
-            selectedTask && isModalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$kanban$2f$TaskDetailModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TaskDetailModal"], {
-                task: selectedTask,
-                onClose: handleCloseModal,
-                onTaskUpdate: handleTaskUpdate,
-                availableUsers: projectUsers
-            }, selectedTask.id, false, {
-                fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-                lineNumber: 1203,
-                columnNumber: 9
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/components/kanban/KanbanBoard.tsx",
-        lineNumber: 972,
-        columnNumber: 5
-    }, this);
-}
-_s(KanbanBoard, "WF6jYA59VtcFCmvKgTMJYCDS1G4=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$usePermissions$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePermissions"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swr$2f$dist$2f$index$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$dnd$2d$kit$2f$core$2f$dist$2f$core$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSensors"]
-    ];
-});
-_c = KanbanBoard;
-var _c;
-__turbopack_context__.k.register(_c, "KanbanBoard");
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
-}
+const e = new Error("Could not parse module '[project]/src/components/kanban/KanbanBoard.tsx'\n\nReturn statement is not allowed here");
+e.code = 'MODULE_UNPARSABLE';
+throw e;
 }),
 "[project]/src/components/kanban/KanbanBoard.tsx [app-client] (ecmascript, next/dynamic entry)", ((__turbopack_context__) => {
 

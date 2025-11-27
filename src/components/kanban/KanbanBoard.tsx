@@ -27,9 +27,13 @@ import { usePermissions } from "@/hooks/usePermissions";
 import { PERMISSIONS } from "@/lib/permissions";
 import { ProjectSettings } from "../project/ProjectSettings";
 import { GanttChart } from "../gantt/GanttChart";
-import { ProjectStatisticsModal } from "./ProjectStatisticsModal";
 import { Settings, X, BarChart3, Eye, EyeOff, Archive, Printer, FileSpreadsheet, PieChart as PieChartIcon } from "lucide-react";
-import { exportToExcel } from "@/lib/excel";
+import dynamic from "next/dynamic";
+
+const ProjectStatisticsModal = dynamic(
+  () => import("./ProjectStatisticsModal").then((mod) => mod.ProjectStatisticsModal),
+  { ssr: false }
+);
 
 interface KanbanBoardProps {
   projectId: string;
@@ -901,51 +905,42 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     }
   };
 
-  const handleExportExcel = () => {
-    // Prepare data for export
-    // We need to flatten the tasks same way Gantt does to preserve order/hierarchy if possible
-    // Or just use the filteredTasks directly.
-    // Let's use filteredTasks but we need to calculate levels if we want indentation.
+  const handleExportExcel = async () => {
+    try {
+      const { exportToExcel } = await import("@/lib/excel");
 
-    // Actually, let's reuse the flattening logic from GanttChart if we can, 
-    // but that's inside GanttChart. 
-    // For now, let's just export the flat list of filtered tasks.
-    // We can try to reconstruct hierarchy if needed, but flat list is often better for Excel.
-    // However, the utility supports 'level'.
+      // Calculate hierarchy for export
+      const taskMap = new Map(filteredTasks.map(t => [t.id, t]));
+      const processedIds = new Set<string>();
+      const exportData: any[] = [];
 
-    // Let's do a simple hierarchy calculation here
-    const taskMap = new Map(filteredTasks.map(t => [t.id, t]));
-    const processedIds = new Set<string>();
-    const exportData: any[] = [];
+      const processTask = (task: FetchedTask, level: number) => {
+        if (processedIds.has(task.id)) return;
+        processedIds.add(task.id);
 
-    const processTask = (task: FetchedTask, level: number) => {
-      if (processedIds.has(task.id)) return;
-      processedIds.add(task.id);
+        exportData.push({ ...task, level });
 
-      exportData.push({ ...task, level });
+        if (task.children) {
+          task.children.forEach(child => {
+            const fullChild = taskMap.get(child.id);
+            if (fullChild) {
+              processTask(fullChild, level + 1);
+            }
+          });
+        }
+      };
 
-      if (task.children) {
-        task.children.forEach(child => {
-          // The children in 'task.children' might not be the full objects if not eager loaded deep enough,
-          // but filteredTasks should have them.
-          // Actually, filteredTasks is a flat array.
-          // We need to find the child in filteredTasks to get its full data.
-          const fullChild = taskMap.get(child.id);
-          if (fullChild) {
-            processTask(fullChild, level + 1);
-          }
-        });
-      }
-    };
+      // Find roots in the filtered set, excluding hidden tasks
+      const roots = filteredTasks.filter(t =>
+        (!t.parentId || !taskMap.has(t.parentId)) &&
+        !t.isHiddenInGantt
+      );
+      roots.forEach(t => processTask(t, 0));
 
-    // Find roots in the filtered set, excluding hidden tasks
-    const roots = filteredTasks.filter(t =>
-      (!t.parentId || !taskMap.has(t.parentId)) &&
-      !t.isHiddenInGantt
-    );
-    roots.forEach(t => processTask(t, 0));
-
-    exportToExcel(exportData, columns, "Proyecto");
+      await exportToExcel(exportData, columns, "Proyecto");
+    } catch (error) {
+      console.error("Failed to export excel:", error);
+    }
   };
 
   // Global optimistic update handler for TaskDetailModal
