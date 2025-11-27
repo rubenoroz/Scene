@@ -1195,15 +1195,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
         document.body
       )}
 
-      {selectedTask && isModalOpen && (
-        <TaskDetailModal
-          key={selectedTask.id}
-          task={selectedTask}
-          onClose={handleCloseModal}
-          onTaskUpdate={handleTaskUpdate}
-          availableUsers={projectUsers}
-        />
-      )}
+
     </div>
   );
 }
