@@ -1957,3 +1957,21 @@ Import trace:
 [04:12:07.294] Server  LOG      ✓ Compiled in 1054ms
 [04:12:09.541] Server  LOG      ✓ Compiled in 385ms
 [04:12:33.838] Server  LOG      ✓ Compiled in 331ms
+[04:23:18.802] Browser ERROR   ./src/components/kanban/KanbanBoard.tsx:162:3
+Parsing ecmascript source code failed
+  160 |   };
+  161 |
+> 162 |   export function KanbanBoard({ projectId }: KanbanBoardProps) {
+      |   ^^^^^^
+  163 |     const { data: session } = useSession();
+  164 |     const { can } = usePermissions(projectId);
+  165 |     const { data: fetchedColumns, error: columnsError, mutate: mutateColumns } = useSWR<FetchedColumn[]>(
+
+'import', and 'export' cannot be used outside of module code
+
+Import trace:
+  Client Component Browser:
+    ./src/components/kanban/KanbanBoard.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Client Component Browser]
+    ./src/app/projects/[id]/page.tsx [Server Component]
+[04:24:25.735] Server  LOG      ✓ Compiled in 603ms

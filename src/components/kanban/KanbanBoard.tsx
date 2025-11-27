@@ -52,8 +52,15 @@ type FetchedTask = {
   endDate?: string | null;
   progress?: number;
   isArchived?: boolean;
-  isHiddenInGantt?: boolean; // Add isHiddenInGantt
+  isHiddenInGantt?: boolean;
+  sortKey?: string; // Added for hierarchical sorting
 };
+
+// ... (FetchedColumn type remains same)
+
+// ... (fetcher remains same)
+
+
 
 type FetchedColumn = {
   id: string;
@@ -151,10 +158,30 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       }
     });
 
-    // 3. Assign root tasks to columns
+    // 3. Generate sortKey for every task (DFS)
+    const generateSortKey = (task: FetchedTask, prefix: string) => {
+      // Pad order with leading zeros for string comparison (e.g. 0001, 0002)
+      // Assuming max order 999999
+      const orderStr = (task.order || 0).toString().padStart(6, '0');
+      const currentKey = prefix ? `${prefix}.${orderStr}` : orderStr;
+
+      task.sortKey = currentKey;
+
+      if (task.children) {
+        // Sort children by order before processing to ensure correct sequence
+        task.children.sort((a, b) => a.order - b.order);
+        task.children.forEach(child => generateSortKey(child, currentKey));
+      }
+    };
+
+    // Sort roots by order first
+    rootTasks.sort((a, b) => a.order - b.order);
+    rootTasks.forEach(root => generateSortKey(root, ""));
+
+    // 3. Assign root tasks to columns (for initial column state if needed, though we use visibleTasks mostly)
     const columnsWithTasks = fetchedColumns.map(col => ({
       ...col,
-      tasks: rootTasks.filter(t => t.columnId === col.id).sort((a, b) => a.order - b.order)
+      tasks: rootTasks.filter(t => t.columnId === col.id) // sortKey handles order now
     }));
 
     return { columns: columnsWithTasks, tasks: Array.from(taskMap.values()) };
@@ -1064,7 +1091,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                         // Filter tasks for this column
                         const columnTasks = visibleTasks
                           .filter(task => task.columnId === col.id && filteredTaskIds.has(task.id))
-                          .sort((a, b) => a.order - b.order);
+                          .sort((a, b) => (a.sortKey || "").localeCompare(b.sortKey || ""));
 
                         return (
                           <Column

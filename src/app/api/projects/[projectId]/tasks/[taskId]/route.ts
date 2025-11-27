@@ -172,24 +172,29 @@ export async function PUT(
       }
     }
 
-    // Handle progress aggregation for parent task
+    // Handle progress aggregation for ALL ancestors (recursive)
     if (currentTask.parentId) {
-      const parentId = currentTask.parentId;
+      let currentParentId: string | null = currentTask.parentId;
 
-      // Optimize: Use aggregate to calculate average progress in DB
-      const aggregations = await prisma.task.aggregate({
-        where: { parentId: parentId },
-        _avg: { progress: true },
-        _count: { progress: true }
-      });
+      while (currentParentId) {
+        // 1. Calculate average progress for the current parent's children
+        const aggregations = await prisma.task.aggregate({
+          where: { parentId: currentParentId },
+          _avg: { progress: true },
+        });
 
-      const averageProgress = Math.round(aggregations._avg.progress || 0);
+        const averageProgress = Math.round(aggregations._avg.progress || 0);
 
-      // Update parent task progress
-      await prisma.task.update({
-        where: { id: parentId },
-        data: { progress: averageProgress }
-      });
+        // 2. Update the current parent
+        const updatedParent: { parentId: string | null } = await prisma.task.update({
+          where: { id: currentParentId },
+          data: { progress: averageProgress },
+          select: { parentId: true } // Fetch the next parent ID
+        });
+
+        // 3. Move up to the next parent
+        currentParentId = updatedParent.parentId;
+      }
     }
 
     // Handle cascade completion if progress is 100
