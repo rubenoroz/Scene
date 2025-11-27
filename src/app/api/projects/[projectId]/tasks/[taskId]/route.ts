@@ -120,23 +120,82 @@ export async function PUT(
       return NextResponse.json(updatedTask);
     }
 
+    // Helper to get all descendant IDs recursively
+    const getAllDescendantIds = async (rootId: string): Promise<string[]> => {
+      let allDescendants: string[] = [];
+      let currentLevelIds = [rootId];
+
+      while (currentLevelIds.length > 0) {
+        const children = await prisma.task.findMany({
+          where: { parentId: { in: currentLevelIds } },
+          select: { id: true }
+        });
+
+        if (children.length === 0) break;
+
+        const childIds = children.map(c => c.id);
+        allDescendants.push(...childIds);
+        currentLevelIds = childIds;
+      }
+
+      return allDescendants;
+    };
+
     let updatedTask;
 
     // Special handling for moving a parent task
     const isMovingColumn = columnId && currentTask.columnId !== columnId;
 
-    if (isMovingColumn && currentTask.children.length > 0) {
-      // Use a transaction to move the parent and all its children
-      const [, task] = await prisma.$transaction([
-        prisma.task.updateMany({
-          where: {
-            parentId: taskId,
-          },
-          data: {
-            columnId: columnId,
-          },
-        }),
-        prisma.task.update({
+    if (isMovingColumn) {
+      // Fetch ALL descendants (children, grandchildren, etc.)
+      const descendantIds = await getAllDescendantIds(taskId);
+
+      if (descendantIds.length > 0) {
+        // Use a transaction to move the parent and all its descendants
+        const [, task] = await prisma.$transaction([
+          prisma.task.updateMany({
+            where: {
+              id: { in: descendantIds },
+            },
+            data: {
+              columnId: columnId,
+            },
+          }),
+          prisma.task.update({
+            where: { id: taskId, projectId },
+            data: {
+              ...updateData,
+              ...(assignees !== undefined && {
+                assignees: {
+                  set: assignees.map((id: string) => ({ id })),
+                },
+              }),
+            },
+            include: {
+              children: true, // Re-include children to return the full updated task
+            }
+          }),
+        ]);
+        updatedTask = task;
+      } else {
+        // No descendants, just update the task normally (will fall through logic below if we didn't handle it here, 
+        // but since we are inside isMovingColumn, we should handle the single task update here if we want to be consistent 
+        // OR just let it fall through. 
+        // Actually, the original logic had an if/else for isMovingColumn && children.length > 0.
+        // Let's keep it simple: if isMovingColumn, we ALWAYS update descendants if they exist.
+
+        // If no descendants, we can just proceed to standard update, BUT we need to make sure we don't double update.
+        // Let's just do the standard update in the else block of the main check.
+
+        // Wait, the original logic was:
+        // if (isMovingColumn && currentTask.children.length > 0) { ... } else { ... }
+
+        // My new logic:
+        // if (isMovingColumn) { getDescendants... if (descendants > 0) { transaction } else { standard update } }
+
+        // To avoid code duplication, let's refine.
+
+        updatedTask = await prisma.task.update({
           where: { id: taskId, projectId },
           data: {
             ...updateData,
@@ -147,13 +206,12 @@ export async function PUT(
             }),
           },
           include: {
-            children: true, // Re-include children to return the full updated task
+            children: true,
           }
-        }),
-      ]);
-      updatedTask = task;
+        });
+      }
     } else {
-      // Standard update for tasks without children or other field updates
+      // Standard update for tasks without column change or other field updates
       if (assignees !== undefined) {
         updatedTask = await prisma.task.update({
           where: { id: taskId, projectId },
@@ -203,33 +261,6 @@ export async function PUT(
 
     // Handle cascade completion if progress is 100
     if (progress === 100) {
-      // Optimized recursive function to get all descendant IDs
-      // We fetch only IDs, which is lighter.
-      const getAllDescendantIds = async (rootId: string): Promise<string[]> => {
-        // Fetch all potential descendants in one go if possible, or layer by layer.
-        // For deep hierarchies, layer by layer is safer to avoid recursion limits in code,
-        // but fetching all tasks for the project and building a tree in memory is often faster for < 10k tasks.
-        // Given we don't want to fetch the whole project here, let's stick to a more efficient recursive fetch.
-
-        let allDescendants: string[] = [];
-        let currentLevelIds = [rootId];
-
-        while (currentLevelIds.length > 0) {
-          const children = await prisma.task.findMany({
-            where: { parentId: { in: currentLevelIds } },
-            select: { id: true }
-          });
-
-          if (children.length === 0) break;
-
-          const childIds = children.map(c => c.id);
-          allDescendants.push(...childIds);
-          currentLevelIds = childIds;
-        }
-
-        return allDescendants;
-      };
-
       const descendantIds = await getAllDescendantIds(taskId);
 
       if (descendantIds.length > 0) {
