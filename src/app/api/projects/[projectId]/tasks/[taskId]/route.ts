@@ -176,7 +176,11 @@ export async function PUT(
     if (currentTask.parentId) {
       let currentParentId: string | null = currentTask.parentId;
 
-      while (currentParentId) {
+      // Optimization: Limit recursion depth to avoid infinite loops and excessive time
+      let depth = 0;
+      const MAX_DEPTH = 10;
+
+      while (currentParentId && depth < MAX_DEPTH) {
         // 1. Calculate average progress for the current parent's children
         const aggregations = await prisma.task.aggregate({
           where: { parentId: currentParentId },
@@ -185,15 +189,15 @@ export async function PUT(
 
         const averageProgress = Math.round(aggregations._avg.progress || 0);
 
-        // 2. Update the current parent
+        // 2. Update the current parent and get its parentId for the next iteration
         const updatedParent: { parentId: string | null } = await prisma.task.update({
           where: { id: currentParentId },
           data: { progress: averageProgress },
-          select: { parentId: true } // Fetch the next parent ID
+          select: { parentId: true }
         });
 
-        // 3. Move up to the next parent
         currentParentId = updatedParent.parentId;
+        depth++;
       }
     }
 

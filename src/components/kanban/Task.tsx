@@ -1,6 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { CheckSquare, Link2, ChevronDown, ChevronRight, Eye, EyeOff, BarChart3 } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const PRIORITY_COLORS = {
   LOW: "#D1FAE5",
@@ -26,15 +27,15 @@ export function Task({
   assignees = [],
   links = [],
   checklist = [],
-  cardColor, // New prop
-  progress, // New prop
-  onProgressChange, // New prop
-  isCollapsed = false, // New prop
-  onToggleCollapse, // New prop
-  isHidden = false, // New prop
-  onToggleHide, // New prop
-  isHiddenInGantt = false, // New prop
-  onToggleGanttVisibility, // New prop
+  cardColor,
+  progress,
+  onProgressChange,
+  isCollapsed = false,
+  onToggleCollapse,
+  isHidden = false,
+  onToggleHide,
+  isHiddenInGantt = false,
+  onToggleGanttVisibility,
 }: {
   id: string;
   title: string;
@@ -45,16 +46,22 @@ export function Task({
   assignees?: { id: string; name: string | null; email: string | null; image: string | null }[];
   links?: { title: string; url: string }[];
   checklist?: { id: string; text: string; completed: boolean }[];
-  cardColor?: string; // New prop
-  progress?: number; // New prop
-  onProgressChange?: (taskId: string, newProgress: number) => void; // New prop
-  isCollapsed?: boolean; // New prop
-  onToggleCollapse?: (taskId: string) => void; // New prop
-  isHidden?: boolean; // New prop
-  onToggleHide?: (taskId: string) => void; // New prop
-  isHiddenInGantt?: boolean; // New prop
-  onToggleGanttVisibility?: (taskId: string) => void; // New prop
+  cardColor?: string;
+  progress?: number;
+  onProgressChange?: (taskId: string, newProgress: number) => void;
+  isCollapsed?: boolean;
+  onToggleCollapse?: (taskId: string) => void;
+  isHidden?: boolean;
+  onToggleHide?: (taskId: string) => void;
+  isHiddenInGantt?: boolean;
+  onToggleGanttVisibility?: (taskId: string) => void;
 }) {
+  const [localProgress, setLocalProgress] = useState(progress || 0);
+
+  useEffect(() => {
+    setLocalProgress(progress || 0);
+  }, [progress]);
+
   const {
     attributes,
     listeners,
@@ -219,19 +226,28 @@ export function Task({
         <div className="flex-1">
           <div className="flex justify-between text-xs text-gray-500 mb-1">
             <span>Progreso</span>
-            <span>{progress || 0}%</span>
+            <span>{localProgress}%</span>
           </div>
           <input
             type="range"
             min="0"
             max="100"
             step="5"
-            value={progress || 0}
+            value={localProgress}
             onClick={(e) => e.stopPropagation()}
             onPointerDown={(e) => e.stopPropagation()} // Prevent drag conflict with dnd-kit
             onChange={(e) => {
-              const newProgress = parseInt(e.target.value, 10);
-              if (onProgressChange) onProgressChange(id, newProgress);
+              setLocalProgress(parseInt(e.target.value, 10));
+            }}
+            onMouseUp={() => {
+              if (onProgressChange && localProgress !== progress) {
+                onProgressChange(id, localProgress);
+              }
+            }}
+            onTouchEnd={() => {
+              if (onProgressChange && localProgress !== progress) {
+                onProgressChange(id, localProgress);
+              }
             }}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-all"
           />
@@ -239,9 +255,12 @@ export function Task({
         <button
           onClick={(e) => {
             e.stopPropagation();
-            if (onProgressChange) onProgressChange(id, 100);
+            if (onProgressChange) {
+              setLocalProgress(100);
+              onProgressChange(id, 100);
+            }
           }}
-          className={`p-1 rounded-full transition-all duration-200 hover:scale-110 active:scale-95 ${progress === 100
+          className={`p-1 rounded-full transition-all duration-200 hover:scale-110 active:scale-95 ${localProgress === 100
             ? "text-green-600 bg-green-100 hover:bg-green-200 shadow-sm"
             : "text-gray-400 hover:text-green-600 hover:bg-gray-100"
             }`}

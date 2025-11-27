@@ -19,9 +19,10 @@ interface GanttChartProps {
     columns: { id: string; name: string; color?: string }[];
     onTaskClick: (taskId: string) => void;
     onTaskUpdate?: () => void;
+    visibleTasks?: GanttTask[];
 }
 
-export function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }: GanttChartProps) {
+export function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate, visibleTasks }: GanttChartProps) {
     const [resizing, setResizing] = useState<{ taskId: string; edge: 'start' | 'end' | 'tolerance'; newDate: string | null } | null>(null);
     const [previewDates, setPreviewDates] = useState<Record<string, { startDate?: string; endDate?: string; toleranceDate?: string }>>({});
     const timelineRef = useRef<HTMLDivElement>(null);
@@ -29,8 +30,9 @@ export function GanttChart({ tasks, columns, onTaskClick, onTaskUpdate }: GanttC
 
     // Filter out tasks that should be hidden in Gantt
     const ganttVisibleTasks = useMemo(() => {
-        return tasks.filter(task => !task.isHiddenInGantt);
-    }, [tasks]);
+        const sourceTasks = visibleTasks || tasks;
+        return sourceTasks.filter(task => !task.isHiddenInGantt);
+    }, [tasks, visibleTasks]);
 
     // Filter tasks that have dates
     const tasksWithDates = useMemo(() => {

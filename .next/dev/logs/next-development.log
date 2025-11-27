@@ -1989,3 +1989,6 @@ Import trace:
 [04:34:37.282] Server  LOG     Session Callback - Session: {}
 [04:34:37.283] Server  LOG     Session Callback - Token: {}
 [04:34:50.310] Server  LOG      ✓ Compiled in 893ms
+[04:41:46.801] Server  LOG      ✓ Compiled in 358ms
+[04:45:23.669] Server  LOG      ✓ Compiled in 2.1s
+[04:45:49.366] Server  LOG      ✓ Compiled in 395ms

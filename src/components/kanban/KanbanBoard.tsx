@@ -27,7 +27,8 @@ import { usePermissions } from "@/hooks/usePermissions";
 import { PERMISSIONS } from "@/lib/permissions";
 import { ProjectSettings } from "../project/ProjectSettings";
 import { GanttChart } from "../gantt/GanttChart";
-import { Settings, X, BarChart3, Eye, EyeOff, Archive, Printer, FileSpreadsheet } from "lucide-react";
+import { ProjectStatisticsModal } from "./ProjectStatisticsModal";
+import { Settings, X, BarChart3, Eye, EyeOff, Archive, Printer, FileSpreadsheet, PieChart as PieChartIcon } from "lucide-react";
 import { exportToExcel } from "@/lib/excel";
 
 interface KanbanBoardProps {
@@ -117,6 +118,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
   const [activeFilter, setActiveFilter] = useState<FilterType | string>("all");
   const [customFilterCriteria, setCustomFilterCriteria] = useState<FilterCriteria | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false); // New state
 
   // Collapsed tasks state - persisted in localStorage
   const [collapsedTasks, setCollapsedTasks] = useState<Set<string>>(() => {
@@ -1047,6 +1049,18 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
                 Excel
               </Button>
             )}
+
+            {/* Statistics Button */}
+            <Button
+              onClick={() => setIsStatsModalOpen(true)}
+              variant="ghost"
+              size="sm"
+              className="bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 shadow-sm transition-all"
+              title="Ver Estadísticas"
+            >
+              <PieChartIcon className="w-4 h-4 mr-2" />
+              Estadísticas
+            </Button>
             {can(PERMISSIONS.MANAGE_PROJECT) && (
               <>
                 <Button
@@ -1140,17 +1154,34 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
             ) : (
               <div className="h-full px-8 pt-8 pb-10 gantt-print-container">
                 <GanttChart
-                  tasks={filteredTasks}
+                  tasks={tasks}
                   columns={columns}
                   onTaskClick={handleTaskClick}
-                  onTaskUpdate={mutate}
+                  visibleTasks={visibleTasks} // Pass visible tasks to Gantt
                 />
               </div>
             )}
           </div>
         )}
       </div>
-      {/* Project Settings Modal */}
+
+      {/* Modals */}
+      <ProjectStatisticsModal
+        isOpen={isStatsModalOpen}
+        onClose={() => setIsStatsModalOpen(false)}
+        tasks={tasks}
+      />
+
+      {selectedTask && isModalOpen && (
+        <TaskDetailModal
+          key={selectedTask.id}
+          task={selectedTask}
+          onClose={handleCloseModal}
+          onTaskUpdate={handleTaskUpdate}
+          availableUsers={projectUsers}
+        />
+      )}
+
       {isSettingsOpen && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative">
