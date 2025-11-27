@@ -2,6 +2,7 @@
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -20,9 +21,16 @@ export default function Home() {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8">
           {/* Logo/Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-neutral-900 mb-2">Scena</h1>
-            <p className="text-neutral-500">Gestión de Proyectos Visuales</p>
+          <div className="text-center mb-8 flex flex-col items-center">
+            <div className="relative w-64 h-24">
+              <Image
+                src="/Scena_c.svg"
+                alt="Scena Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
           </div>
 
           {session ? (
