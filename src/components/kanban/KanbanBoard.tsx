@@ -968,7 +968,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       <div className="flex flex-col h-screen">
         {/* Header - Always visible */}
         <div className="header">
-          <Link href="/dashboard" className="text-sm text-slate-500 hover:text-slate-800 transition-colors mb-4 inline-block">
+          <Link href="/dashboard" className="header-title hover:text-gray-300 transition-colors">
             {"< Proyectos"}
           </Link>
           <div className="flex items-center gap-2">
